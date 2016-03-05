@@ -1,0 +1,226 @@
+@import url("https://fonts.googleapis.com/css?family=Gentium+Basic:400,700|Lato:400,300");
+body.ioc {
+  font-family: monospace;
+  background-color: #000;
+  color: #0f0; }
+  body.ioc table {
+    border-collapse: collapse;
+    border: 1px dashed #0f0; }
+  body.ioc ul {
+    list-style-type: square; }
+  body.ioc td, body.ioc th {
+    padding: 0.5rem;
+    font-family: monospace; }
+  body.ioc td:nth-child(2) {
+    padding: 0 1rem; }
+  body.ioc tr {
+    border-bottom: 1px dashed #0f0; }
+  body.ioc li {
+    font-family: monospace; }
+  body.ioc header {
+    display: flex;
+    border: 1px dashed #0f0;
+    justify-content: center;
+    align-items: center; }
+  body.ioc pre {
+    align-self: center; }
+  body.ioc #inner {
+    display: inline-block; }
+
+* {
+  box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0; }
+
+body {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.5;
+  background: #ccc; }
+
+.container {
+  max-width: 1200px;
+  flex-grow: 2; }
+
+nav {
+  background-color: #333;
+  color: #fff;
+  border-bottom: 0.3rem solid #e7325c; }
+
+nav .container, nav ul {
+  flex-wrap: wrap; }
+
+nav ul {
+  display: inline-flex;
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+
+nav ul.left {
+  flex-grow: 2; }
+
+nav ul.right {
+  flex-shrink: 3;
+  justify-content: flex-end; }
+
+nav ul li {
+  display: block; }
+
+nav ul li a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #fff; }
+
+nav ul li a:hover {
+  background-color: #ce1842; }
+
+nav ul li.active a {
+  background-color: #ce1842; }
+
+footer {
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.5rem 0; }
+
+nav, footer, main {
+  display: flex;
+  align-content: center;
+  justify-content: center; }
+
+footer .container {
+  display: flex;
+  justify-content: space-between; }
+
+footer .container .copyright {
+  flex-grow: 2; }
+
+footer ul.links {
+  margin: 0; }
+
+footer ul.links li {
+  display: inline-block; }
+
+footer ul.links li + li {
+  margin-left: 0.5rem; }
+
+footer ul.links li a {
+  color: #fff; }
+
+nav .container {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between; }
+
+main {
+  font-family: "Gentium Basic", serif; }
+
+main .container {
+  padding: 1rem;
+  background: #fff; }
+
+main .container-no-pad {
+  padding: 0; }
+
+main h2 {
+  font-size: 22px;
+  margin: 0; }
+
+#footer-push {
+  flex-grow: 5; }
+
+#footer-push .bg {
+  background: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  height: 100%; }
+
+/* Buttons */
+.button {
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  background-color: #e7325c;
+  display: inline-block;
+  transition: 0.25s background;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; }
+
+.button:hover {
+  background-color: #ce1842; }
+
+.button.default {
+  background-color: #333; }
+
+.button.default:hover {
+  background-color: #1a1a1a; }
+
+input[type=text] {
+  border: 1px solid #ccc;
+  transition: 0.25s border;
+  padding: 0.2rem;
+  border-radius: 5px; }
+
+input[type=text]:focus {
+  border: 1px solid #e7325c; }
+
+.alert {
+  border: 1px solid #5fec85;
+  border-radius: 5px;
+  padding: 0.75rem 1rem; }
+
+label {
+  font-size: 1rem;
+  color: #444; }
+
+.brand {
+  display: inline-block;
+  padding: 0.5rem 1rem 0.5rem 0; }
+
+.overview {
+  padding: 0 1rem; }
+  .overview h1 {
+    margin-bottom: 0; }
+
+.hero {
+  background: url("assets/sky.jpg");
+  height: 30vh;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-position: 0 54%; }
+  .hero h1 {
+    text-shadow: 1px 1px 5px #000;
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    color: #fff;
+    font-weight: 400; }
+
+.steps-overview {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+  .steps-overview div {
+    width: 25%; }
+    .steps-overview div h2 {
+      text-align: center; }
+  .steps-overview img {
+    display: block;
+    flex-shrink: 2;
+    height: 200px;
+    padding: 0 1rem; }
+
+/*# sourceMappingURL=app.css.map */
