@@ -18,7 +18,8 @@
             <li><a href="#">Settings</a></li>
         </ul>
         <ul class="right">
-            <li><a href="#">Adam <i class="fa fa-caret-down"></i></a></li>
+            <li><a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a></li>
+            <li><a href="#"><i class="fa fa-inbox"></i> <span class="counter">4</span></a></li>
             <li><a href="#">Logout</a></li>
         </ul>
     </div>
@@ -27,7 +28,7 @@
     <div class="container container-no-pad">
         <div class="hero">
             <h1>Bill management made easy</h1>
-            <p><a href="#" class="button">Register now</a> <a href="#" class="button secondary">Register now</a></p>
+            <p><a href="#" class="button"><i class="fa fa-pencil"></i> Register now</a> <a href="#" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
         </div>
         <div class="overview">
             <h1>How does it work?</h1>
@@ -35,7 +36,7 @@
 
             <div class="steps-overview">
                 <div class="step">
-                    <h2>Step 1 &mdash; Register</h2>
+                    <h2><i class="fa fa-pencil"></i> Step 1 &mdash; Register</h2>
                     <p>
                         Register with an email address and password to get started. Alternatively you can save time by
                         logging in with your Warwick IT Services account which will pre-fill your account info.
@@ -43,13 +44,13 @@
                 </div>
                 <img src="assets/simplearrow.svg">
                 <div class="step">
-                    <h2>Step 2 &mdash; Create group</h2>
+                    <h2><i class="fa fa-users"></i> Step 2 &mdash; Create group</h2>
                     <p>Create a group and invite other users to it. You can create as many groups as you like with
                     an unlimited number of members. Once members confirm, they'll be added to the group.</p>
                 </div>
                 <img src="assets/simplearrow.svg">
                 <div class="step">
-                    <h2>Step 3 &mdash; Manage bills</h2>
+                    <h2><i class="fa fa-money"></i> Step 3 &mdash; Manage bills</h2>
                     <p>
                         As you receive bills, create them and assign them to the group. Bills can be split equally or
                         in a custom ratio. Members will receive a notification when bills are created.

@@ -97,6 +97,7 @@ nav ul.right {
 
 nav ul li {
   display: block;
+  max-height: 1rem;
 }
 
 nav ul li a {
@@ -160,7 +161,6 @@ nav .container {
 
 main {
   font-family: "Gentium Basic", serif;
-
 }
 
 main .container {
@@ -288,4 +288,26 @@ label {
     height: 200px;
     padding: 0 1rem;
   }
+}
+
+.warwick-logo {
+  width: 1.5rem;
+}
+
+span.counter {
+  background-color: $accentColor;
+  padding: 0 0.4rem;
+  border-radius: 0.1rem;
+  margin-left: 0.5rem;
+}
+
+a:hover span.counter {
+  background-color: $primaryColor;
+}
+
+.avatar {
+  height: 2rem;
+  margin-top: -0.2rem;
+  vertical-align: middle;
+  border-radius: 0.5rem;
 }
