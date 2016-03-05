@@ -18,9 +18,8 @@
             <li><a href="#">Settings</a></li>
         </ul>
         <ul class="right">
-            <li><a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a></li>
             <li><a href="#"><i class="fa fa-inbox"></i> <span class="counter">4</span></a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a></li>
         </ul>
     </div>
 </nav>

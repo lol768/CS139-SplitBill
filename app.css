@@ -231,8 +231,22 @@ span.counter {
   background-color: #e7325c;
   padding: 0 0.4rem;
   border-radius: 0.1rem;
-  margin-left: 0.5rem; }
+  margin-left: 0.5rem;
+  animation: counterAnim 0.5s;
+  animation-delay: 2s;
+  display: inline-block; }
 
+@keyframes counterAnim {
+  0% {
+    background-color: #333; }
+  33% {
+    background-color: #e7325c; }
+  66% {
+    background-color: #333; }
+  100% {
+    background-color: #e7325c;
+    transform: rotate(45deg);
+    -moz-transform: rotate(45deg); } }
 a:hover span.counter {
   background-color: #333; }
 
