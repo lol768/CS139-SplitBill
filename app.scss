@@ -218,7 +218,7 @@ nav .container {
   justify-content: space-between;
 }
 
-main {
+main, div.modal {
   font-family: "Gentium Basic", serif;
 }
 
@@ -281,16 +281,18 @@ main h2 {
 }
 
 
-input[type=text] {
+input[type=text], input[type=password] {
   border: 1px solid #ccc;
   transition: 0.25s border;
   padding: 0.2rem;
   border-radius: $brx;
+  background-color: #fff;
+  color: #333;
 
 }
 
-input[type=text]:focus {
-  border: 1px solid $accentColor;
+input[type=text]:focus, input[type=password]:focus {
+  border: 1px solid $primaryColor;
 }
 
 .alert {
@@ -416,3 +418,75 @@ a:hover span.counter {
 header, nav, main, footer {
   flex-shrink: 0;
 }
+
+
+.modal {
+  background: radial-gradient(circle farthest-corner at 50% 50%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 95%);
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 20vh;
+  align-items: flex-start;
+  justify-content: center;
+  align-content: center;
+
+  z-index: 50;
+}
+
+body.modal-open {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.modal-inner {
+  background-color: #fff;
+  border: 1px solid $primaryColor;
+  border-radius: 0.2rem;
+  min-width: 400px;
+
+  padding: 1rem;
+  flex: 0;
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    h1 {
+      margin: 0;
+
+    }
+  }
+  p {
+    margin-top: 0;
+  }
+  display: inline-block;
+
+}
+
+.vertical-form {
+  text-align: center;
+  label {
+    text-align: left;
+  }
+  input {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  input[type=text], input[type=password] {
+    font-size: 1.2rem;
+    padding: 0.5rem 0.3rem;
+  }
+  input[type=submit] {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+
+    padding: 0.5rem 0;
+  }
+}
+
+.vertical-form label {
+  display: block;
+}
+

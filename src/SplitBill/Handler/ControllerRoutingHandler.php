@@ -8,6 +8,7 @@ use SplitBill\DependencyInjection\IContainer;
 use SplitBill\Exception\BadRequestException;
 use SplitBill\Exception\RequestHandlingException;
 use SplitBill\Filter\IFilterConfiguration;
+use SplitBill\Rendering\DataProvider\IViewDataProviderManager;
 use SplitBill\Request\HttpRequest;
 use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\ViewResponse;
@@ -47,7 +48,6 @@ class ControllerRoutingHandler {
         $this->container = $container;
         $this->filterConfig = $filterConfig;
         $this->currentRequest = $currentRequest;
-
     }
 
     /**

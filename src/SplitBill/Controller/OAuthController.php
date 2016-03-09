@@ -4,6 +4,7 @@ namespace SplitBill\Controller;
 
 use SplitBill\Helper\IControllerHelper;
 use SplitBill\ItsAuthentication\IOAuthManager;
+use SplitBill\Response\JsonResponse;
 use SplitBill\Response\RedirectResponse;
 use SplitBill\Session\IFlashSession;
 
@@ -50,6 +51,7 @@ class OAuthController extends AbstractController {
      */
     public function getEndLogin($uuid) {
         $userData = $this->oauthManager->getUserInfoUsingUuid($uuid);
-        return $this->h->getViewResponse("itsDebugView", array("user" => $userData));
+        $userCode = $userData->getUsername();
+        
     }
 }

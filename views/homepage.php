@@ -7,35 +7,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-<nav>
-    <div class="container">
-        <span class="brand">SplitBill</span>
-        <ul class="left">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="#">Bills</a></li>
-            <li><a href="#">Settings</a></li>
-        </ul>
-        <ul class="right">
-            <li class="with-dropdown notifications-dropdown">
-                <a href="#" class="notifications-link"><i class="fa fa-inbox"></i></a>
-                <div class="menu">
-                    <ul class="alerts"></ul>
-                </div>
-            </li>
-            <li class="with-dropdown profile-dropdown active">
-                <a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a>
-                <div class="menu">
-                    <ul>
-                        <li><a href="#"><i class="fa fa-fw fa-pencil"></i> Edit profile</a></li>
-                        <li><a href="#"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+<body class="modal-open">
+<?php require("partials/nav.php"); ?>
 <main>
     <div class="container container-no-pad">
         <div class="hero">
@@ -82,8 +55,30 @@
 
 </main>
 <div id="footer-push"><div class="bg"></div></div>
+<div class="registration-modal modal">
+    <div class="modal-inner">
+        <div class="topbar">
+            <h1>Register</h1>
+            <a href="#" class="exit"><i class="fa fa-times"></i></a>
+        </div>
+        <p>To register, simply fill out the fields below:</p>
+        <form class="vertical-form">
+
+            <label>
+                Full name: <input type="text">
+            </label>
+            <label>
+                E-mail: <input type="text">
+            </label>
+            <label>
+                Password: <input type="password">
+            </label>
+
+            <input type="submit" class="button" value="Register">
+        </form>
+    </div>
+</div>
 <?php require("partials/footer.php"); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-<script src="assets/app.js" async></script>
+<?php require("partials/scripts.php"); ?>
 </body>
 </html>
