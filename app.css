@@ -69,20 +69,50 @@ nav ul.right {
   justify-content: flex-end; }
 
 nav ul li {
-  display: block;
-  max-height: 1rem; }
+  display: block; }
 
 nav ul li a {
   display: inline-block;
   padding: 0.5rem 1rem;
   text-decoration: none;
-  color: #fff; }
+  color: #fff;
+  transition: background 0.25s;
+  height: 100%; }
 
 nav ul li a:hover {
   background-color: #ce1842; }
 
-nav ul li.active a {
+nav ul li.active > a {
   background-color: #ce1842; }
+
+nav ul li.with-dropdown {
+  min-width: 10em;
+  position: relative; }
+  nav ul li.with-dropdown a {
+    width: 100%; }
+  nav ul li.with-dropdown .fa-caret-down {
+    line-height: 1.5;
+    position: absolute;
+    right: 1rem;
+    bottom: 0.6rem; }
+  nav ul li.with-dropdown .menu {
+    position: absolute;
+    z-index: 20;
+    background-color: #333;
+    left: -1px;
+    right: 0;
+    color: black;
+    border-left: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    border-right: 1px solid #aaa; }
+    nav ul li.with-dropdown .menu ul {
+      display: block; }
+      nav ul li.with-dropdown .menu ul li {
+        display: block;
+        font-size: 1rem; }
+      nav ul li.with-dropdown .menu ul li a {
+        color: #fff;
+        width: 100%; }
 
 footer {
   background-color: #333;
@@ -134,14 +164,19 @@ main h2 {
   margin: 0; }
 
 #footer-push {
-  flex-grow: 5; }
+  flex-grow: 5;
+  position: relative; }
 
 #footer-push .bg {
+  position: absolute;
   background: #fff;
   margin-left: auto;
   margin-right: auto;
   max-width: 1200px;
-  height: 100%; }
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0; }
 
 /* Buttons */
 .button {
@@ -195,6 +230,7 @@ label {
 
 .hero {
   background: url("assets/sky.jpg");
+  min-height: 200px;
   height: 30vh;
   background-size: cover;
   display: flex;
@@ -214,14 +250,19 @@ label {
   display: flex;
   flex-direction: row;
   justify-content: space-between; }
-  .steps-overview div {
+  .steps-overview div.step {
     width: 25%; }
-    .steps-overview div h2 {
+    .steps-overview div.step h2 {
       text-align: center; }
-  .steps-overview img {
-    display: block;
+  .steps-overview .arrow-wrapper {
     flex-shrink: 2;
-    height: 200px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    align-content: center; }
+  .steps-overview img {
+    height: 100px;
     padding: 0 1rem; }
 
 .warwick-logo {
@@ -232,9 +273,9 @@ span.counter {
   padding: 0 0.4rem;
   border-radius: 0.1rem;
   margin-left: 0.5rem;
-  animation: counterAnim 0.5s;
+  animation: counterAnim 0.75s;
   animation-delay: 2s;
-  display: inline-block; }
+  animation-fill-mode: forwards; }
 
 @keyframes counterAnim {
   0% {
@@ -244,9 +285,7 @@ span.counter {
   66% {
     background-color: #333; }
   100% {
-    background-color: #e7325c;
-    transform: rotate(45deg);
-    -moz-transform: rotate(45deg); } }
+    background-color: #e7325c; } }
 a:hover span.counter {
   background-color: #333; }
 
@@ -255,5 +294,8 @@ a:hover span.counter {
   margin-top: -0.2rem;
   vertical-align: middle;
   border-radius: 0.5rem; }
+
+header, nav, main, footer {
+  flex-shrink: 0; }
 
 /*# sourceMappingURL=app.css.map */

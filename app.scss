@@ -97,7 +97,7 @@ nav ul.right {
 
 nav ul li {
   display: block;
-  max-height: 1rem;
+  //max-height: 1rem;
 }
 
 nav ul li a {
@@ -105,14 +105,54 @@ nav ul li a {
   padding: 0.5rem 1rem;
   text-decoration: none;
   color: #fff;
+  transition: background 0.25s;
+  height: 100%;
 }
 
 nav ul li a:hover {
   background-color: darken($accentColor, 10%);
 }
 
-nav ul li.active a {
+nav ul li.active > a {
   background-color: darken($accentColor, 10%);
+}
+
+
+
+nav ul li.with-dropdown {
+  min-width: 10em;
+  a {
+    width: 100%;
+  }
+  .fa-caret-down {
+    line-height: 1.5;
+    position: absolute;
+    right: 1rem;
+    bottom: 0.6rem;
+  }
+  position: relative;
+  .menu {
+    position: absolute;
+    z-index: 20;
+    background-color: $primaryColor;
+    left: -1px;
+    right: 0;
+    color: rgb(0, 0, 0);
+    border-left: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    ul {
+      display: block;
+      li {
+        display: block;
+        font-size: 1rem;
+      }
+      li a {
+        color: #fff;
+        width: 100%;
+      }
+    }
+  }
 }
 
 footer {
@@ -179,14 +219,19 @@ main h2 {
 
 #footer-push {
   flex-grow: 5;
+  position: relative;
 }
 
 #footer-push .bg {
+  position: absolute;
   background: #fff;
   margin-left: auto;
   margin-right: auto;
   max-width: 1200px;
-  height: 100%;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
 }
 
 /* Buttons */
@@ -254,6 +299,7 @@ label {
 
 .hero {
   background: url("assets/sky.jpg");
+  min-height: 200px;
   height: 30vh;
   background-size: cover;
   display: flex;
@@ -276,16 +322,23 @@ label {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  div {
+
+  div.step {
     width: 25%;
     h2 {
       text-align: center;
     }
   }
-  img {
-    display: block;
+  .arrow-wrapper {
     flex-shrink: 2;
-    height: 200px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+  }
+  img {
+    height: 100px;
     padding: 0 1rem;
   }
 }
@@ -299,9 +352,9 @@ span.counter {
   padding: 0 0.4rem;
   border-radius: 0.1rem;
   margin-left: 0.5rem;
-  animation: counterAnim 0.5s;
+  animation: counterAnim 0.75s;
   animation-delay: 2s;
-  display: inline-block;
+  animation-fill-mode: forwards;
 }
 
 @keyframes counterAnim {
@@ -319,8 +372,6 @@ span.counter {
 
   100% {
     background-color: $accentColor;
-    transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
   }
 
 }
@@ -334,4 +385,8 @@ a:hover span.counter {
   margin-top: -0.2rem;
   vertical-align: middle;
   border-radius: 0.5rem;
+}
+
+header, nav, main, footer {
+  flex-shrink: 0;
 }

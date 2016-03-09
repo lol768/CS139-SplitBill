@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="simplearrow.svg"
+   viewBox="0 0 144.41 301.44"
+   version="1.1"
+   inkscape:version="0.91 r">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="0"
+     fit-margin-left="0"
+     pagecolor="#ffffff"
+     inkscape:window-height="1080"
+     inkscape:window-maximized="0"
+     inkscape:zoom="0.98994949"
+     inkscape:window-x="1920"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="55.043163"
+     inkscape:cy="117.21551"
+     fit-margin-top="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(-148.41 -96.719)">
+    <path
+       id="path2987"
+       style="stroke:#ee6d8b;stroke-width:8;fill:#ce1842;fill-opacity:1;stroke-opacity:1"
+       d="m152.42 100.71v23.938l67.844 122.22-67.844 123.59v23.688h54.812l81-147.53-81-145.91h-54.812z"
+       inkscape:export-ydpi="7.4642339"
+       inkscape:export-filename="C:\Users\John\Desktop\arrow25.png"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="7.4642339" />
+    <path
+       id="path3776"
+       style="fill:#ce1842;fill-opacity:1"
+       d="m155.33 102.55v21.271l53.317 96.055c19.223-1.6622 36.859-7.5029 51.457-16.328l-56.067-101h-48.708z"
+       inkscape:export-ydpi="7.4642339"
+       inkscape:export-filename="C:\Users\John\Desktop\arrow25.png"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="7.4642339" />
+  </g>
+  <metadata
+     id="metadata11">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Arrow - simple</dc:title>
+        <dc:date>2012-06-08T07:00:41</dc:date>
+        <dc:description>Blue right arrow.</dc:description>
+        <dc:source>https://openclipart.org/detail/170475/arrow---simple-by-diamonjohn-170475</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>diamonjohn</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>arrow</rdf:li>
+            <rdf:li>blue</rdf:li>
+            <rdf:li>blue arrow</rdf:li>
+            <rdf:li>clear glass arrow</rdf:li>
+            <rdf:li>cool arrow</rdf:li>
+            <rdf:li>direction</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>right arrow</rdf:li>
+            <rdf:li>simple arrow</rdf:li>
+            <rdf:li>web arrow</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

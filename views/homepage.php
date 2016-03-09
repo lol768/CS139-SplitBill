@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>SplitBill</title>
@@ -19,7 +19,15 @@
         </ul>
         <ul class="right">
             <li><a href="#"><i class="fa fa-inbox"></i> <span class="counter">4</span></a></li>
-            <li><a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a></li>
+            <li class="with-dropdown active">
+                <a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-fw fa-pencil"></i> Edit profile</a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
@@ -31,7 +39,9 @@
         </div>
         <div class="overview">
             <h1>How does it work?</h1>
-            <p>It's easy to get started with SplitBill.</p>
+            <p>
+                SplitBill is a web application for managing shared bills. It's easy to get started with SplitBill, simply follow the steps below:
+            </p>
 
             <div class="steps-overview">
                 <div class="step">
@@ -41,13 +51,17 @@
                         logging in with your Warwick IT Services account which will pre-fill your account info.
                     </p>
                 </div>
-                <img src="assets/simplearrow.svg">
+                <div class="arrow-wrapper">
+                    <img src="assets/simplearrow.svg">
+                </div>
                 <div class="step">
                     <h2><i class="fa fa-users"></i> Step 2 &mdash; Create group</h2>
                     <p>Create a group and invite other users to it. You can create as many groups as you like with
                     an unlimited number of members. Once members confirm, they'll be added to the group.</p>
                 </div>
-                <img src="assets/simplearrow.svg">
+                <div class="arrow-wrapper">
+                    <img src="assets/simplearrow.svg">
+                </div>
                 <div class="step">
                     <h2><i class="fa fa-money"></i> Step 3 &mdash; Manage bills</h2>
                     <p>
@@ -56,6 +70,8 @@
                     </p>
                 </div>
             </div>
+            <h1>WSD</h1>
+            <p id="debug"></p>
         </div>
     </div>
 
@@ -71,5 +87,6 @@
         </ul>
     </div>
 </footer>
+<script src="assets/app.js" async></script>
 </body>
 </html>
