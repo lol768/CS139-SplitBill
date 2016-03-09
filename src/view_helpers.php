@@ -11,12 +11,12 @@ function se($content) {
 }
 
 /**
- * @return \BillSplitter\Security\IAntiRequestForgery
+ * @return \SplitBill\Security\IAntiRequestForgery
  */
 function getAntiForgeryManager() {
-    $container = \BillSplitter\Application::getInstance()->getContainer();
-    /** @var \BillSplitter\Security\IAntiRequestForgery $antiForgery */
-    $antiForgery = $container->resolveClassInstance("\\BillSplitter\\Security\\IAntiRequestForgery");
+    $container = \SplitBill\Application::getInstance()->getContainer();
+    /** @var \SplitBill\Security\IAntiRequestForgery $antiForgery */
+    $antiForgery = $container->resolveClassInstance("\\SplitBill\\Security\\IAntiRequestForgery");
     return $antiForgery;
 }
 

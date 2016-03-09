@@ -50,7 +50,11 @@ body {
 nav {
   background-color: #333;
   color: #fff;
-  border-bottom: 0.3rem solid #e7325c; }
+  border-bottom: 0.3rem solid #e7325c;
+  height: 3rem; }
+
+nav .container, nav ul, nav li, nav a {
+  height: 100%; }
 
 nav .container, nav ul {
   flex-wrap: wrap; }
@@ -85,8 +89,10 @@ nav ul li a:hover {
 nav ul li.active > a {
   background-color: #ce1842; }
 
+.profile-dropdown {
+  min-width: 10em; }
+
 nav ul li.with-dropdown {
-  min-width: 10em;
   position: relative; }
   nav ul li.with-dropdown a {
     width: 100%; }
@@ -113,6 +119,16 @@ nav ul li.with-dropdown {
       nav ul li.with-dropdown .menu ul li a {
         color: #fff;
         width: 100%; }
+
+nav ul li.notifications-dropdown {
+  min-width: 10em;
+  text-align: right; }
+  nav ul li.notifications-dropdown a {
+    width: auto; }
+  nav ul li.notifications-dropdown .menu {
+    text-align: left;
+    color: #fff;
+    border-top: 1px solid #aaa; }
 
 footer {
   background-color: #333;
@@ -272,22 +288,27 @@ span.counter {
   background-color: #e7325c;
   padding: 0 0.4rem;
   border-radius: 0.1rem;
-  margin-left: 0.5rem;
+  margin-left: 0.5rem; }
+
+span.counter.anim {
   animation: counterAnim 0.75s;
-  animation-delay: 2s;
   animation-fill-mode: forwards; }
+
+.notifications-dropdown a.anim {
+  animation: notificationsBorderAnim 0.75s; }
 
 @keyframes counterAnim {
   0% {
     background-color: #333; }
-  33% {
-    background-color: #e7325c; }
-  66% {
-    background-color: #333; }
   100% {
     background-color: #e7325c; } }
+@keyframes notificationsBorderAnim {
+  0% {
+    background-color: #e7325c; }
+  100% {
+    background-color: #333; } }
 a:hover span.counter {
-  background-color: #333; }
+  background-color: #333 !important; }
 
 .avatar {
   height: 2rem;

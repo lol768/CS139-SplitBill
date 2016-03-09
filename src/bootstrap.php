@@ -1,10 +1,10 @@
 <?php
-use BillSplitter\Application;
-use BillSplitter\DependencyInjection\Container;
-use BillSplitter\DependencyInjection\IContainer;
-use BillSplitter\Exception\AutoloaderException;
-use BillSplitter\Filter\FilterConfiguration;
-use BillSplitter\Session\FlashSession;
+use SplitBill\Application;
+use SplitBill\DependencyInjection\Container;
+use SplitBill\DependencyInjection\IContainer;
+use SplitBill\Exception\AutoloaderException;
+use SplitBill\Filter\FilterConfiguration;
+use SplitBill\Session\FlashSession;
 
 /**
  * Namespace-aware autoloader.
@@ -37,9 +37,9 @@ function isolatedViewInclude($_nameOfView, $_variables) {
  */
 function getFilterConfiguration(IContainer $container) {
     $fc = new FilterConfiguration();
-    $fc->addPostFilter($container->resolveClassInstance("\\BillSplitter\\Filter\\Post\\ContentSecurityPolicy"));
-    $fc->addPostFilter($container->resolveClassInstance("\\BillSplitter\\Filter\\Post\\XFrameOptions"));
-    $fc->addPreFilter($container->resolveClassInstance("\\BillSplitter\\Filter\\Pre\\AntiRequestForgeryFilter"));
+    $fc->addPostFilter($container->resolveClassInstance("\\SplitBill\\Filter\\Post\\ContentSecurityPolicy"));
+    $fc->addPostFilter($container->resolveClassInstance("\\SplitBill\\Filter\\Post\\XFrameOptions"));
+    $fc->addPreFilter($container->resolveClassInstance("\\SplitBill\\Filter\\Pre\\AntiRequestForgeryFilter"));
     return $fc;
 }
 
@@ -114,8 +114,8 @@ function handleResponseForPage($controller, $action) {
 
     $app = Application::getInstance();
     $container = $app->getContainer();
-    /** @var \BillSplitter\Handler\ControllerRoutingHandler $handler */
-    $handler = $container->resolveClassInstance("\\BillSplitter\\Handler\\ControllerRoutingHandler");
+    /** @var \SplitBill\Handler\ControllerRoutingHandler $handler */
+    $handler = $container->resolveClassInstance("\\SplitBill\\Handler\\ControllerRoutingHandler");
     $handler->handleRequest($controller, $action);
     die();
 }

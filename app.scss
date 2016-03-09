@@ -73,6 +73,11 @@ nav {
   background-color: $primaryColor;
   color: #fff;
   border-bottom: 0.3rem solid $accentColor;
+  height: 3rem;
+}
+
+nav .container, nav ul, nav li, nav a {
+  height: 100%;
 }
 
 nav .container, nav ul{
@@ -117,10 +122,11 @@ nav ul li.active > a {
   background-color: darken($accentColor, 10%);
 }
 
-
+.profile-dropdown {
+  min-width: 10em;
+}
 
 nav ul li.with-dropdown {
-  min-width: 10em;
   a {
     width: 100%;
   }
@@ -152,6 +158,19 @@ nav ul li.with-dropdown {
         width: 100%;
       }
     }
+  }
+}
+
+nav ul li.notifications-dropdown {
+  min-width: 10em;
+  text-align: right;
+  a {
+    width: auto;
+  }
+  .menu {
+    text-align: left;
+    color: #fff;
+    border-top: 1px solid #aaa;
   }
 }
 
@@ -352,9 +371,15 @@ span.counter {
   padding: 0 0.4rem;
   border-radius: 0.1rem;
   margin-left: 0.5rem;
+}
+
+span.counter.anim {
   animation: counterAnim 0.75s;
-  animation-delay: 2s;
   animation-fill-mode: forwards;
+}
+
+.notifications-dropdown a.anim {
+  animation: notificationsBorderAnim 0.75s;
 }
 
 @keyframes counterAnim {
@@ -362,22 +387,23 @@ span.counter {
     background-color: $primaryColor;
   }
 
-  33% {
-    background-color: $accentColor;
-  }
-
-  66% {
-    background-color: $primaryColor;
-  }
-
   100% {
     background-color: $accentColor;
   }
+}
 
+@keyframes notificationsBorderAnim {
+  0% {
+    background-color: $accentColor;
+  }
+
+  100% {
+    background-color: $primaryColor;
+  }
 }
 
 a:hover span.counter {
-  background-color: $primaryColor;
+  background-color: $primaryColor !important;
 }
 
 .avatar {

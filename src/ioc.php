@@ -1,5 +1,5 @@
 <?php
-use BillSplitter\DependencyInjection\IContainer;
+use SplitBill\DependencyInjection\IContainer;
 
 /**
  * Sets up dependency mappings in our IoC container.
@@ -7,18 +7,18 @@ use BillSplitter\DependencyInjection\IContainer;
  * @param IContainer $container The IoC container instance.
  */
 function wireUpContainer(IContainer $container) {
-    $container->registerAbstractImplementation("\\BillSplitter\\Rendering\\IViewRenderer", "\\BillSplitter\\Rendering\\ViewRenderer");
-    $container->registerAbstractImplementation("\\BillSplitter\\Helper\\IControllerHelper", "\\BillSplitter\\Helper\\ControllerHelper");
-    $container->registerAbstractImplementation("\\BillSplitter\\IApplication", "\\BillSplitter\\Application");
-    $container->registerAbstractImplementation("\\BillSplitter\\Session\\IUserSession", "\\BillSplitter\\Session\\UserSession");
-    $container->registerAbstractImplementation("\\BillSplitter\\Session\\IFlashSession", "\\BillSplitter\\Session\\FlashSession");
-    $container->registerAbstractImplementation("\\BillSplitter\\Filter\\IFilterConfiguration", "\\BillSplitter\\Filter\\FilterConfiguration");
-    $container->registerAbstractImplementation("\\BillSplitter\\Helper\\IRequestHelper", "\\BillSplitter\\Helper\\RequestHelper");
-    $container->registerAbstractImplementation("\\BillSplitter\\Security\\IAntiRequestForgery", "\\BillSplitter\\Security\\AntiRequestForgeryManager");
-    $container->registerAbstractImplementation("\\BillSplitter\\ItsAuthentication\\IOAuthManager", "\\BillSplitter\\ItsAuthentication\\PsOAuthManager");
+    $container->registerAbstractImplementation("\\SplitBill\\Rendering\\IViewRenderer", "\\SplitBill\\Rendering\\ViewRenderer");
+    $container->registerAbstractImplementation("\\SplitBill\\Helper\\IControllerHelper", "\\SplitBill\\Helper\\ControllerHelper");
+    $container->registerAbstractImplementation("\\SplitBill\\IApplication", "\\SplitBill\\Application");
+    $container->registerAbstractImplementation("\\SplitBill\\Session\\IUserSession", "\\SplitBill\\Session\\UserSession");
+    $container->registerAbstractImplementation("\\SplitBill\\Session\\IFlashSession", "\\SplitBill\\Session\\FlashSession");
+    $container->registerAbstractImplementation("\\SplitBill\\Filter\\IFilterConfiguration", "\\SplitBill\\Filter\\FilterConfiguration");
+    $container->registerAbstractImplementation("\\SplitBill\\Helper\\IRequestHelper", "\\SplitBill\\Helper\\RequestHelper");
+    $container->registerAbstractImplementation("\\SplitBill\\Security\\IAntiRequestForgery", "\\SplitBill\\Security\\AntiRequestForgeryManager");
+    $container->registerAbstractImplementation("\\SplitBill\\ItsAuthentication\\IOAuthManager", "\\SplitBill\\ItsAuthentication\\PsOAuthManager");
 
     $container->registerSingleton(getFilterConfiguration($container));
-    $container->registerSingleton($container->resolveClassInstance("\\BillSplitter\\Session\\FlashSession"));
-    $container->registerSingleton($container->resolveClassInstance("\\BillSplitter\\Database\\SqliteDatabaseManager"));
-    $container->registerSingleton($container->resolveClassInstance("\\BillSplitter\\Helper\\IRequestHelper")->getCurrentRequestInstance());
+    $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Session\\FlashSession"));
+    $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Database\\SqliteDatabaseManager"));
+    $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Helper\\IRequestHelper")->getCurrentRequestInstance());
 }

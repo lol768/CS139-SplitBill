@@ -18,8 +18,13 @@
             <li><a href="#">Settings</a></li>
         </ul>
         <ul class="right">
-            <li><a href="#"><i class="fa fa-inbox"></i> <span class="counter">4</span></a></li>
-            <li class="with-dropdown active">
+            <li class="with-dropdown notifications-dropdown">
+                <a href="#" class="notifications-link"><i class="fa fa-inbox"></i></a>
+                <div class="menu">
+                    <ul class="alerts"></ul>
+                </div>
+            </li>
+            <li class="with-dropdown profile-dropdown active">
                 <a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a>
                 <div class="menu">
                     <ul>
@@ -35,7 +40,7 @@
     <div class="container container-no-pad">
         <div class="hero">
             <h1>Bill management made easy</h1>
-            <p><a href="#" class="button"><i class="fa fa-pencil"></i> Register now</a> <a href="#" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
+            <p><a href="#" class="button"><i class="fa fa-pencil"></i> Register now</a> <a href="startIts.php" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
         </div>
         <div class="overview">
             <h1>How does it work?</h1>
@@ -70,23 +75,15 @@
                     </p>
                 </div>
             </div>
-            <h1>WSD</h1>
-            <p id="debug"></p>
+            <h1>Feature Tour</h1>
+            <p>TODO</p>
         </div>
     </div>
 
 </main>
 <div id="footer-push"><div class="bg"></div></div>
-<footer>
-    <div class="container">
-        <span class="copyright">&copy; 2016 &mdash; Adam Williams</span>
-        <ul class="links">
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Debug</a></li>
-        </ul>
-    </div>
-</footer>
+<?php require("partials/footer.php"); ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
 <script src="assets/app.js" async></script>
 </body>
 </html>
