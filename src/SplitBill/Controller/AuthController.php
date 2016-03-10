@@ -38,9 +38,17 @@ class AuthController extends AbstractController {
     /**
      * GET /register.php
      */
-    public function getShowRegistrationForm() {
+    public function getShowRegistrationForm(HttpRequest $req) {
         $this->h->setActiveNavigationItem("Register");
         return $this->h->getViewResponse("registerNoModal", array());
+    }
+
+    /**
+     * GET /login.php
+     */
+    public function getShowLoginForm(HttpRequest $req) {
+        $this->h->setActiveNavigationItem("Login");
+        return $this->h->getViewResponse("loginNoModal", array());
     }
 
     /**
@@ -52,10 +60,8 @@ class AuthController extends AbstractController {
         if (!$request->isValid()) {
             return new RedirectResponse("register.php");
         }
-        var_dump($request);
-        die();
         $user = new User($request->getName(), $request->getEmail(), PhpCompatibility::makeBcryptHash($request->getPassword()));
-        $this->authManager->setActualUserId($this->userRepo->add($user));
+        $this->authManager->setActualUserId($this->userRepo->add($user)->getUserId());
         return new RedirectResponse("index.php");
     }
 

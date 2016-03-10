@@ -12,7 +12,7 @@ return array(
         "Bills" => "bills.php", "Settings" => "settings.php"
     ),
     "public_nav_right" => array(
-        "Register" => "#", "Login" => "#"
+        "Register" => "register.php", "Login" => "login.php"
     ),
     "sqlite" => array(
         // put outside webroot..

@@ -2,10 +2,10 @@
 <form class="vertical-form">
     <?php csrf_input(); ?>
     <label>
-        E-mail: <input type="text">
+        E-mail: <input type="email" name="email">
     </label>
     <label>
-        Password: <input type="password">
+        Password: <input type="password" name="password">
     </label>
 
     <input type="submit" class="button" value="Login">

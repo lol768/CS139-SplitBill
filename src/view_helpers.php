@@ -20,6 +20,16 @@ function getAntiForgeryManager() {
     return $antiForgery;
 }
 
+/**
+ * @return \SplitBill\Session\IFlashSession
+ */
+function getFlashSession() {
+    $container = \SplitBill\Application::getInstance()->getContainer();
+    /** @var \SplitBill\Session\IFlashSession $flash */
+    $flash = $container->resolveClassInstance("\\SplitBill\\Session\\IFlashSession");
+    return $flash;
+}
+
 function csrf_input() {
     $antiForgery = getAntiForgeryManager();
     echo "<input type=\"hidden\" value=\"" . $antiForgery->getCurrentCsrfToken() . "\" name=\"" . "__csrf_token" . "\">";
@@ -31,3 +41,12 @@ function csrf_meta() {
     echo "<meta name=\"X-Csrf-Token\" content=\"" . $antiForgery->getCurrentCsrfToken() . "\" id=\"csrf-token\">";
 }
 
+function old_input($key) {
+    $fs = getFlashSession();
+    if ($fs->has("oldData")) {
+        $oldData = $fs->get("oldData");
+        if (array_key_exists($key, $oldData)) {
+            se($oldData[$key]);
+        }
+    }
+}

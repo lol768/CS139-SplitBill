@@ -3,6 +3,7 @@
 namespace SplitBill\Helper;
 
 use SplitBill\Request\HttpRequest;
+use SplitBill\Utilities\PhpCompatibility;
 
 class RequestHelper implements IRequestHelper {
 
@@ -36,12 +37,12 @@ class RequestHelper implements IRequestHelper {
             return $headers;
         } else {
             // otherwise, we need to do it ourselves..
-            foreach (array_filter($_SERVER, function ($item) {
+            foreach (PhpCompatibility::arrayFilterKeys($_SERVER, function ($item) {
                 return substr($item, 0, 5) === "HTTP_";
             }) as $item => $value) {
                 $component = substr($item, 5);
                 $component = strtolower(str_replace("_", "-", $component));
-                $headers[$component] = $component;
+                $headers[$component] = $value;
             }
         }
         return $headers;

@@ -76,6 +76,7 @@ class SessionAuthenticationManager implements IAuthenticationManager {
     private function initializeFromSession() {
         if ($this->userSession->has("user_id")) {
             $this->realUser = $this->userRepository->getById($this->userSession->get("user_id"));
+            $this->effectiveUser = $this->realUser;
         }
 
         if ($this->userSession->has("masquerading_as_user_id")) {

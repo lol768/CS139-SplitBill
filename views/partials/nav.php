@@ -26,7 +26,7 @@
                     </div>
                 </li>
                 <li class="with-dropdown profile-dropdown active">
-                    <a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> Adam  <i class="fa fa-caret-down"></i></a>
+                    <a href="#"><img src="https://avatars2.githubusercontent.com/u/2552726?v=3&s=100" class="avatar"> <?php se($user->getFirstName()); ?>  <i class="fa fa-caret-down"></i></a>
                     <div class="menu">
                         <ul>
                             <li><a href="#"><i class="fa fa-fw fa-pencil"></i> Edit profile</a></li>

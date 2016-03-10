@@ -21,7 +21,7 @@ class FormErrorsViewDataProvider implements IViewDataProvider {
 
     public function modifyView($viewName, &$vars) {
         if ($this->flash->has("errors")) {
-            $vars['errors'] = $this->flash->get("erorrs");
+            $vars['errors'] = $this->flash->get("errors");
             $vars['oldData'] = $this->flash->get("oldData");
         }
     }

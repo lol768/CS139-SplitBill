@@ -3,10 +3,10 @@
 <form class="vertical-form" method="POST" action="register.php">
     <?php csrf_input(); ?>
     <label>
-        Full name: <input type="text" name="name" >
+        Full name: <input type="text" name="name" value="<?php old_input("name"); ?>">
     </label>
     <label>
-        E-mail: <input type="email" name="email" required>
+        E-mail: <input type="email" name="email" value="<?php old_input("email"); ?>" required>
     </label>
     <label>
         Password: <input type="password" name="password" required>

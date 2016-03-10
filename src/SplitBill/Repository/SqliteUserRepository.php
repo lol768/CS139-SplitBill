@@ -57,10 +57,10 @@ class SqliteUserRepository implements IUserRepository {
     private function getSingleUserViaStatement($stmt) {
         $results = $stmt->execute();
         $results = $results->fetchArray(SQLITE3_ASSOC);
-        if (count($results) === 0) {
+        if ($results === false) {
             return null;
         } else {
-            return $this->mapFromArray($results[0]);
+            return $this->mapFromArray($results);
         }
     }
 

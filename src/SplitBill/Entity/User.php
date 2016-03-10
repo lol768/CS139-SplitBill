@@ -66,6 +66,11 @@ class User {
         return $this->name;
     }
 
+    public function getFirstName() {
+        $split = explode(" ", $this->name);
+        return $split[0];
+    }
+
     /**
      * @return string The user's email address.
      */
