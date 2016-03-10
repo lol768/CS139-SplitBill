@@ -1,13 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SplitBill</title>
-    <link href="app.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body class="modal-open">
+<?php require("partials/pageBegin.php"); ?>
+<?php $frontendModules[] = "HomepageAuthModals"; ?>
 <?php require("partials/nav.php"); ?>
 <main>
     <div class="container container-no-pad">
@@ -54,31 +46,17 @@
     </div>
 
 </main>
-<div id="footer-push"><div class="bg"></div></div>
+
+<?php require("partials/footer.php"); ?>
 <div class="registration-modal modal">
     <div class="modal-inner">
         <div class="topbar">
             <h1>Register</h1>
             <a href="#" class="exit"><i class="fa fa-times"></i></a>
         </div>
-        <p>To register, simply fill out the fields below:</p>
-        <form class="vertical-form">
-
-            <label>
-                Full name: <input type="text">
-            </label>
-            <label>
-                E-mail: <input type="text">
-            </label>
-            <label>
-                Password: <input type="password">
-            </label>
-
-            <input type="submit" class="button" value="Register">
-        </form>
+        <?php require("partials/registrationInner.php"); ?>
     </div>
 </div>
-<?php require("partials/footer.php"); ?>
 <?php require("partials/scripts.php"); ?>
-</body>
-</html>
+<?php require("partials/pageEnd.php"); ?>
+

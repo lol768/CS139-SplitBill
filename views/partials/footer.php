@@ -1,3 +1,4 @@
+<div id="footer-push"><div class="bg"></div></div>
 <footer>
     <div class="container">
         <span class="copyright">&copy; 2016 &mdash; Adam Williams</span>

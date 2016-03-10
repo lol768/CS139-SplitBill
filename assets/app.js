@@ -7,6 +7,18 @@ SplitBill.Configuration = {
     wsUrl: "ws://americano.adamwilliams.host:8765"
 };
 
+SplitBill.FlashMessages = {
+    wireUpEvents: function() {
+        jQuery(".flash a.close").click(function() {
+            jQuery(this).parent().hide();
+        });
+    },
+
+    initialise: function() {
+        this.wireUpEvents();
+    }
+};
+
 SplitBill.AlertManager = {
     /**
      * Array of alerts
@@ -64,25 +76,82 @@ SplitBill.AlertManager = {
             }
             $notsMenu.show();
         }
+    },
+
+    initialise: function() {
+        this.updatePage();
+    }
+};
+
+SplitBill.Modals = {
+
+    wireUpEvents: function() {
+
+        var $body = jQuery("body");
+        $body.find(".modal").hide();
+        $body.addClass("modals-enabled");
+        var th = this;
+        $body.on("click", ".modal-inner", function(event) {
+            event.stopPropagation();
+        });
+
+        $body.on("click", ".modal-inner .exit", function(event) {
+            th.closeModal();
+            return false;
+        });
+
+        $body.on("click", ".modal", function() {
+            th.closeModal();
+        });
+
+        $body.on("keyup", function(event) {
+            if (event.keyCode == 27) {
+                th.closeModal();
+            }
+            return false;
+        })
+    },
+
+    openModal: function($element) {
+        jQuery("body").addClass("modal-open");
+        $element.show();
+    },
+
+    closeModal: function() {
+        jQuery(".modal").fadeOut();
+        jQuery("body").removeClass("modal-open");
+    },
+
+    initialise: function() {
+        this.wireUpEvents();
     }
 };
 
 SplitBill.WebSockets = {
-
     socket: null,
 
     /**
      * Create the socket
      */
-    initialiseSocket: function() {
+    initialise: function() {
         this.socket = new WebSocket(SplitBill.Configuration.wsUrl);
-        window.addEventListener("beforeunload", this.beforeUnloadHandler);
+        this.socket.onopen = this.socketOpened;
+        this.socket.onmessage = this.socketMessageReceived;
+        window.onbeforeunload = this.beforeUnloadHandler;
     },
 
+    /**
+     * Send an application identifier.
+     * @param event
+     */
     socketOpened: function(event) {
         this.socket.send("SplitBill");
     },
 
+    /**
+     * Executed whenever we get a message from the server.
+     * @param event
+     */
     socketMessageReceived: function(event) {
         var data = JSON.parse(event.data);
         if (data.type == "alert") {
@@ -90,16 +159,36 @@ SplitBill.WebSockets = {
         }
     },
 
+    /**
+     * Handle browsers which don't close sockets properly..
+     */
     beforeUnloadHandler: function() {
         this.socket.close();
     },
 
+    /**
+     * Retrieve the socket.
+     * @returns WebSocket
+     */
     getSocket: function() {
         return this.socket;
     }
 };
 
+SplitBill.HomepageAuthModals = {
+    initialise: function() {
+        this.wireUpEvents();
+    },
+
+    wireUpEvents: function() {
+
+    }
+};
+
 jQuery(function() {
-    SplitBill.WebSockets.initialiseSocket();
-    SplitBill.AlertManager.updatePage();
+    var modules = JSON.parse(jQuery("#appState").html()).modules;
+    for (var module of modules) {
+        console.log("Initialising module " + module);
+        SplitBill[module].initialise();
+    }
 });

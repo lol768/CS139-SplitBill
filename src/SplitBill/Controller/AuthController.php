@@ -6,7 +6,7 @@ use SplitBill\Helper\IControllerHelper;
 use SplitBill\Response\RedirectResponse;
 use SplitBill\Session\IFlashSession;
 
-class HomepageController extends AbstractController {
+class AuthController extends AbstractController {
 
     /**
      * @var IControllerHelper The controller helper instance.
@@ -18,11 +18,11 @@ class HomepageController extends AbstractController {
     }
 
     /**
-     * GET /index.php
+     * GET /register.php
      */
-    public function getShowHome() {
-        $this->h->setActiveNavigationItem("Home");
-        return $this->h->getViewResponse("homepage", array());
+    public function getShowRegistrationForm() {
+        $this->h->setActiveNavigationItem("Register");
+        return $this->h->getViewResponse("registerNoModal", array());
     }
 
 }

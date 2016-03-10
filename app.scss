@@ -76,6 +76,11 @@ nav {
   height: 3rem;
 }
 
+nav span.brand a {
+  color: #fff;
+  text-decoration: none;
+}
+
 nav .container, nav ul, nav li, nav a {
   height: 100%;
 }
@@ -219,7 +224,7 @@ nav .container {
 }
 
 main, div.modal {
-  font-family: "Gentium Basic", serif;
+  font-family: "Lato", sans-serif;
 }
 
 main .container {
@@ -419,51 +424,61 @@ header, nav, main, footer {
   flex-shrink: 0;
 }
 
-
 .modal {
-  background: radial-gradient(circle farthest-corner at 50% 50%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 95%);
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  padding-top: 20vh;
-  align-items: flex-start;
-  justify-content: center;
-  align-content: center;
-
-  z-index: 50;
+  display: none;
 }
+
+body.modals-enabled {
+  .modal {
+    background: radial-gradient(circle farthest-corner at 50% 50%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 95%);
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 20vh;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: center;
+
+    z-index: 50;
+  }
+
+  .modal-inner {
+    background-color: #fff;
+    border: 1px solid $primaryColor;
+    border-radius: 0.2rem;
+    min-width: 400px;
+
+    padding: 1rem;
+    flex: 0;
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      h1 {
+        margin: 0;
+      }
+      a.exit {
+        color: $primaryColor;
+      }
+    }
+    p {
+      margin-top: 0;
+    }
+    display: inline-block;
+
+  }
+}
+
 
 body.modal-open {
   height: 100vh;
   overflow: hidden;
 }
 
-.modal-inner {
-  background-color: #fff;
-  border: 1px solid $primaryColor;
-  border-radius: 0.2rem;
-  min-width: 400px;
 
-  padding: 1rem;
-  flex: 0;
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    h1 {
-      margin: 0;
-
-    }
-  }
-  p {
-    margin-top: 0;
-  }
-  display: inline-block;
-
-}
 
 .vertical-form {
   text-align: center;
@@ -490,3 +505,28 @@ body.modal-open {
   display: block;
 }
 
+
+.flash {
+  width: 100%;
+  padding: 0 0;
+  line-height: 0.5;
+  text-align: center;
+  position: relative;
+  color: #fff;
+  font-weight: bold;
+
+  a.close {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    color: #fff;
+  }
+}
+
+.flash-warning {
+  background-color: #cf8b00;
+}
+
+.flash-error {
+  background-color: #cf2000;
+}

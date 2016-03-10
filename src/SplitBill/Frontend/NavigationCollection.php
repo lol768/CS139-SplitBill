@@ -23,9 +23,9 @@ class NavigationCollection {
     /**
      * NavigationCollection constructor.
      */
-    public function __construct(IApplication $app) { // TODO: eventually depend on session stuff here
-        $this->leftCollection = $this->getPublicItemsFromConfig($app->getConfig());
-        $this->rightCollection = array(new NavigationItem("Login", "login.html"), new NavigationItem("Register", "register.html"));
+    public function __construct(IApplication $app) {
+        $this->leftCollection = $this->getPublicLeftItemsFromConfig($app->getConfig());
+        $this->rightCollection = $this->getPublicRightItemsFromConfig($app->getConfig());
     }
 
     /**
@@ -45,12 +45,17 @@ class NavigationCollection {
     /**
      * @return array The left-hand public nav items
      */
-    private function getPublicItemsFromConfig($config) {
-        $arr = array();
-        foreach ($config['public_nav'] as $name => $link) {
-            $arr[] = new NavigationItem($name, $link);
-        }
-        return $arr;
+    private function getPublicLeftItemsFromConfig($config) {
+        $key = "public_nav_left";
+        return $this->getNavItemsFromConfigKey($config, $key);
+    }
+
+    /**
+     * @return array The right-hand public nav items
+     */
+    private function getPublicRightItemsFromConfig($config) {
+        $key = "public_nav_right";
+        return $this->getNavItemsFromConfigKey($config, $key);
     }
 
     /**
@@ -73,5 +78,18 @@ class NavigationCollection {
         foreach ($this->leftCollection+$this->rightCollection as $item) {
             $item->setActive(false);
         }
+    }
+
+    /**
+     * @param $config
+     * @param $key
+     * @return array
+     */
+    private function getNavItemsFromConfigKey($config, $key) {
+        $arr = array();
+        foreach ($config[$key] as $name => $link) {
+            $arr[] = new NavigationItem($name, $link);
+        }
+        return $arr;
     }
 }

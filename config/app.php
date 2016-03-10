@@ -2,14 +2,17 @@
 return array(
     "oauth" => array(
         "base_url" => "https://protostar.adamwilliams.eu",
-        "back_ucode" => "1510654"
     ),
     "cookies" => array(
         "path" => "/~u1510654/cs139-cw/",
-        "name" => "BillSplitterSession"
+        "name" => "SplitBillSession"
     ),
-    "public_nav" => array(
-        "Dashboard" => "app.html", "Settings" => "settings.html"
+    "public_nav_left" => array(
+        "Home" => "index.php", "Groups" => "groups.php",
+        "Bills" => "bills.php", "Settings" => "settings.php"
+    ),
+    "public_nav_right" => array(
+        "Register" => "#", "Login" => "#"
     ),
     "sqlite" => array(
         // put outside webroot..

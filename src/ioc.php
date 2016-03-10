@@ -3,9 +3,10 @@ use SplitBill\DependencyInjection\IContainer;
 use SplitBill\Rendering\DataProvider\BrandViewDataProvider;
 use SplitBill\Rendering\DataProvider\ViewDataProviderManager;
 
-function provideViewDataProviderManager() {
+function provideViewDataProviderManager(IContainer $container) {
     $manager = new ViewDataProviderManager();
     $manager->registerProvider(new BrandViewDataProvider());
+    $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\SessionViewDataProvider"));
     return $manager;
 }
 
@@ -25,9 +26,11 @@ function wireUpContainer(IContainer $container) {
     $container->registerAbstractImplementation("\\SplitBill\\Security\\IAntiRequestForgery", "\\SplitBill\\Security\\AntiRequestForgeryManager");
     $container->registerAbstractImplementation("\\SplitBill\\ItsAuthentication\\IOAuthManager", "\\SplitBill\\ItsAuthentication\\PsOAuthManager");
     $container->registerAbstractImplementation("\\SplitBill\\Rendering\\DataProvider\\IViewDataProviderManager", "\\SplitBill\\Rendering\\DataProvider\\ViewDataProviderManager");
+    $container->registerAbstractImplementation("\\SplitBill\\Authentication\\IAuthenticationManager", "\\SplitBill\\Authentication\\SessionAuthenticationManager");
+    $container->registerAbstractImplementation("\\SplitBill\\Repository\\IUserRepository", "\\SplitBill\\Repository\\SqliteUserRepository");
 
     $container->registerSingleton(getFilterConfiguration($container));
-    $container->registerSingleton(provideViewDataProviderManager());
+    $container->registerSingleton(provideViewDataProviderManager($container));
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Session\\FlashSession"));
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Database\\SqliteDatabaseManager"));
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Helper\\IRequestHelper")->getCurrentRequestInstance());

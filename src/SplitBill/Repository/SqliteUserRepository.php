@@ -27,7 +27,13 @@ class SqliteUserRepository implements IUserRepository {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":email", $email, SQLITE3_TEXT);
         return $this->getSingleUserViaStatement($stmt);
+    }
 
+    public function getById($userId) {
+        $sql = "SELECT * FROM users WHERE users.user_id = :id LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":id", $userId, SQLITE3_INTEGER);
+        return $this->getSingleUserViaStatement($stmt);
     }
 
     public function getByItsUsername($itsUsername) {
