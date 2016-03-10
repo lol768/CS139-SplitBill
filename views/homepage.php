@@ -5,7 +5,7 @@
     <div class="container container-no-pad">
         <div class="hero">
             <h1>Bill management made easy</h1>
-            <p><a href="#" class="button"><i class="fa fa-pencil"></i> Register now</a> <a href="startIts.php" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
+            <p><a href="register.php" data-selector=".registration-modal" class="button modal-trigger"><i class="fa fa-pencil"></i> Register now</a> <a href="startIts.php" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
         </div>
         <div class="overview">
             <h1>How does it work?</h1>
@@ -55,6 +55,15 @@
             <a href="#" class="exit"><i class="fa fa-times"></i></a>
         </div>
         <?php require("partials/registrationInner.php"); ?>
+    </div>
+</div>
+<div class="login-modal modal">
+    <div class="modal-inner">
+        <div class="topbar">
+            <h1>Login</h1>
+            <a href="#" class="exit"><i class="fa fa-times"></i></a>
+        </div>
+        <?php require("partials/loginInner.php"); ?>
     </div>
 </div>
 <?php require("partials/scripts.php"); ?>

@@ -32,6 +32,12 @@ class User {
     private $updatedAt;
 
     /**
+     * @var string|null
+     */
+    private $itsUsername;
+
+
+    /**
      * User constructor.
      *
      * @param string $name
@@ -89,6 +95,14 @@ class User {
     }
 
     /**
+     * @return null|string
+     */
+    public function getItsUsername() {
+        return $this->itsUsername;
+    }
+
+
+    /**
      * @param int|null $userId
      */
     public function setUserId($userId) {
@@ -116,6 +130,14 @@ class User {
      */
     public function setPassword($password) {
         $this->password = $password;
+        $this->touch();
+    }
+
+    /**
+     * @param null|string $itsUsername
+     */
+    public function setItsUsername($itsUsername) {
+        $this->itsUsername = $itsUsername;
         $this->touch();
     }
 

@@ -2,6 +2,7 @@
 
 namespace SplitBill\Handler;
 
+use ReflectionClass;
 use ReflectionMethod;
 use SplitBill\Controller\AbstractController;
 use SplitBill\DependencyInjection\IContainer;
@@ -12,7 +13,9 @@ use SplitBill\Rendering\DataProvider\IViewDataProviderManager;
 use SplitBill\Request\HttpRequest;
 use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\ViewResponse;
+use SplitBill\Session\IFlashSession;
 use SplitBill\Utilities\PhpCompatibility;
+use SplitBill\Validation\IFormRequest;
 
 class ControllerRoutingHandler {
 
@@ -38,16 +41,21 @@ class ControllerRoutingHandler {
      * @var HttpRequest
      */
     private $currentRequest;
+    /**
+     * @var IFlashSession
+     */
+    private $flash;
 
     /**
      * @param IContainer $container
      * @param IFilterConfiguration $filterConfig
      * @param HttpRequest $currentRequest
      */
-    public function __construct(IContainer $container, IFilterConfiguration $filterConfig, HttpRequest $currentRequest) {
+    public function __construct(IContainer $container, IFilterConfiguration $filterConfig, HttpRequest $currentRequest, IFlashSession $flash) {
         $this->container = $container;
         $this->filterConfig = $filterConfig;
         $this->currentRequest = $currentRequest;
+        $this->flash = $flash;
     }
 
     /**
@@ -144,7 +152,21 @@ class ControllerRoutingHandler {
                 $paramsToSupply[] = $paramValue;
 
             } else {
-                $paramsToSupply[] = $this->container->resolveClassInstance($param->getClass()->getName());
+                /** @var ReflectionClass $reflectionClass */
+                $reflectionClass = $param->getClass();
+                if ($this->reqMethod === "POST" && in_array("\\SplitBill\\Validation\\IFormRequest", $reflectionClass->getInterfaceNames())) {
+                    /** @var IFormRequest $request */
+                    $request = $this->container->resolveClassInstance($reflectionClass->getName());
+                    $request->receiveFrom($this->currentRequest->getFormParameters());
+                    if (!$request->isValid()) {
+                        $this->flash->set("errors", $request->getErrors());
+                        $this->flash->set("oldData", $this->currentRequest->getFormParameters());
+                    }
+                    $paramsToSupply[] = $request;
+                } else {
+                    $paramsToSupply[] = $this->container->resolveClassInstance($reflectionClass->getName());
+                }
+
             }
         }
         $response = $actionMethod->invokeArgs($controllerInstance, $paramsToSupply);

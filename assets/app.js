@@ -4,7 +4,8 @@ SplitBill.Configuration = {
     /**
      * WebSocket URL.
      */
-    wsUrl: "ws://americano.adamwilliams.host:8765"
+    wsUrl: "ws://americano.adamwilliams.host:8765",
+    version: "0.1"
 };
 
 SplitBill.FlashMessages = {
@@ -109,12 +110,17 @@ SplitBill.Modals = {
                 th.closeModal();
             }
             return false;
-        })
+        });
+
+        jQuery(".modal-trigger").click(function() {
+            SplitBill.Modals.openModal(jQuery(jQuery(this).data("selector")));
+            return false;
+        });
     },
 
     openModal: function($element) {
         jQuery("body").addClass("modal-open");
-        $element.show();
+        $element.fadeIn();
     },
 
     closeModal: function() {
@@ -175,20 +181,82 @@ SplitBill.WebSockets = {
     }
 };
 
+SplitBill.Security = {
+    csrfToken: jQuery("#csrf-token").attr("content"),
+    getCsrfToken: function() {
+        return this.csrfToken;
+    }
+};
+
+SplitBill.JQueryCustomisations = {
+
+    initialise: function() {
+        jQuery(document).ajaxComplete(this.ajaxCompleteHandler);
+        jQuery.ajaxSetup({
+            headers: {
+                "Authorization": "Token csrf=\"" + SplitBill.Security.getCsrfToken() + "\""
+            }
+        });
+    },
+
+    /**
+     * Handles AJAX request completions.
+     *
+     * @param event Event
+     * @param xhr XMLHttpRequest
+     * @param settings PlainObject
+     */
+    ajaxCompleteHandler: function(event, xhr, settings) {
+        if (xhr.statusCode() !== 200) {
+            SplitBill.JQueryCustomisations.createErrorModal(settings, xhr.statusCode());
+        }
+    },
+
+    /**
+     * Tell the user if an AJAX req failed.
+     * @param settings
+     * @param status
+     */
+    createErrorModal: function(settings, status) {
+        jQuery(".ajax-error-modal").remove();
+        var $html = jQuery("#ajaxErrorTmpl").html();
+        jQuery("footer").after($html);
+        jQuery(".request-url").text(settings.url);
+        jQuery(".request-type").text(settings.type);
+        jQuery(".request-status").text(status.status + " (" + status.statusText + ")");
+        SplitBill.Modals.openModal(jQuery(".ajax-error-modal"));
+    }
+};
+
 SplitBill.HomepageAuthModals = {
     initialise: function() {
         this.wireUpEvents();
     },
 
     wireUpEvents: function() {
+        jQuery("nav ul.right a").click(function() {
+            if (jQuery(this).text() === "Register") {
+                SplitBill.Modals.openModal(jQuery(".registration-modal"));
+                return false;
+            }
+
+            if (jQuery(this).text() === "Login") {
+                SplitBill.Modals.openModal(jQuery(".login-modal"));
+                return false;
+            }
+        });
+
 
     }
 };
 
 jQuery(function() {
+    console.log("SplitBill v" + SplitBill.Configuration.version);
+    console.log("Begin loading modules...");
     var modules = JSON.parse(jQuery("#appState").html()).modules;
     for (var module of modules) {
         console.log("Initialising module " + module);
         SplitBill[module].initialise();
     }
+    console.log("Finished loading modules");
 });

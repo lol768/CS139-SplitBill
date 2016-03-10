@@ -333,7 +333,7 @@ label {
   justify-content: center;
   align-content: center;
   align-items: center;
-
+  animation: heroAnim 2s ease-in-out;
   background-position: 0 54%;
   h1 {
     text-shadow: 1px 1px 5px #000;
@@ -341,6 +341,16 @@ label {
     margin: 0;
     color: #fff;
     font-weight: 400;
+  }
+}
+
+@keyframes heroAnim {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 54%;
   }
 }
 
@@ -432,11 +442,12 @@ body.modals-enabled {
   .modal {
     background: radial-gradient(circle farthest-corner at 50% 50%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 95%);
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
+    height: 100%;
     padding-top: 20vh;
     align-items: flex-start;
     justify-content: center;
@@ -472,11 +483,6 @@ body.modals-enabled {
   }
 }
 
-
-body.modal-open {
-  height: 100vh;
-  overflow: hidden;
-}
 
 
 
@@ -529,4 +535,8 @@ body.modal-open {
 
 .flash-error {
   background-color: #cf2000;
+}
+
+body.modals-enabled .ajax-error-modal .modal-inner {
+  min-width: 30%
 }

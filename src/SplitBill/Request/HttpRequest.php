@@ -125,5 +125,9 @@ class HttpRequest {
         return $this->formData;
     }
 
+    public function isAjax() {
+        return $this->getHeader("X-Requested-With") !== null && strtolower($this->getHeader("X-Requested-With")) == "xmlhttprequest";
+    }
+
 
 }

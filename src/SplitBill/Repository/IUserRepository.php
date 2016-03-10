@@ -11,4 +11,10 @@ interface IUserRepository {
     public function getByItsUsername($itsUsername);
     /** @return User */
     public function getById($userId);
+
+    /**
+     * @param User $user
+     * @return User
+     */
+    public function add(User $user);
 }

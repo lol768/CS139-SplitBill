@@ -31,12 +31,18 @@ class AntiRequestForgeryFilter implements IPreResponseFilter {
             if (!$this->antiRequestForgery->hasCsrfTokenSet()) {
                 throw new CsrfException("No CSRf token present in session for a POST request. Refresh homepage and try again.");
             }
+            $expected = $this->antiRequestForgery->getCurrentCsrfToken();
+
+            $authToken = $request->getHeader("Authorization");
+            if ($authToken !== null && SecurityUtil::timingSafeComparison("Token csrf=\"$expected\"", $authToken)) {
+                return;
+            }
 
             if (!$request->hasFormParameter("__csrf_token")) {
                 throw new CsrfException("No CSRf token present on a POST request.");
             }
 
-            if (!SecurityUtil::timingSafeComparison($this->antiRequestForgery->getCurrentCsrfToken(), $request->getFormParameter("__csrf_token"))) {
+            if (!SecurityUtil::timingSafeComparison($expected, $request->getFormParameter("__csrf_token"))) {
                 throw new CsrfException("Mismatching CSRF token.");
             }
         }

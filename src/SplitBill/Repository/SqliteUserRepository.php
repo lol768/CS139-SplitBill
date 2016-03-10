@@ -63,4 +63,18 @@ class SqliteUserRepository implements IUserRepository {
             return $this->mapFromArray($results[0]);
         }
     }
+
+    public function add(User $user) {
+        $sql = "INSERT INTO users VALUES(NULL, :name, :email, :password, :created_at, :updated_at, :its_username);";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":name", $user->getName(), SQLITE3_TEXT);
+        $stmt->bindValue(":password", $user->getPassword(), SQLITE3_TEXT);
+        $stmt->bindValue(":email", $user->getEmail(), SQLITE3_TEXT);
+        $stmt->bindValue(":created_at", $user->getCreatedAt()->format("U"), SQLITE3_INTEGER);
+        $stmt->bindValue(":updated_at", $user->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
+        $stmt->bindValue(":its_username", $user->get(), SQLITE3_TEXT);
+        $stmt->execute();
+        $user->setUserId($this->db->lastInsertRowID());
+        return $user;
+    }
 }
