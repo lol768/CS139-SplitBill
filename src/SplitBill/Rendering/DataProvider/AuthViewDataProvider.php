@@ -4,14 +4,14 @@ namespace SplitBill\Rendering\DataProvider;
 
 use SplitBill\Authentication\IAuthenticationManager;
 
-class SessionViewDataProvider implements IViewDataProvider {
+class AuthViewDataProvider implements IViewDataProvider {
     /**
      * @var IAuthenticationManager
      */
     private $authManager;
 
     /**
-     * SessionViewDataProvider constructor.
+     * AuthViewDataProvider constructor.
      * @param IAuthenticationManager $authManager
      */
     public function __construct(IAuthenticationManager $authManager) {

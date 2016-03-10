@@ -286,7 +286,7 @@ main h2 {
 }
 
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   border: 1px solid #ccc;
   transition: 0.25s border;
   padding: 0.2rem;
@@ -296,7 +296,7 @@ input[type=text], input[type=password] {
 
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   border: 1px solid $primaryColor;
 }
 
@@ -307,7 +307,7 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 label {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #444;
 }
 
@@ -495,7 +495,7 @@ body.modals-enabled {
     margin-bottom: 0.5rem;
     width: 100%;
   }
-  input[type=text], input[type=password] {
+  input[type=text], input[type=password], input[type=email] {
     font-size: 1.2rem;
     padding: 0.5rem 0.3rem;
   }

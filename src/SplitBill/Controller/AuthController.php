@@ -52,6 +52,8 @@ class AuthController extends AbstractController {
         if (!$request->isValid()) {
             return new RedirectResponse("register.php");
         }
+        var_dump($request);
+        die();
         $user = new User($request->getName(), $request->getEmail(), PhpCompatibility::makeBcryptHash($request->getPassword()));
         $this->authManager->setActualUserId($this->userRepo->add($user));
         return new RedirectResponse("index.php");

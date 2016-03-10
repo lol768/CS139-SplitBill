@@ -82,6 +82,17 @@ function simpleExceptionHandler($e) {
     die($error);
 }
 
+function shutdownHandler() {
+    $e = error_get_last();
+    if ($e['type'] === E_ERROR) {
+        header("HTTP/1.1 500 Internal Server Error");
+        header("Content-Type: text/plain");
+        echo "  ___   _   ___    ______    _        _                            \n |  _| | | |_  |  |  ____|  | |      | |                           \n | |   | |   | |  | |__ __ _| |_ __ _| |   ___ _ __ _ __ ___  _ __ \n | |   | |   | |  |  __/ _` | __/ _` | |  / _ \ '__| '__/ _ \| '__|\n | |   |_|   | |  | | | (_| | || (_| | | |  __/ |  | | | (_) | |   \n | |_  (_)  _| |  |_|  \__,_|\__\__,_|_|  \___|_|  |_|  \___/|_|   \n |___|     |___|                                                   \n                                                                   ";
+        echo "\n" . $e['message'] . " in file " . $e['file'];
+        echo "\n\nNo further information is available.";
+    }
+}
+
 
 /**
  * Entry point of all requests.
@@ -92,6 +103,7 @@ function startApp() {
     set_error_handler("errorsToExceptions"); // converts errors to exceptions so we can see them
     date_default_timezone_set("UTC"); // standardise datetime
     set_exception_handler("simpleExceptionHandler"); // print out a pretty text page when things go wrong
+    register_shutdown_function("shutdownHandler");
 
     $container = new Container(); // our IoC container
     require_once("ioc.php");

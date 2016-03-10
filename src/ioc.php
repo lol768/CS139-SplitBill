@@ -6,7 +6,8 @@ use SplitBill\Rendering\DataProvider\ViewDataProviderManager;
 function provideViewDataProviderManager(IContainer $container) {
     $manager = new ViewDataProviderManager();
     $manager->registerProvider(new BrandViewDataProvider());
-    $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\SessionViewDataProvider"));
+    $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\AuthViewDataProvider"));
+    $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\FormErrorsViewDataProvider"));
     return $manager;
 }
 

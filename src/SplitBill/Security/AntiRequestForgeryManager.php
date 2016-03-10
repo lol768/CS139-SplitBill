@@ -21,14 +21,14 @@ class AntiRequestForgeryManager implements IAntiRequestForgery {
     }
 
     /**
-     * @return string|null The user's CSRF token (or null if they don't have one).
+     * @return bool Whether or not the user has a CSRF token in their session.
      */
     public function hasCsrfTokenSet() {
         return $this->session->has("__csrf_token");
     }
 
     /**
-     * @return bool Whether or not the user has a CSRF token in their session.
+     * @return string|null The user's CSRF token (or null if they don't have one).
      */
     public function getCurrentCsrfToken() {
         return $this->session->get("__csrf_token");

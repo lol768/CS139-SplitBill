@@ -154,7 +154,7 @@ class ControllerRoutingHandler {
             } else {
                 /** @var ReflectionClass $reflectionClass */
                 $reflectionClass = $param->getClass();
-                if ($this->reqMethod === "POST" && in_array("\\SplitBill\\Validation\\IFormRequest", $reflectionClass->getInterfaceNames())) {
+                if ($this->reqMethod === "POST" && in_array("SplitBill\\Validation\\IFormRequest", $reflectionClass->getInterfaceNames())) {
                     /** @var IFormRequest $request */
                     $request = $this->container->resolveClassInstance($reflectionClass->getName());
                     $request->receiveFrom($this->currentRequest->getFormParameters());

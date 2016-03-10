@@ -72,7 +72,7 @@ class SqliteUserRepository implements IUserRepository {
         $stmt->bindValue(":email", $user->getEmail(), SQLITE3_TEXT);
         $stmt->bindValue(":created_at", $user->getCreatedAt()->format("U"), SQLITE3_INTEGER);
         $stmt->bindValue(":updated_at", $user->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
-        $stmt->bindValue(":its_username", $user->get(), SQLITE3_TEXT);
+        $stmt->bindValue(":its_username", $user->getItsUsername(), SQLITE3_TEXT);
         $stmt->execute();
         $user->setUserId($this->db->lastInsertRowID());
         return $user;

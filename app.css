@@ -221,7 +221,7 @@ main h2 {
 .button.default:hover {
   background-color: #1a1a1a; }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   border: 1px solid #ccc;
   transition: 0.25s border;
   padding: 0.2rem;
@@ -229,7 +229,7 @@ input[type=text], input[type=password] {
   background-color: #fff;
   color: #333; }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   border: 1px solid #333; }
 
 .alert {
@@ -238,7 +238,7 @@ input[type=text]:focus, input[type=password]:focus {
   padding: 0.75rem 1rem; }
 
 label {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #444; }
 
 .brand {
@@ -374,7 +374,7 @@ body.modals-enabled .modal-inner {
   .vertical-form input {
     margin-bottom: 0.5rem;
     width: 100%; }
-  .vertical-form input[type=text], .vertical-form input[type=password] {
+  .vertical-form input[type=text], .vertical-form input[type=password], .vertical-form input[type=email] {
     font-size: 1.2rem;
     padding: 0.5rem 0.3rem; }
   .vertical-form input[type=submit] {

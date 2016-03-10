@@ -29,7 +29,7 @@ class AntiRequestForgeryFilter implements IPreResponseFilter {
     public function handleRequest(HttpRequest $request) {
         if ($request->getRequestMethod() === "POST") {
             if (!$this->antiRequestForgery->hasCsrfTokenSet()) {
-                throw new CsrfException("No CSRf token present in session for a POST request. Refresh homepage and try again.");
+                throw new CsrfException("No CSRF token present in session for a POST request. Refresh homepage and try again.");
             }
             $expected = $this->antiRequestForgery->getCurrentCsrfToken();
 

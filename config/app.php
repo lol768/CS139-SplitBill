@@ -4,7 +4,7 @@ return array(
         "base_url" => "https://protostar.adamwilliams.eu",
     ),
     "cookies" => array(
-        "path" => "/~u1510654/cs139-cw/",
+        "path" => "/",
         "name" => "SplitBillSession"
     ),
     "public_nav_left" => array(
