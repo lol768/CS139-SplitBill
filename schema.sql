@@ -5,7 +5,8 @@ CREATE TABLE users(
   password VARCHAR, /* bcrypt */
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
-  its_username VARCHAR
+  its_username VARCHAR,
+  active INTEGER NOT NULL
 );
 
 CREATE TABLE groups(
@@ -51,3 +52,9 @@ CREATE TABLE payments(
   FOREIGN KEY(bill_id) REFERENCES bills(bill_id),
   FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
+
+CREATE TABLE email_confirmations(
+  user_id INTEGER NOT NULL,
+  token VARCHAR NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES users(user_id)
+)
