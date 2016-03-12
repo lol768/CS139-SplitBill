@@ -6,7 +6,7 @@ CREATE TABLE users(
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
   its_username VARCHAR,
-  active INTEGER NOT NULL
+  active INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE groups(
@@ -57,4 +57,4 @@ CREATE TABLE email_confirmations(
   user_id INTEGER NOT NULL,
   token VARCHAR NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(user_id)
-)
+);

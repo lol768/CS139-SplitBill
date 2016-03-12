@@ -44,7 +44,7 @@ class SqliteUserRepository implements IUserRepository {
     }
 
     private function mapFromArray($arr) {
-        $user = new User($arr['name'], $arr['email'], $arr['password']);
+        $user = new User($arr['name'], $arr['email'], $arr['password'], $arr['active'] == 1);
         $user->setCreatedAt(DateTime::createFromFormat("U", $arr['created_at']));
         $user->setUpdatedAt(DateTime::createFromFormat("U", $arr['updated_at']));
         return $user;
