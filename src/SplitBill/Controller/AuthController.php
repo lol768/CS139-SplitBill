@@ -66,6 +66,7 @@ class AuthController extends AbstractController {
         $bcryptedPassword = $loginRequest->getPotentialUserInstance()->getPassword();
         if (!PhpCompatibility::checkBcryptHash($bcryptedPassword, $loginRequest->getPassword())) {
             $flash->set("errors", array("Invalid password."));
+            $flash->set("oldData", array("email" => $loginRequest->getEmail()));
             return new RedirectResponse("login.php");
         }
         $this->authManager->setActualUserId($loginRequest->getPotentialUserInstance()->getUserId());

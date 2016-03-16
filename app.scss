@@ -240,6 +240,11 @@ main .container {
   background: #fff;
 }
 
+.container.profile h1:first-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 main .container-no-pad {
   padding: 0;
 }
@@ -538,8 +543,31 @@ body.modals-enabled {
   }
 }
 
+.groupBox {
+  border: 1px solid #aaa;
+  border-radius: $brx;
+  padding: 1rem;
+}
+
+main .vertical-form {
+  text-align: left;
+}
+
+main .vertical-form input[type=submit] {
+  display: inline-block;
+  width: auto;
+  padding: 0.5rem 1rem;
+}
+
 .vertical-form label {
   display: block;
+}
+
+.vertical-form .explanation {
+  color: #999;
+  margin: 0;
+  display: block;
+  font-style: italic;
 }
 
 
@@ -570,4 +598,8 @@ body.modals-enabled {
 
 body.modals-enabled .ajax-error-modal .modal-inner {
   min-width: 30%
+}
+
+.profile h2 {
+  margin-top: 1rem;
 }

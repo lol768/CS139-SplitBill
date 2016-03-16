@@ -3,7 +3,7 @@
 <form class="vertical-form" method="POST" action="login.php">
     <?php csrf_input(); ?>
     <label>
-        E-mail: <input type="email" name="email">
+        E-mail: <input type="email" name="email" value="<?php old_input("email"); ?>">
     </label>
     <label>
         Password: <input type="password" name="password">

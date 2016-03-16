@@ -48,6 +48,7 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
         $user->setUserId($arr['user_id']);
         $user->setCreatedAt(DateTime::createFromFormat("U", $arr['created_at']));
         $user->setUpdatedAt(DateTime::createFromFormat("U", $arr['updated_at']));
+        $user->setItsUsername($arr['its_username']);
         return $user;
     }
 
