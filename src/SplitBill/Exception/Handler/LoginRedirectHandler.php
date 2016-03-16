@@ -34,6 +34,7 @@ class LoginRedirectHandler implements IExceptionHandler {
         if ($exception instanceof NotLoggedInException) {
             if ($request->getRequestMethod() === "GET") {
                 $this->flash->set("previousUrl", $request->getUrlRequested());
+                $this->flash->set("flash", array("type" => "warning", "message" => "You must be logged in to access that page."));
             }
             return new RedirectResponse("login.php");
         }

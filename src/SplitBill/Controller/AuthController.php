@@ -60,6 +60,8 @@ class AuthController extends AbstractController {
      * POST /login.php
      */
     public function postShowLoginForm(LoginFormRequest $loginRequest, IFlashSession $flash) {
+        $flash->extendLife("previousUrl");
+
         if (!$loginRequest->isValid()) {
             return new RedirectResponse("login.php");
         }

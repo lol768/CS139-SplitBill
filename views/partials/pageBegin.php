@@ -16,3 +16,6 @@
 <noscript>
     <div class="flash flash-error"><p>It appears you have JavaScript disabled. This site requires JavaScript to operate.</p></div>
 </noscript>
+<?php if (isset($flashMessage)): ?> <?php /** @var $flashType string */ ?>
+    <div class="flash flash-<?php se($flashType); ?>"><a href="#" class="close"><i class="fa fa-times"></i></a><p><?php se($flashMessage); ?></p></div>
+<?php endif; ?>

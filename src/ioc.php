@@ -9,6 +9,7 @@ function provideViewDataProviderManager(IContainer $container) {
     $manager->registerProvider(new BrandViewDataProvider());
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\AuthViewDataProvider"));
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\FormErrorsViewDataProvider"));
+    $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\FlashMessageViewDataProvider"));
     return $manager;
 }
 
