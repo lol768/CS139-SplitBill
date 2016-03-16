@@ -3,6 +3,7 @@
 namespace SplitBill\Controller;
 
 use SplitBill\Email\IEmailService;
+use SplitBill\Exception\NotLoggedInException;
 use SplitBill\Helper\IControllerHelper;
 use SplitBill\Response\RedirectResponse;
 use SplitBill\Session\IFlashSession;

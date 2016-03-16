@@ -50,8 +50,9 @@ class AuthController extends AbstractController {
     /**
      * GET /login.php
      */
-    public function getShowLoginForm(HttpRequest $req) {
+    public function getShowLoginForm(HttpRequest $req, IFlashSession $flash) {
         $this->h->setActiveNavigationItem("Login");
+        $flash->extendLife("previousUrl");
         return $this->h->getViewResponse("loginNoModal", array());
     }
 

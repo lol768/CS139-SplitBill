@@ -7,8 +7,23 @@ use SplitBill\Handler\IExceptionHandler;
 use SplitBill\Request\HttpRequest;
 use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\RedirectResponse;
+use SplitBill\Session\IFlashSession;
 
 class LoginRedirectHandler implements IExceptionHandler {
+    
+    /**
+     * @var IFlashSession
+     */
+    private $flash;
+
+    /**
+     * LoginRedirectHandler constructor.
+     * @param IFlashSession $flash
+     */
+    public function __construct(IFlashSession $flash) {
+        $this->flash = $flash;
+    }
+
 
     /**
      * @param \Exception $exception The exception that has been thrown.
@@ -17,7 +32,10 @@ class LoginRedirectHandler implements IExceptionHandler {
      */
     public function handleException(\Exception $exception, HttpRequest $request) {
         if ($exception instanceof NotLoggedInException) {
-            return new RedirectResponse("http://google.com");
+            if ($request->getRequestMethod() === "GET") {
+                $this->flash->set("previousUrl", $request->getUrlRequested());
+            }
+            return new RedirectResponse("login.php");
         }
         return null;
     }

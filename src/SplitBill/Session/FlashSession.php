@@ -50,7 +50,7 @@ class FlashSession extends UserSession implements IFlashSession {
         if ($currentList === null) {
             return;
         } else {
-            $key = array_search($key, $currentList);
+            $key = array_search("__flash_" . $key, $currentList);
             if($key !== false) {
                 unset($currentList[$key]);
             }
@@ -80,7 +80,7 @@ class FlashSession extends UserSession implements IFlashSession {
     }
 
     public function getOrDefault($key, $default) {
-        return parent::getOrDefault("__flash_$key", $default);
+        return parent::getOrDefault($key, $default);
     }
 
     public function extendLife($key) {

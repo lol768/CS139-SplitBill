@@ -21,6 +21,7 @@ class ProfileController extends AbstractController {
     public function __construct(IControllerHelper $helper, IContainer $container) {
         $this->h = $helper;
         $this->container = $container;
+        $this->h->requireLoggedIn();
     }
 
     /**
