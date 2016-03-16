@@ -233,9 +233,23 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   border: 1px solid #333; }
 
 .alert {
-  border: 1px solid #5fec85;
-  border-radius: 5px;
-  padding: 0.75rem 1rem; }
+  border: 1px solid #333;
+  border-left: 5px solid #e7325c;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  border-radius: 5px; }
+  .alert p {
+    margin-top: 0; }
+  .alert i {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    opacity: 0.5; }
+  .alert ul {
+    display: block;
+    margin: 0; }
 
 label {
   font-size: 1.2rem;
@@ -260,7 +274,6 @@ label {
   justify-content: center;
   align-content: center;
   align-items: center;
-  animation: heroAnim 2s ease-in-out;
   background-position: 0 54%; }
   .hero h1 {
     text-shadow: 1px 1px 5px #000;

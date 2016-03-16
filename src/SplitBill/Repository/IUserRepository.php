@@ -17,4 +17,10 @@ interface IUserRepository {
      * @return User
      */
     public function add(User $user);
+
+    /**
+     * @param User $user
+     * @return User
+     */
+    public function update(User $user);
 }

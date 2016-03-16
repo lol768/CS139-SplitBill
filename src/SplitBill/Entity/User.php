@@ -37,7 +37,7 @@ class User {
     private $itsUsername;
 
     /**
-     * @var bool
+     * @var bool Whether the account is active (confirmed email).
      */
     private $active;
 
@@ -184,6 +184,10 @@ class User {
      */
     public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function getActive() {
+        return $this->active;
     }
 
 

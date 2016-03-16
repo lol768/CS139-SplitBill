@@ -10,4 +10,6 @@ interface IAuthenticationManager {
     public function setActualUserId($userId);
     public function masquerade($userId);
     public function unmasquerade();
+
+    public function logout();
 }

@@ -5,11 +5,13 @@ namespace SplitBill\Controller;
 use SplitBill\Authentication\IAuthenticationManager;
 use SplitBill\Entity\EmailConfirmation;
 use SplitBill\Entity\User;
+use SplitBill\Exception\CsrfException;
 use SplitBill\Helper\IControllerHelper;
 use SplitBill\Repository\IUserRepository;
 use SplitBill\Request\HttpRequest;
 use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\RedirectResponse;
+use SplitBill\Security\IAntiRequestForgery;
 use SplitBill\Security\SecurityUtil;
 use SplitBill\Session\IFlashSession;
 use SplitBill\Utilities\PhpCompatibility;
@@ -36,13 +38,13 @@ class AuthController extends AbstractController {
         $this->authManager = $authManager;
     }
 
-    /**
-     * GET /register.php
-     */
-    public function getShowRegistrationForm(HttpRequest $req) {
-        $this->h->setActiveNavigationItem("Register");
-        return $this->h->getViewResponse("registerNoModal", array());
+    public function getQueryParametersForAction($action, $method) {
+        if ($action === "logout") {
+            return array("csrf" => array("required" => true));
+        }
+        return array();
     }
+
 
     /**
      * GET /login.php
@@ -53,19 +55,20 @@ class AuthController extends AbstractController {
     }
 
     /**
-     * POST /register.php
-     * @param RegistrationFormRequest $request
+     * GET /logout.php
+     *
+     * @param $csrf
+     * @param IAntiRequestForgery $antiRequestForgery
      * @return AbstractResponse
+     * @throws CsrfException
      */
-    public function postShowRegistrationForm(RegistrationFormRequest $request) {
-        if (!$request->isValid()) {
-            return new RedirectResponse("register.php");
+    public function getLogout($csrf, IAntiRequestForgery $antiRequestForgery) {
+        if (!SecurityUtil::timingSafeComparison($antiRequestForgery->getCurrentCsrfToken(), $csrf)) {
+            throw new CsrfException("Logout CSRF detected");
         }
-        $user = new User($request->getName(), $request->getEmail(), PhpCompatibility::makeBcryptHash($request->getPassword()));
-        $this->userRepo->add($user);
-        $confirmation = new EmailConfirmation($user->getUserId(), SecurityUtil::generateSecurityToken());
-        
-        return new RedirectResponse("email_confirm.php");
+
+        $this->authManager->logout();
+        return new RedirectResponse("index.php");
     }
 
 }

@@ -30,7 +30,7 @@
                     <div class="menu">
                         <ul>
                             <li><a href="#"><i class="fa fa-fw fa-pencil"></i> Edit profile</a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
+                            <li><a href="logout.php?csrf=<?php se($csrfToken); ?>"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li>
                         </ul>
                     </div>
                 </li>

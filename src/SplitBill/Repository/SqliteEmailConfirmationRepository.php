@@ -6,7 +6,7 @@ namespace SplitBill\Repository;
 use SplitBill\Database\SqliteDatabaseManager;
 use SplitBill\Entity\EmailConfirmation;
 
-class SqliteEmailConfirmationRepository implements IEmailConfirmationRepository {
+class SqliteEmailConfirmationRepository extends AbstractSqliteRepository implements IEmailConfirmationRepository {
     /**
      * @var \SQLite3
      */
@@ -28,7 +28,7 @@ class SqliteEmailConfirmationRepository implements IEmailConfirmationRepository 
         $sql = "SELECT * FROM email_confirmations WHERE email_confirmations.user_id = :user_id LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
-        return $this->getSingleConfirmartionViaStatement($stmt);
+        return $this->getSingleEntityViaStatement($stmt);
     }
 
     /**
@@ -36,7 +36,10 @@ class SqliteEmailConfirmationRepository implements IEmailConfirmationRepository 
      * @return EmailConfirmation
      */
     public function getByToken($token) {
-        // TODO: Implement getByToken() method.
+        $sql = "SELECT * FROM email_confirmations WHERE email_confirmations.token = :token LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":token", $token, SQLITE3_TEXT);
+        return $this->getSingleEntityViaStatement($stmt);
     }
 
     /**
@@ -44,9 +47,16 @@ class SqliteEmailConfirmationRepository implements IEmailConfirmationRepository 
      * @return EmailConfirmation
      */
     public function add(EmailConfirmation $confirmation) {
-        // TODO: Implement add() method.
+        $sql = "INSERT INTO email_confirmations VALUES(:user_id, :token);";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":user_id", $confirmation->getUserId(), SQLITE3_INTEGER);
+        $stmt->bindValue(":token", $confirmation->getToken(), SQLITE3_TEXT);
+        $stmt->execute();
+        return $confirmation;
     }
 
-    private function getSingleConfirmartionViaStatement($stmt) {
+    protected function mapFromArray(array $results) {
+        $confirmationEntity = new EmailConfirmation($results['user_id'], $results['token']);
+        return $confirmationEntity;
     }
 }

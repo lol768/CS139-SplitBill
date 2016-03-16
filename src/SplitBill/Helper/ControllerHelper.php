@@ -50,4 +50,8 @@ class ControllerHelper implements IControllerHelper {
         $this->nav->setAllInactive();
         $item->setActive(true);
     }
+
+    public function getPrettyErrorResponse($error) {
+        return $this->getViewResponse("genericErrors", array("title" => "Request error", "errors" => array($error)), 400);
+    }
 }

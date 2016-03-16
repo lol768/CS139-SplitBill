@@ -83,4 +83,11 @@ class SessionAuthenticationManager implements IAuthenticationManager {
             $this->effectiveUser = $this->userRepository->getById($this->userSession->get("masquerading_as_user_id"));
         }
     }
+
+    public function logout() {
+        $this->realUser = null;
+        $this->effectiveUser = null;
+        $this->userSession->remove("user_id");
+        $this->userSession->remove("masquerading_as_user_id");
+    }
 }

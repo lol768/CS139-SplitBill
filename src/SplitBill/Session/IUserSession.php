@@ -12,7 +12,7 @@ interface IUserSession {
      * Get a session item by key.
      *
      * @param string $key The key for this item.
-     * @return mixed The value of the item in the sesion or null if not set.
+     * @return mixed The value of the item in the session or null if not set.
      */
     public function get($key);
 

@@ -1,9 +1,10 @@
+<?php /** @var $brand string */ ?>
 <?php $frontendModules = array("AlertManager", "WebSockets", "Modals", "FlashMessages", "JQueryCustomisations"); ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SplitBill</title>
+    <title><?php se(((isset($title)) ? $title . " - " : "") . $brand); ?></title>
     <link href="app.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">

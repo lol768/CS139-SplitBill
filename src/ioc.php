@@ -29,7 +29,12 @@ function wireUpContainer(IContainer $container) {
     $container->registerAbstractImplementation("\\SplitBill\\Rendering\\DataProvider\\IViewDataProviderManager", "\\SplitBill\\Rendering\\DataProvider\\ViewDataProviderManager");
     $container->registerAbstractImplementation("\\SplitBill\\Authentication\\IAuthenticationManager", "\\SplitBill\\Authentication\\SessionAuthenticationManager");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IUserRepository", "\\SplitBill\\Repository\\SqliteUserRepository");
-    $container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\MultipartEmailService");
+
+    /** Email binding */
+    $container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\DummyEmailService");
+    //$container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\MultipartEmailService");
+
+    $container->registerAbstractImplementation("\\SplitBill\\Repository\\IEmailConfirmationRepository", "\\SplitBill\\Repository\\SqliteEmailConfirmationRepository");
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Session\\FlashSession"));
 
     $container->registerSingleton(getFilterConfiguration($container));

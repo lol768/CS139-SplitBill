@@ -301,9 +301,26 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
 }
 
 .alert {
-  border: 1px solid lighten(adjust_hue($accentColor, 150), 10%);
-  border-radius: $brx;
+  border: 1px solid $primaryColor;
+  border-left: 5px solid $accentColor;
   padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  p {
+    margin-top: 0;
+  }
+  i {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    opacity: 0.5;
+  }
+  border-radius: $brx;
+  ul {
+    display: block;
+    margin: 0;
+  }
 }
 
 label {
@@ -333,7 +350,6 @@ label {
   justify-content: center;
   align-content: center;
   align-items: center;
-  animation: heroAnim 2s ease-in-out;
   background-position: 0 54%;
   h1 {
     text-shadow: 1px 1px 5px #000;
