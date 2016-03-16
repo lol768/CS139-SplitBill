@@ -1,5 +1,5 @@
 <?php /** @var $brand string */ ?>
-<?php $frontendModules = array("AlertManager", "WebSockets", "Modals", "FlashMessages", "JQueryCustomisations"); ?>
+<?php $frontendModules = array("AlertManager", "WebSockets", "Modals", "FlashMessages", "JQueryCustomisations", "Dropdowns"); ?>
 <!doctype html>
 <html lang="en">
 <head>

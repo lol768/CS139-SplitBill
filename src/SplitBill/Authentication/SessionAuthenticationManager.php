@@ -53,6 +53,7 @@ class SessionAuthenticationManager implements IAuthenticationManager {
         if ($instance === null) {
             throw new InvalidUserException("Provided ID does not exist.");
         }
+        $this->realUser = $instance;
         $this->userSession->set("user_id", $userId);
     }
 

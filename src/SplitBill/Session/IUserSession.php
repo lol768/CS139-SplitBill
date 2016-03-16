@@ -17,6 +17,15 @@ interface IUserSession {
     public function get($key);
 
     /**
+     * Get a session item by key, or the default if the session item does not exist.
+     *
+     * @param string $key The key for this item.
+     * @param mixed $default Default.
+     * @return mixed The value of the item in the session or the default if not set.
+     */
+    public function getOrDefault($key, $default);
+
+    /**
      * Sets a session item by key with a value.
      *
      * @param string $key

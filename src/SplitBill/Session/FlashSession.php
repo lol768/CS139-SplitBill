@@ -45,6 +45,19 @@ class FlashSession extends UserSession implements IFlashSession {
         parent::set("__flash", $currentList);
     }
 
+    private function removeFromFlashSessionDeleteList($key) {
+        $currentList = parent::get("__flash");
+        if ($currentList === null) {
+            return;
+        } else {
+            $key = array_search($key, $currentList);
+            if($key !== false) {
+                unset($currentList[$key]);
+            }
+        }
+        parent::set("__flash", $currentList);
+    }
+
     public function cleanupOldFlashItems() {
         $currentList = parent::get("__flash");
         $items = array();
@@ -64,6 +77,13 @@ class FlashSession extends UserSession implements IFlashSession {
                 $this->addToFlashSessionDeleteList($key);
             }
         }
+    }
 
+    public function getOrDefault($key, $default) {
+        return parent::getOrDefault("__flash_$key", $default);
+    }
+
+    public function extendLife($key) {
+        $this->removeFromFlashSessionDeleteList($key);
     }
 }

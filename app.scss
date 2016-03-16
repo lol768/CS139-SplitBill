@@ -128,18 +128,23 @@ nav ul li.active > a {
 }
 
 .profile-dropdown {
-  min-width: 10em;
+  ul li a {
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+.profile-dropdown:not(.active) .menu, .notifications-dropdown:not(.active) .menu {
+  display: none;
 }
 
 nav ul li.with-dropdown {
   a {
     width: 100%;
+    outline: none;
   }
   .fa-caret-down {
     line-height: 1.5;
-    position: absolute;
-    right: 1rem;
-    bottom: 0.6rem;
+    margin-left: 0.5rem;
   }
   position: relative;
   .menu {
@@ -161,6 +166,9 @@ nav ul li.with-dropdown {
       li a {
         color: #fff;
         width: 100%;
+      }
+      li a:active, li a:hover {
+        background-color: darken($primaryColor, 20%);
       }
     }
   }
@@ -341,6 +349,7 @@ label {
 }
 
 .hero {
+
   background: url("assets/sky.jpg");
   min-height: 200px;
   height: 30vh;
@@ -350,7 +359,7 @@ label {
   justify-content: center;
   align-content: center;
   align-items: center;
-  background-position: 0 54%;
+  background-attachment: fixed;
   h1 {
     text-shadow: 1px 1px 5px #000;
     font-family: 'Lato', sans-serif;
@@ -443,7 +452,8 @@ a:hover span.counter {
   height: 2rem;
   margin-top: -0.2rem;
   vertical-align: middle;
-  border-radius: 0.5rem;
+  margin-right: 0.3rem;
+  border-radius: 0.1rem;
 }
 
 header, nav, main, footer {
@@ -499,7 +509,12 @@ body.modals-enabled {
   }
 }
 
-
+@media (max-width: 1200px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
 
 
 .vertical-form {

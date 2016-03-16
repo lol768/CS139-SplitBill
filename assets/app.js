@@ -20,6 +20,27 @@ SplitBill.FlashMessages = {
     }
 };
 
+SplitBill.Dropdowns = {
+    wireUpEvents: function() {
+        jQuery(".with-dropdown > a").click(function(event) {
+            jQuery(this).parent().toggleClass("active");
+            event.stopPropagation();
+        });
+
+        jQuery(".with-dropdown .menu").click(function(event) {
+            event.stopPropagation();
+        });
+
+        jQuery("body").click(function() {
+            jQuery(".with-dropdown.active").removeClass("active");
+        });
+    },
+
+    initialise: function() {
+        this.wireUpEvents();
+    }
+};
+
 SplitBill.AlertManager = {
     /**
      * Array of alerts
@@ -58,8 +79,8 @@ SplitBill.AlertManager = {
         var $notificationsLink = jQuery(".notifications-link");
         $notificationsLink.find("span.counter").remove();
         var $notsMenu = jQuery(".notifications-dropdown .menu");
-        $notsMenu.hide();
         if (this.getCountOfAlerts() !== 0) {
+            jQuery(".no-alerts").hide();
             var $counter = jQuery("<span>");
             $counter.addClass("counter");
             $counter.addClass("anim");
@@ -76,6 +97,8 @@ SplitBill.AlertManager = {
                 $alertsList.append(jQuery("<li>").text(alert));
             }
             $notsMenu.show();
+        } else {
+            jQuery(".no-alerts").show();
         }
     },
 

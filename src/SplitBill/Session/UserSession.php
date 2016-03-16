@@ -48,4 +48,18 @@ class UserSession implements IUserSession {
             unset($_SESSION[$key]);
         }
     }
+
+    /**
+     * Get a session item by key, or the default if the session item does not exist.
+     *
+     * @param string $key The key for this item.
+     * @param mixed $default Default.
+     * @return mixed The value of the item in the session or the default if not set.
+     */
+    public function getOrDefault($key, $default) {
+        if (!$this->has($key)) {
+            return $default;
+        }
+        return $this->get($key);
+    }
 }

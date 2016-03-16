@@ -15,6 +15,7 @@ use SplitBill\Security\IAntiRequestForgery;
 use SplitBill\Security\SecurityUtil;
 use SplitBill\Session\IFlashSession;
 use SplitBill\Utilities\PhpCompatibility;
+use SplitBill\Validation\LoginFormRequest;
 use SplitBill\Validation\RegistrationFormRequest;
 
 class AuthController extends AbstractController {
@@ -52,6 +53,23 @@ class AuthController extends AbstractController {
     public function getShowLoginForm(HttpRequest $req) {
         $this->h->setActiveNavigationItem("Login");
         return $this->h->getViewResponse("loginNoModal", array());
+    }
+
+    /**
+     * POST /login.php
+     */
+    public function postShowLoginForm(LoginFormRequest $loginRequest, IFlashSession $flash) {
+        if (!$loginRequest->isValid()) {
+            return new RedirectResponse("login.php");
+        }
+
+        $bcryptedPassword = $loginRequest->getPotentialUserInstance()->getPassword();
+        if (!PhpCompatibility::checkBcryptHash($bcryptedPassword, $loginRequest->getPassword())) {
+            $flash->set("errors", array("Invalid password."));
+            return new RedirectResponse("login.php");
+        }
+        $this->authManager->setActualUserId($loginRequest->getPotentialUserInstance()->getUserId());
+        return new RedirectResponse($flash->getOrDefault("previousUrl", "index.php"));
     }
 
     /**
