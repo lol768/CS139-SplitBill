@@ -1,5 +1,6 @@
 <?php
 use SplitBill\DependencyInjection\IContainer;
+use SplitBill\Handler\ExceptionHandlerManager;
 use SplitBill\Rendering\DataProvider\BrandViewDataProvider;
 use SplitBill\Rendering\DataProvider\ViewDataProviderManager;
 
@@ -8,6 +9,12 @@ function provideViewDataProviderManager(IContainer $container) {
     $manager->registerProvider(new BrandViewDataProvider());
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\AuthViewDataProvider"));
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\FormErrorsViewDataProvider"));
+    return $manager;
+}
+
+function provideExceptionHandlerManager(IContainer $container) {
+    $manager = new ExceptionHandlerManager();
+    $manager->registerExceptionHandler($container->resolveClassInstance("\\SplitBill\\Exception\\Handler\\LoginRedirectHandler"));
     return $manager;
 }
 
@@ -30,6 +37,7 @@ function wireUpContainer(IContainer $container) {
     $container->registerAbstractImplementation("\\SplitBill\\Authentication\\IAuthenticationManager", "\\SplitBill\\Authentication\\SessionAuthenticationManager");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IUserRepository", "\\SplitBill\\Repository\\SqliteUserRepository");
 
+    $container->registerAbstractImplementation("\\SplitBill\\Handler\\IExceptionHandlerManager", "\\SplitBill\\Handler\\ExceptionHandlerManager");
     /** Email binding */
     $container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\DummyEmailService");
     //$container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\MultipartEmailService");
@@ -41,5 +49,6 @@ function wireUpContainer(IContainer $container) {
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Database\\SqliteDatabaseManager"));
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Helper\\IRequestHelper")->getCurrentRequestInstance());
     $container->registerSingleton(provideViewDataProviderManager($container));
+    $container->registerSingleton(provideExceptionHandlerManager($container));
 
 }

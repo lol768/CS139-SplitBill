@@ -57,8 +57,28 @@ function errorsToExceptions($severity, $message, $file, $line) {
  */
 function simpleExceptionHandler($e) {
     header("HTTP/1.1 500 Internal Server Error");
-    header("Content-Type: text/plain");
     $error = "";
+
+    try {
+        /** @var \SplitBill\Handler\IExceptionHandlerManager $handler */
+        $container = Application::getInstance()->getContainer();
+        $handler = $container->resolveClassInstance("\\SplitBill\\Handler\\IExceptionHandlerManager");
+        /** @var \SplitBill\Request\HttpRequest $request */
+        $request = $container->resolveClassInstance("\\SplitBill\\Request\\HttpRequest");
+        $response = $handler->handleExceptionUsingRegisteredHandlers($e, $request);
+        if ($response !== null) {
+            foreach ($response->getAllHeaders() as $headerName => $headerValue) {
+                header("${headerName}: $headerValue");
+            }
+            die($response->getResponseBody());
+        }
+    } catch (\Exception $e) {
+        $error .= "(Additionally, a " . get_class($e) . " was thrown whilst trying to handle this exception)\n\n";
+        // if this fails, fine - we'll just fall back to the usual handler below
+    }
+
+
+    header("Content-Type: text/plain");
     if ($e instanceof ParseError) {
         $error .= "    __  ___          _           \n   / / |__ \\        | |          \n  / /     ) |  _ __ | |__  _ __  \n < <     / /  | '_ \\| '_ \\| '_ \\ \n  \\ \\   |_|   | |_) | | | | |_) |\n   \\_\\  (_)   | .__/|_| |_| .__/ \n              | |         | |    \n              |_|         |_|    \n\n";
         $error .= "A parse error was encountered whilst interpreting the source code in file:\n\n" . $e->getFile() . " on line " . $e->getLine() . "\n\n";
