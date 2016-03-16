@@ -37,8 +37,10 @@ class GroupsController extends AbstractController {
      * GET /groups.php
      */
     public function getGroupsList() {
+        $myGroups = $this->groupRepo->getGroupsSatisfyingRelation($this->user->getUserId(), GroupRelationType::OWNER);
         return $this->h->getViewResponse("groupsList", array(
-            "title" => "Groups"
+            "title" => "Groups",
+            "myGroups" => $myGroups
         ));
     }
 

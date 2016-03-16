@@ -24,9 +24,9 @@ abstract class AbstractSqliteRepository {
      * @return object
      */
     protected function getMultipleEntitiesViaStatement($stmt) {
-        $results = $stmt->execute();
+        $out = $stmt->execute();
         $finalObjects = array();
-        while (($results = $results->fetchArray(SQLITE3_ASSOC)) !== false) {
+        while (($results = $out->fetchArray(SQLITE3_ASSOC)) !== false) {
             $finalObjects[] = $this->mapFromArray($results);
         }
         return $finalObjects;

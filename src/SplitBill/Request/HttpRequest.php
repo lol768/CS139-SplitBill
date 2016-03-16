@@ -48,6 +48,13 @@ class HttpRequest {
     }
 
     /**
+     * @return array
+     */
+    public function getUploadedFiles() {
+        return $_FILES;
+    }
+
+    /**
      * @return string The URL requested by the user (relative, no host included).
      */
     public function getUrlRequested() {

@@ -89,12 +89,13 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
     public function addRelation($groupId, $userId, $role) {
         $sql = "INSERT INTO users_groups VALUES(NULL, :user_id, :group_id, :role, :created_at, :updated_at)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":user_id", $groupId, SQLITE3_INTEGER);
-        $stmt->bindValue(":group_id", $userId, SQLITE3_INTEGER);
+        $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $groupId, SQLITE3_INTEGER);
         $stmt->bindValue(":role", $role, SQLITE3_TEXT);
         $now = new DateTime();
         $stmt->bindValue(":created_at", $now->format("U"), SQLITE3_INTEGER);
         $stmt->bindValue(":updated_at", $now->format("U"), SQLITE3_INTEGER);
+        $stmt->execute();
     }
 
     /**

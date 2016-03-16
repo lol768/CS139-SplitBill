@@ -52,7 +52,7 @@ use SplitBill\Entity\User;
 
         <h2>Upload avatar</h2>
         <div class="groupBox">
-            <form class="vertical-form" method="POST" action="upload_avatar.php">
+            <form class="vertical-form" method="POST" action="upload_avatar.php" enctype="multipart/form-data">
                 <?php csrf_input(); ?>
                 <label>
                     Image: <input type="file" name="avatar">
