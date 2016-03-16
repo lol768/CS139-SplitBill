@@ -47,6 +47,7 @@ CREATE TABLE payments(
   amount INTEGER NOT NULL, /* Deliberate! */
   bill_id INTEGER NOT NULL,
   user_id UNSIGNED INTEGER NOT NULL,
+  completed INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
   FOREIGN KEY(bill_id) REFERENCES bills(bill_id),

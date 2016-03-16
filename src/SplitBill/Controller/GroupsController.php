@@ -2,9 +2,15 @@
 
 namespace SplitBill\Controller;
 
-use SplitBill\DependencyInjection\IContainer;
+use SplitBill\Authentication\IAuthenticationManager;
+use SplitBill\Entity\Group;
+use SplitBill\Entity\User;
+use SplitBill\Enum\GroupRelationType;
 use SplitBill\Helper\IControllerHelper;
-use SplitBill\Session\IFlashSession;
+use SplitBill\Repository\IGroupRepository;
+use SplitBill\Response\AbstractResponse;
+use SplitBill\Response\RedirectResponse;
+use SplitBill\Validation\GroupAddFormRequest;
 
 class GroupsController extends AbstractController {
 
@@ -12,11 +18,19 @@ class GroupsController extends AbstractController {
      * @var IControllerHelper The controller helper instance.
      */
     private $h;
+    /**
+     * @var IGroupRepository
+     */
+    private $groupRepo;
+    /** @var User */
+    private $user;
 
-    public function __construct(IControllerHelper $helper) {
+    public function __construct(IControllerHelper $helper, IGroupRepository $groupRepo, IAuthenticationManager $authMan) {
         $this->h = $helper;
         $this->h->requireLoggedIn();
         $this->h->setActiveNavigationItem("Groups");
+        $this->groupRepo = $groupRepo;
+        $this->user = $authMan->getRealUser();
     }
 
     /**
@@ -26,6 +40,22 @@ class GroupsController extends AbstractController {
         return $this->h->getViewResponse("groupsList", array(
             "title" => "Groups"
         ));
+    }
+
+    /**
+     * POST /add_group.php
+     * @param GroupAddFormRequest $groupAdd
+     * @return AbstractResponse
+     */
+    public function postAddGroup(GroupAddFormRequest $groupAdd) {
+        if (!$groupAdd->isValid()) {
+            return new RedirectResponse("groups.php");
+        } else {
+            $group = new Group($groupAdd->getName(), $groupAdd->isSecret(), $groupAdd->isOpen());
+            $this->groupRepo->add($group);
+            $this->groupRepo->addRelation($group->getGroupId(), $this->user->getUserId(), GroupRelationType::OWNER);
+            return new RedirectResponse("groups.php");
+        }
     }
 
 }

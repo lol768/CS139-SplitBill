@@ -283,7 +283,12 @@ main h2 {
   font-size: 1rem;
   border: none;
   cursor: pointer;
+  font-weight: normal;
   border-radius: $brx;
+}
+
+.button-right {
+  float: right;
 }
 
 .button:hover {
@@ -511,6 +516,10 @@ body.modals-enabled {
     display: inline-block;
 
   }
+}
+
+body.modals-enabled .group-add-modal .modal-inner {
+  min-width: 600px;
 }
 
 @media (max-width: 1200px) {

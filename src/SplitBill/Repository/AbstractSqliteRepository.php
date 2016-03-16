@@ -19,5 +19,18 @@ abstract class AbstractSqliteRepository {
         }
     }
 
+    /**
+     * @param SQLite3Stmt $stmt
+     * @return object
+     */
+    protected function getMultipleEntitiesViaStatement($stmt) {
+        $results = $stmt->execute();
+        $finalObjects = array();
+        while (($results = $results->fetchArray(SQLITE3_ASSOC)) !== false) {
+            $finalObjects[] = $this->mapFromArray($results);
+        }
+        return $finalObjects;
+    }
+
     protected abstract function mapFromArray(array $results);
 }

@@ -5,7 +5,12 @@
     <div class="container container-no-pad">
         <div class="hero">
             <h1>Bill management made easy</h1>
-            <p><a href="register.php" data-selector=".registration-modal" class="button modal-trigger"><i class="fa fa-pencil"></i> Register now</a> <a href="startIts.php" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
+            <?php if ($user === null): ?>
+                <p><a href="register.php" data-selector=".registration-modal" class="button modal-trigger"><i class="fa fa-pencil"></i> Register now</a> <a href="startIts.php" class="button"><img src="assets/warwick.svg" class="warwick-logo"> Login via ITS account</a></p>
+            <?php else: ?>
+                <p><a href="groups.php" class="button"><i class="fa fa-users"></i> View groups</a> </p>
+
+            <?php endif; ?>
         </div>
         <div class="overview">
             <h1>How does it work?</h1>

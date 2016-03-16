@@ -218,7 +218,11 @@ main h2 {
   font-size: 1rem;
   border: none;
   cursor: pointer;
+  font-weight: normal;
   border-radius: 5px; }
+
+.button-right {
+  float: right; }
 
 .button:hover {
   background-color: #ce1842; }
@@ -388,6 +392,9 @@ body.modals-enabled .modal-inner {
       color: #333; }
   body.modals-enabled .modal-inner p {
     margin-top: 0; }
+
+body.modals-enabled .group-add-modal .modal-inner {
+  min-width: 600px; }
 
 @media (max-width: 1200px) {
   .container {

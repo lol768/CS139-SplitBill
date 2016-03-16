@@ -37,6 +37,7 @@ function wireUpContainer(IContainer $container) {
     $container->registerAbstractImplementation("\\SplitBill\\Rendering\\DataProvider\\IViewDataProviderManager", "\\SplitBill\\Rendering\\DataProvider\\ViewDataProviderManager");
     $container->registerAbstractImplementation("\\SplitBill\\Authentication\\IAuthenticationManager", "\\SplitBill\\Authentication\\SessionAuthenticationManager");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IUserRepository", "\\SplitBill\\Repository\\SqliteUserRepository");
+    $container->registerAbstractImplementation("\\SplitBill\\Repository\\IGroupRepository", "\\SplitBill\\Repository\\SqliteGroupRepository");
 
     $container->registerAbstractImplementation("\\SplitBill\\Handler\\IExceptionHandlerManager", "\\SplitBill\\Handler\\ExceptionHandlerManager");
     /** Email binding */
