@@ -3,6 +3,7 @@
 namespace SplitBill\Controller;
 
 use SplitBill\Authentication\IAuthenticationManager;
+use SplitBill\Entity\EmailConfirmation;
 use SplitBill\Entity\User;
 use SplitBill\Helper\IControllerHelper;
 use SplitBill\Repository\IUserRepository;
@@ -61,8 +62,10 @@ class AuthController extends AbstractController {
             return new RedirectResponse("register.php");
         }
         $user = new User($request->getName(), $request->getEmail(), PhpCompatibility::makeBcryptHash($request->getPassword()));
-        $this->authManager->setActualUserId($this->userRepo->add($user)->getUserId());
-        return new RedirectResponse("index.php");
+        $this->userRepo->add($user);
+        $confirmation = new EmailConfirmation($user->getUserId(), SecurityUtil::generateSecurityToken());
+        
+        return new RedirectResponse("email_confirm.php");
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace SplitBill\Security;
 
-use SplitBill\Exception\InsecureCsrfTokenGenerationException;
+use SplitBill\Exception\InsecureTokenGenerationException;
 use SplitBill\Session\IUserSession;
 
 class AntiRequestForgeryManager implements IAntiRequestForgery {
@@ -36,15 +36,10 @@ class AntiRequestForgeryManager implements IAntiRequestForgery {
 
     /**
      * Generates a CSRF token and stores it in the user's session.
-     * @throws InsecureCsrfTokenGenerationException If the token generation failed.
+     * @throws InsecureTokenGenerationException If the token generation failed.
      */
     public function createCsrfTokenForUser() {
-        $wasSecure = false;
-        $csrfToken = openssl_random_pseudo_bytes(64, $wasSecure);
-        if (!$wasSecure) {
-            throw new InsecureCsrfTokenGenerationException("Failed to generate random bytes in a cryptographically secure manner");
-        }
-
-        $this->session->set("__csrf_token", bin2hex($csrfToken));
+        $csrfToken = SecurityUtil::generateSecurityToken(64);
+        $this->session->set("__csrf_token", $csrfToken);
     }
 }
