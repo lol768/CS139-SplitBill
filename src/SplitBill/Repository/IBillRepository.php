@@ -5,6 +5,13 @@ namespace SplitBill\Repository;
 use SplitBill\Entity\Bill;
 
 interface IBillRepository {
+
+    /**
+     * @param $groupId
+     * @return Bill[]
+     */
+    public function getByGroupId($groupId);
+
     /**
      * @param Bill $bill
      * @return Bill

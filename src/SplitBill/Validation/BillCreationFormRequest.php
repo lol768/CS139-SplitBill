@@ -53,7 +53,7 @@ class BillCreationFormRequest implements IFormRequest {
         $hasPermission = false;
         $groups = $this->groupRepo->getGroupsSatisfyingRelation($user->getUserId(), null);
         foreach ($groups as $group) {
-            if ($group->getGroupId() == $data['groupId'] &&
+            if ($group->getGroupId() == $data['group_id'] &&
                 $this->groupRepo->hasRelation($group->getGroupId(), $user->getUserId(), GroupRelationType::ADMIN) ||
                 $this->groupRepo->hasRelation($group->getGroupId(), $user->getUserId(), GroupRelationType::OWNER)) {
                 $hasPermission = true;

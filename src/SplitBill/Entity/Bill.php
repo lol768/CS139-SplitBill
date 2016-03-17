@@ -42,6 +42,13 @@ class Bill {
     }
 
     /**
+     * @param int $billId
+     */
+    public function setBillId($billId) {
+        $this->billId = $billId;
+    }
+
+    /**
      * @return mixed
      */
     public function getUserId() {

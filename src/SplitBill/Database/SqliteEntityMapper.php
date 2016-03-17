@@ -3,6 +3,7 @@
 namespace SplitBill\Database;
 
 use DateTime;
+use SplitBill\Entity\Bill;
 use SplitBill\Entity\Group;
 use SplitBill\Entity\GroupRelationEntry;
 use SplitBill\Entity\User;
@@ -43,5 +44,17 @@ class SqliteEntityMapper implements IEntityMapper {
         $user = $this->mapUserFromArray($data);
         $relation = new GroupRelationEntry($data['relation_id'], $data['role'], $user);
         return $relation;
+    }
+
+    /**
+     * @param array $data
+     * @return Bill
+     */
+    public function mapBillFromArray(array $data) {
+        $bill = new Bill($data['user_id'], $data['group_id'], $data['amount'], $data['description'], $data['company']);
+        $bill->setCreatedAt(DateTime::createFromFormat("U", $data['created_at']));
+        $bill->setUpdatedAt(DateTime::createFromFormat("U", $data['updated_at']));
+        $bill->setBillId($data['bill_id']);
+        return $bill;
     }
 }

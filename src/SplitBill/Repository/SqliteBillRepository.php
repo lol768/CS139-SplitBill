@@ -11,7 +11,7 @@ use SQLite3Stmt;
 class SqliteBillRepository extends AbstractSqliteRepository implements IBillRepository {
 
     protected function mapFromArray(array $results) {
-        // TODO: Implement mapFromArray() method.
+        return $this->mapper->mapBillFromArray($results);
     }
 
     /**
@@ -21,17 +21,17 @@ class SqliteBillRepository extends AbstractSqliteRepository implements IBillRepo
     public function add(Bill $bill) {
         $sql = "INSERT INTO bills VALUES(NULL, :amount, :description, :user_id, :group_id, :company, :created_at, :updated_at);";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":name", $user->getName(), SQLITE3_TEXT);
-        $stmt->bindValue(":password", $user->getPassword(), SQLITE3_TEXT);
-        $stmt->bindValue(":email", $user->getEmail(), SQLITE3_TEXT);
-        $stmt->bindValue(":created_at", $user->getCreatedAt()->format("U"), SQLITE3_INTEGER);
-        $stmt->bindValue(":updated_at", $user->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
-        $stmt->bindValue(":its_username", $user->getItsUsername(), SQLITE3_TEXT);
-        $stmt->bindValue(":active", $user->getActive() ? 1 : 0, SQLITE3_INTEGER);
-        $stmt->bindValue(":has_avatar", $user->getHasAvatar() ? 1 : 0, SQLITE3_INTEGER);
+        $stmt->bindValue(":amount", $bill->getAmount(), SQLITE3_INTEGER);
+        $stmt->bindValue(":description", $bill->getDescription(), SQLITE3_TEXT);
+        $stmt->bindValue(":company", $bill->getCompany(), SQLITE3_TEXT);
+        $stmt->bindValue(":user_id", $bill->getUserId(), SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $bill->getGroupId(), SQLITE3_INTEGER);
+
+        $stmt->bindValue(":created_at", $bill->getCreatedAt()->format("U"), SQLITE3_INTEGER);
+        $stmt->bindValue(":updated_at", $bill->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
         $stmt->execute();
-        $user->setUserId($this->db->lastInsertRowID());
-        return $user;
+        $bill->setBillId($this->db->lastInsertRowID());
+        return $bill;
     }
 
     /**
@@ -39,6 +39,32 @@ class SqliteBillRepository extends AbstractSqliteRepository implements IBillRepo
      * @return Bill
      */
     public function update(Bill $bill) {
-        // TODO: Implement update() method.
+        $sql = "UPDATE bills SET amount = :amount, description = :description, user_id = :user_id,
+                group_id = :group_id, company = :company, created_at = :created_at, updated_at = :updated_at
+                WHERE bill_id = :bill_id;";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":amount", $bill->getAmount(), SQLITE3_INTEGER);
+        $stmt->bindValue(":description", $bill->getDescription(), SQLITE3_TEXT);
+        $stmt->bindValue(":company", $bill->getCompany(), SQLITE3_TEXT);
+        $stmt->bindValue(":user_id", $bill->getUserId(), SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $bill->getGroupId(), SQLITE3_INTEGER);
+        $stmt->bindValue(":bill_id", $bill->getBillId(), SQLITE3_INTEGER);
+
+        $stmt->bindValue(":created_at", $bill->getCreatedAt()->format("U"), SQLITE3_INTEGER);
+        $stmt->bindValue(":updated_at", $bill->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
+        $stmt->execute();
+        $bill->setGroupId($this->db->lastInsertRowID());
+        return $bill;
+    }
+
+    /**
+     * @param $groupId
+     * @return Bill[]
+     */
+    public function getByGroupId($groupId) {
+        $sql = "SELECT * FROM bills WHERE bills.group_id = :bill_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":bill_id", $groupId, SQLITE3_INTEGER);
+        return $this->getMultipleEntitiesViaStatement($stmt);
     }
 }

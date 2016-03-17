@@ -74,6 +74,7 @@ use SplitBill\Entity\Group; ?>
                             <h3>Status</h3>
                             <ul>
                                 <li><?php se($group->getIsSecret() ? "Secret" : "Public"); ?></li>
+                                <li><?php se($group->getIsOpen() ? "Open" : "Requires invitation to join"); ?></li>
                             </ul>
                         </div>
                     <?php else: ?>
