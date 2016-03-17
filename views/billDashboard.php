@@ -27,22 +27,22 @@ use SplitBill\Entity\Group; ?>
             <h1>Create a new bill</h1>
             <a href="#" class="exit"><i class="fa fa-times"></i></a>
         </div>
-
+        <p>Bill amounts will be split equally between all members of the group.</p>
         <form class="vertical-form" method="POST" action="add_bill.php">
             <?php csrf_input(); ?>
             <label>
                 Company:
-                <input type="text" name="company">
+                <input type="text" name="company" placeholder="British Gas">
             </label>
 
             <label>
                 Description:
-                <input type="text" name="description">
+                <input type="text" name="description" placeholder="Heating">
             </label>
 
             <label>
                 Amount:
-                <input type="text" name="amount">
+                <input type="text" name="amount" placeholder="£5.00">
             </label>
 
             <label>

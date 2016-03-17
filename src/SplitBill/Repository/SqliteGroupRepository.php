@@ -149,4 +149,20 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
         $res = $stmt->execute();
         return $res->fetchArray(SQLITE3_ASSOC) !== false;
     }
+
+    /**
+     * @param int $groupId
+     * @param int $userId
+     * @param string $role
+     * @return bool
+     */
+    public function hasRelation($groupId, $userId, $role) {
+        $sql = "SELECT users_groups.relation_id FROM users_groups WHERE users_groups.group_id = :group_id AND users_groups.user_id = :user_id AND users_groups.role = :role;";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $groupId, SQLITE3_INTEGER);
+        $stmt->bindValue(":role", $role, SQLITE3_TEXT);
+        $res = $stmt->execute();
+        return $res->fetchArray(SQLITE3_ASSOC) !== false;
+    }
 }

@@ -54,6 +54,14 @@ interface IGroupRepository {
     public function hasInvitation($groupId, $userId, $role);
 
     /**
+     * @param int $groupId
+     * @param int $userId
+     * @param string $role
+     * @return bool
+     */
+    public function hasRelation($groupId, $userId, $role);
+
+    /**
      * @param Group $user
      * @return Group
      */
