@@ -10,25 +10,8 @@ use SQLite3Stmt;
 
 class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRepository {
 
-    /**
-     * @var \SQLite3
-     */
-    private $db;
-
-    /**
-     * SqliteGroupRepository constructor.
-     * @param SqliteDatabaseManager $dbm
-     */
-    public function __construct(SqliteDatabaseManager $dbm) {
-        $this->db = $dbm->getSqlite();
-    }
-
     protected function mapFromArray(array $results) {
-        $group = new Group($results['name'], $results['open'] == 1, $results['secret'] == 1);
-        $group->setCreatedAt(DateTime::createFromFormat("U", $results['created_at']));
-        $group->setUpdatedAt(DateTime::createFromFormat("U", $results['updated_at']));
-        $group->setGroupId($results['group_id']);
-        return $group;
+        return $this->mapper->mapGroupFromArray($results);
     }
 
     /**
@@ -46,7 +29,6 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
     public function getPublicGroups() {
         $sql = "SELECT * FROM groups WHERE groups.secret = 0;";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute();
         return $this->getMultipleEntitiesViaStatement($stmt);
     }
 
@@ -60,7 +42,6 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
         $stmt->bindValue(":role", $role, SQLITE3_TEXT);
-        $stmt->execute();
         return $this->getMultipleEntitiesViaStatement($stmt);
     }
 
@@ -114,5 +95,21 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
         $stmt->execute();
         $group->setGroupId($this->db->lastInsertRowID());
         return $group;
+    }
+
+    /**
+     * @param Group $group
+     * @return \SplitBill\Entity\Group[]
+     */
+    public function getRelationsForGroup(Group $group) {
+        $sql = "SELECT users.*, users_groups.relation_id, users_groups.role FROM users INNER JOIN users_groups ON users_groups.user_id = users.user_id WHERE users_groups.group_id = :group_id;";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":group_id", $group->getGroupId(), SQLITE3_INTEGER);
+        $out = $stmt->execute();
+        $finalObjects = array();
+        while (($results = $out->fetchArray(SQLITE3_ASSOC)) !== false) {
+            $finalObjects[] = $this->mapper->mapGroupRelationEntryFromArray($results);
+        }
+        return $finalObjects;
     }
 }

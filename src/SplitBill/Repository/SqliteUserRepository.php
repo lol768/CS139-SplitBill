@@ -8,19 +8,6 @@ use SplitBill\Entity\User;
 use SQLite3Stmt;
 
 class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepository {
-
-    /**
-     * @var \SQLite3
-     */
-    private $db;
-
-    /**
-     * SqliteUserRepository constructor.
-     * @param SqliteDatabaseManager $dbm
-     */
-    public function __construct(SqliteDatabaseManager $dbm) {
-        $this->db = $dbm->getSqlite();
-    }
     
     public function getByEmail($email) {
         $sql = "SELECT * FROM users WHERE users.email = :email LIMIT 1";
@@ -44,13 +31,7 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
     }
 
     protected function mapFromArray(array $arr) {
-        $user = new User($arr['name'], $arr['email'], $arr['password'], $arr['active'] == 1);
-        $user->setUserId($arr['user_id']);
-        $user->setCreatedAt(DateTime::createFromFormat("U", $arr['created_at']));
-        $user->setUpdatedAt(DateTime::createFromFormat("U", $arr['updated_at']));
-        $user->setItsUsername($arr['its_username']);
-        $user->setHasAvatar($arr['has_avatar'] == 1);
-        return $user;
+        return $this->mapper->mapUserFromArray($arr);
     }
 
     public function add(User $user) {
@@ -87,5 +68,14 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
         $stmt->bindValue(":has_avatar", $user->getHasAvatar() ? 1 : 0, SQLITE3_INTEGER);
         $stmt->execute();
         return $user;
+    }
+
+    /** @return User[] */
+    public function getFuzzyMatches($search) {
+        $search = "%$search%";
+        $sql = "SELECT * FROM users WHERE users.name LIKE :search OR users.email LIKE :search OR users.its_username LIKE :search LIMIT 10";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":search", $search, SQLITE3_TEXT);
+        return $this->getMultipleEntitiesViaStatement($stmt);
     }
 }

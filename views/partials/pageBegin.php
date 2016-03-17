@@ -11,6 +11,7 @@
     <meta name="theme-color" content="#e7325c" />
     <?php csrf_meta(); ?>
     <?php require(__DIR__ . "/../jsTemplates/ajaxError.php"); ?>
+    <?php require(__DIR__ . "/../jsTemplates/userSearchResult.php"); ?>
 </head>
 <body>
 <noscript>

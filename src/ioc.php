@@ -16,6 +16,7 @@ function provideViewDataProviderManager(IContainer $container) {
 function provideExceptionHandlerManager(IContainer $container) {
     $manager = new ExceptionHandlerManager();
     $manager->registerExceptionHandler($container->resolveClassInstance("\\SplitBill\\Exception\\Handler\\LoginRedirectHandler"));
+    $manager->registerExceptionHandler($container->resolveClassInstance("\\SplitBill\\Exception\\Handler\\NotImplementedHandler"));
     return $manager;
 }
 
@@ -38,6 +39,7 @@ function wireUpContainer(IContainer $container) {
     $container->registerAbstractImplementation("\\SplitBill\\Authentication\\IAuthenticationManager", "\\SplitBill\\Authentication\\SessionAuthenticationManager");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IUserRepository", "\\SplitBill\\Repository\\SqliteUserRepository");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IGroupRepository", "\\SplitBill\\Repository\\SqliteGroupRepository");
+    $container->registerAbstractImplementation("\\SplitBill\\Database\\IEntityMapper", "\\SplitBill\\Database\\SqliteEntityMapper");
 
     $container->registerAbstractImplementation("\\SplitBill\\Handler\\IExceptionHandlerManager", "\\SplitBill\\Handler\\ExceptionHandlerManager");
     /** Email binding */

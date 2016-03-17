@@ -21,6 +21,12 @@ interface IGroupRepository {
 
     /**
      * @param Group $group
+     * @return \SplitBill\Entity\Group[]
+     */
+    public function getRelationsForGroup(Group $group);
+
+    /**
+     * @param Group $group
      * @return Group
      */
     public function add(Group $group);

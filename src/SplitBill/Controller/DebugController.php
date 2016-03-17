@@ -24,7 +24,7 @@ class DebugController extends AbstractController {
     }
 
     /**
-     * GET /iocDebug.php
+     * GET /ioc_debug.php
      */
     public function getContainerInfo() {
         return $this->h->getViewResponse("containerDebug", array(

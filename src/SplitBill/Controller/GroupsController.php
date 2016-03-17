@@ -38,10 +38,16 @@ class GroupsController extends AbstractController {
      */
     public function getGroupsList() {
         $myGroups = $this->groupRepo->getGroupsSatisfyingRelation($this->user->getUserId(), GroupRelationType::OWNER);
-        return $this->h->getViewResponse("groupsList", array(
+
+        $viewVars = array(
             "title" => "Groups",
-            "myGroups" => $myGroups
-        ));
+            "myGroups" => array()
+        );
+        foreach ($myGroups as $myGroup) {
+            $relations = $this->groupRepo->getRelationsForGroup($myGroup);
+            $viewVars['myGroups'][] = array("group" => $myGroup, "relations" => $relations);
+        }
+        return $this->h->getViewResponse("groupsList", $viewVars);
     }
 
     /**
@@ -58,6 +64,10 @@ class GroupsController extends AbstractController {
             $this->groupRepo->addRelation($group->getGroupId(), $this->user->getUserId(), GroupRelationType::OWNER);
             return new RedirectResponse("groups.php");
         }
+    }
+
+    public function postInviteGroup(GroupUserInviteRequest $groupAdd) {
+
     }
 
 }

@@ -2,9 +2,33 @@
 
 namespace SplitBill\Repository;
 
+use SplitBill\Database\IEntityMapper;
+use SplitBill\Database\SqliteDatabaseManager;
 use SQLite3Stmt;
 
 abstract class AbstractSqliteRepository {
+    /**
+     * @var IEntityMapper
+     */
+    protected $mapper;
+
+    /**
+     * @var \SQLite3
+     */
+    protected $db;
+
+
+    /**
+     * AbstractSqliteRepository constructor.
+     * @param IEntityMapper $mapper
+     * @param SqliteDatabaseManager $dbm
+     */
+    public function __construct(IEntityMapper $mapper, SqliteDatabaseManager $dbm) {
+        $this->mapper = $mapper;
+        $this->db = $dbm->getSqlite();
+    }
+
+
     /**
      * @param SQLite3Stmt $stmt
      * @return object

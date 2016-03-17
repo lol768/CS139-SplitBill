@@ -12,6 +12,9 @@ interface IUserRepository {
     /** @return User */
     public function getById($userId);
 
+    /** @return User[] */
+    public function getFuzzyMatches($search);
+
     /**
      * @param User $user
      * @return User

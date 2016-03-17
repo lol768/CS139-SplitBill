@@ -42,6 +42,81 @@ SplitBill.Dropdowns = {
     }
 };
 
+SplitBill.UserSearchResults = {
+    wireUpEvents: function() {
+        var salvagedThis = this;
+        jQuery(".user-search-results input").on("keyup", function(event) {
+            var queryData = {"action": "usersSearch", "q": jQuery(this).val()};
+            var $el = jQuery(this).parent();
+            var $resultsContainer = $el.find(".results");
+
+            if (jQuery(this).val() === "") {
+                $resultsContainer.html("");
+                return;
+            }
+
+            jQuery.get("api.php", queryData, function(data) {
+                var $resultsList = jQuery("<ul>");
+                for (var user of data.data) {
+                    var $li = jQuery(jQuery("#ajaxUserSearchResultTmpl").html());
+                    var $link = $li.find("a.name");
+                    $link.text(user.name);
+                    $link.data("uid", user.uid);
+                    if (user.avatar) {
+                        $li.find("img").attr("src", "assets/avatars/" + user.uid + "_t.png");
+                    }
+                    $resultsList.append($li);
+                }
+                $resultsContainer.html("");
+                $resultsContainer.append($resultsList);
+            });
+        });
+    },
+
+    selectHandler: function() {
+        var uid = jQuery(this).data("uid");
+        var $container = jQuery(this).parent().parent().parent().parent();
+        $container.find(".selected").show();
+        $container.find(".selected").find("span").text("You have selected " + jQuery(this).text());
+        $container.find("input").val("");
+        $container.find("input[type=text]").hide();
+        $container.find("i").hide();
+        $container.find("a i").show();
+        $container.find(".results").html("");
+        $container.find("input[name=selectedId]").val(uid);
+        return false;
+    },
+
+    clearHandler: function () {
+        var $container = jQuery(this).parent().parent();
+        $container.find(".selected").hide();
+        $container.find(".selected").find("span").text("");
+        $container.find("input[type=text]").show();
+        $container.find("input[type=text]").focus();
+        $container.find("input[name=selectedId]").val("");
+        $container.find("i").show();
+        return false;
+    },
+
+    addResultsBlocks: function () {
+        var obj = this;
+        jQuery(".user-search-results").each(function() {
+            var $res = jQuery("<div>");
+            $res.addClass("results");
+            jQuery(this).append($res);
+            jQuery(this).find(".selected").hide();
+            $res.on("click", "a.name", obj.selectHandler);
+            jQuery(this).find(".clear-user-search-results").on("click", obj.clearHandler);
+        });
+    },
+
+    initialise: function() {
+        this.wireUpEvents();
+        this.addResultsBlocks();
+
+    }
+};
+
 SplitBill.AlertManager = {
     /**
      * Array of alerts
@@ -231,7 +306,7 @@ SplitBill.JQueryCustomisations = {
      * @param settings PlainObject
      */
     ajaxCompleteHandler: function(event, xhr, settings) {
-        if (xhr.statusCode() !== 200) {
+        if (xhr.statusCode().status != 200) {
             SplitBill.JQueryCustomisations.createErrorModal(settings, xhr.statusCode());
         }
     },

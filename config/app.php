@@ -9,7 +9,7 @@ return array(
     ),
     "public_nav_left" => array(
         "Home" => "index.php", "Groups" => "groups.php",
-        "Bills" => "bills.php", "Settings" => "settings.php"
+        "Bills" => "bills.php"
     ),
     "public_nav_right" => array(
         "Register" => "register.php", "Login" => "login.php"

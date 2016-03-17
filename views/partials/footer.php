@@ -5,7 +5,7 @@
         <ul class="links">
             <li><a href="#">Privacy</a></li>
             <li><a href="#">Terms</a></li>
-            <li><a href="iocDebug.php">Debug</a></li>
+            <li><a href="ioc_debug.php">Debug</a></li>
         </ul>
     </div>
 </footer>

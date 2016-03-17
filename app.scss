@@ -625,3 +625,57 @@ body.modals-enabled .ajax-error-modal .modal-inner {
   width: 100px;
   top: 1rem;
 }
+
+.groups .groupBox + .groupBox {
+  margin-top: 1rem;
+}
+
+.groups h2 {
+  margin-bottom: 0.5rem;
+}
+
+.groups .groupBox h1 {
+  margin-top: 0.5rem;
+}
+
+.user-search-result-item img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.user-search-results {
+  margin-bottom: 1rem;
+  input[type=text] {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.user-search-results ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  li {
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    background-color: #eee;
+    border-radius: $brx;
+  }
+  li + li {
+    margin-left: 0.5rem;
+  }
+
+  img {
+    margin-right: 0.2rem;
+  }
+  a, img {
+    vertical-align: middle;
+    text-decoration: none;
+    line-height: 2rem;
+  }
+
+}
+
+a.clear-user-search-results i {
+  color: $primaryColor !important;
+}
