@@ -10,6 +10,8 @@ function provideViewDataProviderManager(IContainer $container) {
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\AuthViewDataProvider"));
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\FormErrorsViewDataProvider"));
     $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\FlashMessageViewDataProvider"));
+    $manager->registerProvider($container->resolveClassInstance("\\SplitBill\\Rendering\\DataProvider\\ProfilingDataProvider"));
+
     return $manager;
 }
 
@@ -37,9 +39,11 @@ function wireUpContainer(IContainer $container) {
     $container->registerAbstractImplementation("\\SplitBill\\ItsAuthentication\\IOAuthManager", "\\SplitBill\\ItsAuthentication\\PsOAuthManager");
     $container->registerAbstractImplementation("\\SplitBill\\Rendering\\DataProvider\\IViewDataProviderManager", "\\SplitBill\\Rendering\\DataProvider\\ViewDataProviderManager");
     $container->registerAbstractImplementation("\\SplitBill\\Authentication\\IAuthenticationManager", "\\SplitBill\\Authentication\\SessionAuthenticationManager");
+
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IUserRepository", "\\SplitBill\\Repository\\SqliteUserRepository");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IGroupRepository", "\\SplitBill\\Repository\\SqliteGroupRepository");
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IBillRepository", "\\SplitBill\\Repository\\SqliteBillRepository");
+    $container->registerAbstractImplementation("\\SplitBill\\Repository\\IPaymentRepository", "\\SplitBill\\Repository\\SqlitePaymentRepository");
     $container->registerAbstractImplementation("\\SplitBill\\Database\\IEntityMapper", "\\SplitBill\\Database\\SqliteEntityMapper");
 
     $container->registerAbstractImplementation("\\SplitBill\\Handler\\IExceptionHandlerManager", "\\SplitBill\\Handler\\ExceptionHandlerManager");
@@ -53,7 +57,10 @@ function wireUpContainer(IContainer $container) {
     $container->registerSingleton(getFilterConfiguration($container));
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Database\\SqliteDatabaseManager"));
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Helper\\IRequestHelper")->getCurrentRequestInstance());
+
     $container->registerSingleton(provideViewDataProviderManager($container));
     $container->registerSingleton(provideExceptionHandlerManager($container));
+    $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Authentication\\IAuthenticationManager"));
+
 
 }

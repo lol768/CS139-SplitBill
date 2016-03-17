@@ -10,15 +10,7 @@
     <link rel="stylesheet" href="app.css">
 </head>
 <body class="ioc"><div id="inner">
-    <header><pre>  _____       _____   _____       _                       _
- |_   _|     / ____| |  __ \     | |                     (_)
-   | |  ___ | |      | |  | | ___| |__  _   _  __ _  __ _ _ _ __   __ _
-   | | / _ \| |      | |  | |/ _ \ '_ \| | | |/ _` |/ _` | | '_ \ / _` |
-  _| || (_) | |____  | |__| |  __/ |_) | |_| | (_| | (_| | | | | | (_| |
- |_____\___/ \_____| |_____/ \___|_.__/ \__,_|\__, |\__, |_|_| |_|\__, |
-                                               __/ | __/ |         __/ |
-                                              |___/ |___/         |___/
-    </pre></header>
+    <header>IoC Debug Page</header>
     <p>The following interface bindings are registered in the IoC container:</p>
 
     <table>

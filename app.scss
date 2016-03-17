@@ -1,5 +1,7 @@
 // Begin IoC debug styles..
 body.ioc {
+  font-size: 14px;
+  padding: 1rem;
   font-family: monospace;
   background-color: #fff;
   color: #000;
@@ -26,6 +28,8 @@ body.ioc {
   header {
     display: flex;
     border: 1px dashed #000;
+    font-weight: bold;
+    font-size: 2rem;
     justify-content: center;
     align-items: center;
   }
@@ -713,4 +717,17 @@ hr {
 
 a.clear-user-search-results i {
   color: $primaryColor !important;
+}
+
+#skip-to-content {
+  position: absolute;
+  left: -9999999px;
+}
+
+#skip-to-content:focus {
+  position: relative;
+  left: 0;
+  background-color: white;
+  display: block;
+  border: 2px dotted $accentColor;
 }

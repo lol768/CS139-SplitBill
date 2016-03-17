@@ -6,11 +6,13 @@ use SplitBill\Authentication\IAuthenticationManager;
 use SplitBill\DependencyInjection\IContainer;
 use SplitBill\Entity\Bill;
 use SplitBill\Entity\Group;
+use SplitBill\Entity\Payment;
 use SplitBill\Enum\GroupRelationType;
 use SplitBill\Exception\NotImplementedException;
 use SplitBill\Helper\IControllerHelper;
 use SplitBill\Repository\IBillRepository;
 use SplitBill\Repository\IGroupRepository;
+use SplitBill\Repository\IPaymentRepository;
 use SplitBill\Repository\IUserRepository;
 use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\JsonResponse;
@@ -36,15 +38,27 @@ class BillsController extends AbstractController {
      * @var IBillRepository
      */
     private $billRepo;
+    /**
+     * @var IUserRepository
+     */
+    private $userRepo;
+    /**
+     * @var IPaymentRepository
+     */
+    private $paymentRepo;
 
 
-    public function __construct(IControllerHelper $helper, IUserRepository $userRepo, IBillRepository $billRepo, IGroupRepository $groupRepo, IAuthenticationManager $authMan) {
+    public function __construct(IControllerHelper $helper, IUserRepository $userRepo,
+                                IBillRepository $billRepo, IGroupRepository $groupRepo,
+                                IAuthenticationManager $authMan, IPaymentRepository $paymentRepo) {
         $this->h = $helper;
         $this->h->requireLoggedIn();
         $this->h->setActiveNavigationItem("Bills");
         $this->groupRepo = $groupRepo;
         $this->authMan = $authMan;
         $this->billRepo = $billRepo;
+        $this->userRepo = $userRepo;
+        $this->paymentRepo = $paymentRepo;
     }
 
     /**
@@ -53,8 +67,15 @@ class BillsController extends AbstractController {
     public function getDashboard() {
         $user = $this->authMan->getEffectiveUser();
         $billableGroups = array_merge($this->groupRepo->getGroupsSatisfyingRelation($user->getUserId(), GroupRelationType::ADMIN), $this->groupRepo->getGroupsSatisfyingRelation($user->getUserId(), GroupRelationType::OWNER));
-
-        return $this->h->getViewResponse("billDashboard", array("title" => "Bills", "billableGroups" => $billableGroups));
+        $duePayments = $this->paymentRepo->getPendingPaymentsForUserId($user->getUserId());
+        $duePaymentsOut = array();
+        $totalDue = 0;
+        foreach ($duePayments as $payment) {
+            $bill = $this->billRepo->getByBillId($payment->getBillId());
+            $totalDue += $payment->getAmount();
+            $duePaymentsOut[] = array("payment" => $payment, "bill" => $bill, "group" => $this->groupRepo->getById($bill->getGroupId()));
+        }
+        return $this->h->getViewResponse("billDashboard", array("title" => "Bills", "duePayments" => $duePaymentsOut, "billableGroups" => $billableGroups, "totalDue" => $totalDue));
     }
 
     /**
@@ -64,7 +85,7 @@ class BillsController extends AbstractController {
      */
     public function postAddBill(BillCreationFormRequest $formRequest) {
         if (!$formRequest->isValid()) {
-            return new JsonResponse(array("errors" => $formRequest->getErrors()));
+            return new RedirectResponse("bills.php");
         }
 
         $bill = new Bill($this->authMan->getEffectiveUser()->getUserId(),
@@ -81,7 +102,8 @@ class BillsController extends AbstractController {
         $count = count($applicableRelations);
         $amountPayable = round(($bill->getAmount() / (float)$count));
         foreach ($applicableRelations as $relation) {
-            
+            $payment = new Payment($bill->getBillId(), $relation->getUser()->getUserId(), false, $amountPayable);
+            $this->paymentRepo->add($payment);
         }
     }
 

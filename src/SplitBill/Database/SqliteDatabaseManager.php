@@ -18,7 +18,7 @@ class SqliteDatabaseManager {
     public function __construct(IApplication $app) {
         $config = $app->getConfig();
         $path = $config['sqlite']['path'];
-        $this->sqlite = new SQLite3($path);
+        $this->sqlite = new WrappedSQLite3($path);
     }
 
     /**

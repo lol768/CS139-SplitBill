@@ -5,6 +5,7 @@ namespace SplitBill\Database;
 use SplitBill\Entity\Bill;
 use SplitBill\Entity\Group;
 use SplitBill\Entity\GroupRelationEntry;
+use SplitBill\Entity\Payment;
 use SplitBill\Entity\User;
 
 interface IEntityMapper {
@@ -26,6 +27,12 @@ interface IEntityMapper {
      * @return Bill
      */
     public function mapBillFromArray(array $data);
+
+    /**
+     * @param array $data
+     * @return Payment
+     */
+    public function mapPaymentFromArray(array $data);
 
     /**
      * @param array $data

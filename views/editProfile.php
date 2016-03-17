@@ -53,7 +53,7 @@ use SplitBill\Entity\User;
         <h2>Upload avatar</h2>
         <div class="groupBox">
             <?php if ($user->getHasAvatar()): ?>
-                <img src="assets/avatars/<?php se($user->getUserId()); ?>.png" class="current-avatar">
+                <img src="assets/avatars/<?php se($user->getUserId()); ?>.png" alt="User's current avatar" class="current-avatar">
             <?php endif; ?>
             <form class="vertical-form" method="POST" action="upload_avatar.php" enctype="multipart/form-data">
                 <?php csrf_input(); ?>

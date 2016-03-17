@@ -353,6 +353,12 @@ SplitBill.HomepageAuthModals = {
 
 jQuery(function() {
     console.log("SplitBill v" + SplitBill.Configuration.version);
+    var profilingData = JSON.parse(jQuery("#profiling").html());
+    console.log("Did " + profilingData.queries.length + " SQL queries to build the page:");
+    for (var item of profilingData.queries) {
+        console.log(item);
+    }
+    console.log("Total time spent rendering server-side: " + profilingData.time + "ms");
     console.log("Begin loading modules...");
     var modules = JSON.parse(jQuery("#appState").html()).modules;
     for (var module of modules) {

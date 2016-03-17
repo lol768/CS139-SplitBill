@@ -132,7 +132,6 @@ function startApp() {
     $app = new Application($container); // singleton application, one per request
     Application::setInstance($app); // allow us to retrieve the application instance from anywhere
     $container->registerSingleton($app);
-
 }
 
 /**

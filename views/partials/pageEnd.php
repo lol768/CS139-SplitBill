@@ -16,5 +16,6 @@
     </div>
 </div>
 <script type="application/json" id="appState"><?php echo json_encode(array("modules" => $frontendModules)); ?></script>
+<script type="application/json" id="profiling"><?php echo json_encode(array("queries" => $queriesLogged, "time" => $timeDiff)); ?></script>
 </body>
 </html>

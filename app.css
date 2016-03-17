@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Gentium+Basic:400,700|Lato:400,300");
 body.ioc {
+  font-size: 14px;
+  padding: 1rem;
   font-family: monospace;
   background-color: #fff;
   color: #000; }
@@ -20,6 +22,8 @@ body.ioc {
   body.ioc header {
     display: flex;
     border: 1px dashed #000;
+    font-weight: bold;
+    font-size: 2rem;
     justify-content: center;
     align-items: center; }
   body.ioc pre {
@@ -541,5 +545,16 @@ hr {
 
 a.clear-user-search-results i {
   color: #333 !important; }
+
+#skip-to-content {
+  position: absolute;
+  left: -9999999px; }
+
+#skip-to-content:focus {
+  position: relative;
+  left: 0;
+  background-color: white;
+  display: block;
+  border: 2px dotted #e7325c; }
 
 /*# sourceMappingURL=app.css.map */

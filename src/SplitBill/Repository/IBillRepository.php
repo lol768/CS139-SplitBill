@@ -13,6 +13,12 @@ interface IBillRepository {
     public function getByGroupId($groupId);
 
     /**
+     * @param $billId
+     * @return Bill
+     */
+    public function getByBillId($billId);
+
+    /**
      * @param Bill $bill
      * @return Bill
      */

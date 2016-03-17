@@ -1,6 +1,8 @@
 <?php /** @var $myGroups array */
 /** @var $billableGroups Group[] */
-use SplitBill\Entity\Group; ?>
+/** @var $duePayments Payment[] */
+use SplitBill\Entity\Group;
+use SplitBill\Entity\Payment; ?>
 <?php require("partials/pageBegin.php"); ?>
 <?php require("partials/nav.php"); ?>
 <main class="bills">
@@ -13,10 +15,15 @@ use SplitBill\Entity\Group; ?>
             <?php endif; ?></h1>
         <?php require("partials/errors.php"); ?>
         <p>
-            This page gives you an overview of any outstanding bills and can be used to create new bills for a group.
+            This page gives you an overview of any outstanding bills and can also be used to create new bills for a group.
         </p>
-        <h2>Unpaid bills</h2>
-
+        <h2>Unpaid bills (total: <?php print_integer_money($totalDue); ?> due)</h2>
+        <?php foreach ($duePayments as $payment): ?>
+            <p>
+                <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>
+                <?php se($payment['group']->getName()); ?>
+            </p>
+        <?php endforeach; ?>
     </div>
 </main>
 
@@ -32,17 +39,17 @@ use SplitBill\Entity\Group; ?>
             <?php csrf_input(); ?>
             <label>
                 Company:
-                <input type="text" name="company" placeholder="British Gas">
+                <input type="text" name="company" placeholder="British Gas" value="<?php old_input("company"); ?>" required>
             </label>
 
             <label>
                 Description:
-                <input type="text" name="description" placeholder="Heating">
+                <input type="text" name="description" placeholder="Heating" value="<?php old_input("description"); ?>" required>
             </label>
 
             <label>
                 Amount:
-                <input type="text" name="amount" placeholder="£5.00">
+                <input type="text" name="amount" placeholder="£5.00" value="<?php old_input("amount"); ?>" required>
             </label>
 
             <label>

@@ -17,6 +17,7 @@ use SplitBill\Entity\User;
     <?php require(__DIR__ . "/../jsTemplates/userSearchResult.php"); ?>
 </head>
 <body>
+<a href="#content" id="skip-to-content">Skip to main content</a>
 <noscript>
     <div class="flash flash-error"><p>It appears you have JavaScript disabled. This site requires JavaScript to operate.</p></div>
 </noscript>

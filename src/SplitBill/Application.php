@@ -22,6 +22,11 @@ class Application implements IApplication {
     /* --------------------------- */
 
     /**
+     * @var float
+     */
+    private $startTime;
+
+    /**
      * @var IContainer
      */
     private $container;
@@ -43,6 +48,7 @@ class Application implements IApplication {
     public function __construct(IContainer $container) {
         $this->container = $container;
         $this->rootPath = dirname(dirname(__DIR__));
+        $this->startTime = microtime(true);
         $this->configCache = include($this->rootPath . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "app.php");
     }
 
@@ -59,5 +65,12 @@ class Application implements IApplication {
      */
     public function getConfig() {
         return $this->configCache;
+    }
+
+    /**
+     * @return float Time at which app was initialised.
+     */
+    public function getStartTime() {
+        return $this->startTime;
     }
 }

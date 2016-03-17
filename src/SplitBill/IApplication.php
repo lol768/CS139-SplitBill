@@ -23,4 +23,9 @@ interface IApplication {
      */
     public function getConfig();
 
+    /**
+     * @return float Time at which app was initialised.
+     */
+    public function getStartTime();
+
 }

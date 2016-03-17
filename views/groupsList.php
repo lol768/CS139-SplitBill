@@ -29,7 +29,7 @@ use SplitBill\Entity\Group; ?>
                         <h3>Members</h3>
                         <ul>
                             <?php foreach ($relations as $relation): ?>
-                                <li><?php se($relation->getUser()->getName()); ?> (<?php se($relation->getRelationType()); ?>) </li>
+                                <li><?php se($relation->getUser()->getName()); ?> (<?php se($relation->getRelationType()); ?>) <?php if ($relation->getUser()->getUserId() !== $user->getUserId()): ?><a href="#"><i class="fa fa-trash"></i></a><?php endif; ?></li>
                             <?php endforeach; ?>
                         </ul>
                         <hr>

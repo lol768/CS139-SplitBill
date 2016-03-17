@@ -23,13 +23,13 @@ class Payment {
 
     /**
      * Payment constructor.
-     * @param int $paymentId
+     * @param $billId
      * @param int $userId
      * @param bool $completed
      * @param int $amount
      */
-    public function __construct($paymentId, $userId, $completed, $amount) {
-        $this->paymentId = $paymentId;
+    public function __construct($billId, $userId, $completed, $amount) {
+        $this->billId = $billId;
         $this->userId = $userId;
         $this->completed = $completed;
         $this->amount = $amount;
@@ -127,6 +127,20 @@ class Payment {
      */
     public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt() {
+        return $this->updatedAt;
     }
 
     /**

@@ -41,6 +41,11 @@ function csrf_meta() {
     echo "<meta name=\"X-Csrf-Token\" content=\"" . $antiForgery->getCurrentCsrfToken() . "\" id=\"csrf-token\">";
 }
 
+function print_integer_money($amount) {
+    $amount = $amount / 100.0;
+    se("£" . number_format($amount, 2));
+}
+
 function old_input($key) {
     $fs = getFlashSession();
     if ($fs->has("oldData")) {

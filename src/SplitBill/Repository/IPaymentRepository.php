@@ -17,4 +17,10 @@ interface IPaymentRepository {
      * @return Payment
      */
     public function update(Payment $payment);
+
+    /**
+     * @param $userId
+     * @return Payment[]
+     */
+    public function getPendingPaymentsForUserId($userId);
 }

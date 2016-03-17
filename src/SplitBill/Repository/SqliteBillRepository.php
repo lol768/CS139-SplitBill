@@ -62,9 +62,20 @@ class SqliteBillRepository extends AbstractSqliteRepository implements IBillRepo
      * @return Bill[]
      */
     public function getByGroupId($groupId) {
-        $sql = "SELECT * FROM bills WHERE bills.group_id = :bill_id";
+        $sql = "SELECT * FROM bills WHERE bills.group_id = :group_id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":bill_id", $groupId, SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $groupId, SQLITE3_INTEGER);
         return $this->getMultipleEntitiesViaStatement($stmt);
+    }
+
+    /**
+     * @param $billId
+     * @return Bill
+     */
+    public function getByBillId($billId) {
+        $sql = "SELECT * FROM bills WHERE bills.bill_id = :bill_id LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":bill_id", $billId, SQLITE3_INTEGER);
+        return $this->getSingleEntityViaStatement($stmt);
     }
 }

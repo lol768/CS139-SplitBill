@@ -6,6 +6,7 @@ use DateTime;
 use SplitBill\Entity\Bill;
 use SplitBill\Entity\Group;
 use SplitBill\Entity\GroupRelationEntry;
+use SplitBill\Entity\Payment;
 use SplitBill\Entity\User;
 
 class SqliteEntityMapper implements IEntityMapper {
@@ -56,5 +57,17 @@ class SqliteEntityMapper implements IEntityMapper {
         $bill->setUpdatedAt(DateTime::createFromFormat("U", $data['updated_at']));
         $bill->setBillId($data['bill_id']);
         return $bill;
+    }
+
+    /**
+     * @param array $data
+     * @return Payment
+     */
+    public function mapPaymentFromArray(array $data) {
+        $payment = new Payment($data['bill_id'], $data['user_id'], $data['completed'] == 1, $data['amount']);
+        $payment->setPaymentId($data['payment_id']);
+        $payment->setCreatedAt(DateTime::createFromFormat("U", $data['created_at']));
+        $payment->setUpdatedAt(DateTime::createFromFormat("U", $data['updated_at']));
+        return $payment;
     }
 }

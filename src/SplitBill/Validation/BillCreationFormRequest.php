@@ -66,7 +66,7 @@ class BillCreationFormRequest implements IFormRequest {
         }
 
         $this->company = $data['company'];
-        $this->amount = str_replace(".", "", $data['amount']);
+        $this->amount = (int) ($data['amount'] * 100);
         $this->description = $data['description'];
     }
 
