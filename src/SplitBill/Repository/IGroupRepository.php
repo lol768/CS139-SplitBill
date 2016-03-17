@@ -14,14 +14,14 @@ interface IGroupRepository {
 
     /**
      * @param int $userId
-     * @param string $role
+     * @param string|null $role
      * @return Group[]
      */
     public function getGroupsSatisfyingRelation($userId, $role);
 
     /**
      * @param Group $group
-     * @return \SplitBill\Entity\Group[]
+     * @return \SplitBill\Entity\GroupRelationEntry[]
      */
     public function getRelationsForGroup(Group $group);
 
@@ -37,6 +37,21 @@ interface IGroupRepository {
      * @param string $role
      */
     public function addRelation($groupId, $userId, $role);
+
+    /**
+     * @param int $groupId
+     * @param int $userId
+     * @param string $role
+     */
+    public function addInvitation($groupId, $userId, $role);
+
+    /**
+     * @param int $groupId
+     * @param int $userId
+     * @param string $role
+     * @return bool
+     */
+    public function hasInvitation($groupId, $userId, $role);
 
     /**
      * @param Group $user

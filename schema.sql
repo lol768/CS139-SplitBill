@@ -60,3 +60,11 @@ CREATE TABLE email_confirmations(
   token VARCHAR NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
+
+CREATE TABLE invites(
+  group_id UNSIGNED INTEGER NOT NULL,
+  user_id UNSIGNED INTEGER NOT NULL,
+  role VARCHAR NOT NULL,
+  FOREIGN KEY(group_id) REFERENCES groups(group_id),
+  FOREIGN KEY(user_id) REFERENCES users(user_id)
+);

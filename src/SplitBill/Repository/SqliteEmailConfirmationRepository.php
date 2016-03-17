@@ -8,19 +8,6 @@ use SplitBill\Entity\EmailConfirmation;
 
 class SqliteEmailConfirmationRepository extends AbstractSqliteRepository implements IEmailConfirmationRepository {
     /**
-     * @var \SQLite3
-     */
-    private $db;
-
-    /**
-     * SqliteUserRepository constructor.
-     * @param SqliteDatabaseManager $dbm
-     */
-    public function __construct(SqliteDatabaseManager $dbm) {
-        $this->db = $dbm->getSqlite();
-    }
-
-    /**
      * @param $userId
      * @return EmailConfirmation
      */

@@ -27,7 +27,7 @@ class AuthViewDataProvider implements IViewDataProvider {
 
     public function modifyView($viewName, &$vars) {
         $vars["user"] = $this->authManager->getEffectiveUser();
-        $vars['real_user'] = $this->authManager->getRealUser();
+        $vars['realUser'] = $this->authManager->getRealUser();
         $vars['csrfToken'] = $this->antiRequestForgery->getCurrentCsrfToken();
     }
 }

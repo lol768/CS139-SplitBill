@@ -55,6 +55,7 @@ class SessionAuthenticationManager implements IAuthenticationManager {
         }
         $this->realUser = $instance;
         $this->userSession->set("user_id", $userId);
+        $this->unmasquerade();
     }
 
     public function masquerade($userId) {

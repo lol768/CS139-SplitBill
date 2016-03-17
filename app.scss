@@ -595,6 +595,15 @@ main .vertical-form input[type=submit] {
     right: 1rem;
     color: #fff;
   }
+
+  a {
+    color: #fff;
+  }
+}
+
+.flash-system {
+  background-color: $primaryColor;
+  border: 1px solid #aaa;
 }
 
 .flash-warning {

@@ -17,5 +17,6 @@ return array(
     "sqlite" => array(
         // put outside webroot..
         "path" => "splitter.sqlite3"
-    )
+    ),
+    "masquerade_ips" => array("127.0.0.1", "172.26.4.214")
 );

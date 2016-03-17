@@ -1,4 +1,7 @@
-<?php /** @var $brand string */ ?>
+<?php /** @var $brand string */
+use SplitBill\Entity\User;
+
+/** @var $user User */ /** @var $realUser User */ ?>
 <?php $frontendModules = array("AlertManager", "WebSockets", "Modals", "FlashMessages", "JQueryCustomisations", "Dropdowns"); ?>
 <!doctype html>
 <html lang="en">
@@ -19,4 +22,7 @@
 </noscript>
 <?php if (isset($flashMessage)): ?> <?php /** @var $flashType string */ ?>
     <div class="flash flash-<?php se($flashType); ?>"><a href="#" class="close"><i class="fa fa-times"></i></a><p><?php se($flashMessage); ?></p></div>
+<?php endif; ?>
+<?php if ($user !== null && $realUser !== $user): ?>
+    <div class="flash flash-system"><p><i class="fa fa-gears"></i> Currently masquerading as <?php se($user->getName()); ?> (<a href="masquerade.php?uid=<?php se($realUser->getUserId()); ?>">quit</a>)</p></div>
 <?php endif; ?>

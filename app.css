@@ -451,6 +451,12 @@ main .vertical-form input[type=submit] {
     top: 0.5rem;
     right: 1rem;
     color: #fff; }
+  .flash a {
+    color: #fff; }
+
+.flash-system {
+  background-color: #333;
+  border: 1px solid #aaa; }
 
 .flash-warning {
   background-color: #cf8b00; }

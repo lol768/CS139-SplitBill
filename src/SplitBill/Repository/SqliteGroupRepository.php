@@ -34,10 +34,16 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
 
     /**
      * @param int $userId
-     * @param string $role
+     * @param string|null $role
      * @return Group[]
      */
     public function getGroupsSatisfyingRelation($userId, $role) {
+        if ($role == null) {
+            $sql = "SELECT * FROM groups gr INNER JOIN users_groups ug ON gr.group_id = ug.group_id WHERE ug.user_id = :user_id;";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
+            return $this->getMultipleEntitiesViaStatement($stmt);
+        }
         $sql = "SELECT * FROM groups gr INNER JOIN users_groups ug ON gr.group_id = ug.group_id WHERE ug.user_id = :user_id AND ug.role = :role;";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
@@ -111,5 +117,35 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
             $finalObjects[] = $this->mapper->mapGroupRelationEntryFromArray($results);
         }
         return $finalObjects;
+    }
+
+    /**
+     * @param int $groupId
+     * @param int $userId
+     * @param string $role
+     */
+    public function addInvitation($groupId, $userId, $role) {
+        $sql = "INSERT INTO invites VALUES(:group_id, :user_id, :role)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $groupId, SQLITE3_INTEGER);
+        $stmt->bindValue(":role", $role, SQLITE3_TEXT);
+        $stmt->execute();
+    }
+
+    /**
+     * @param int $groupId
+     * @param int $userId
+     * @param string $role
+     * @return bool
+     */
+    public function hasInvitation($groupId, $userId, $role) {
+        $sql = "SELECT group_id FROM invites WHERE group_id = :group_id AND user_id = :user_id AND role = :role";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
+        $stmt->bindValue(":group_id", $groupId, SQLITE3_INTEGER);
+        $stmt->bindValue(":role", $role, SQLITE3_TEXT);
+        $res = $stmt->execute();
+        return $res->fetchArray(SQLITE3_ASSOC) !== false;
     }
 }

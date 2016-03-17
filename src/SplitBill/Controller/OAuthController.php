@@ -63,8 +63,8 @@ class OAuthController extends AbstractController {
     /**
      * GET /endIts.php
      */
-    public function getEndLogin($uuid) {
-        if ($this->authManager->getRealUser() !== null) {
+    public function getEndLogin($uuid, IFlashSession $flash) {
+        if ($this->authManager->getEffectiveUser() !== null) {
             return $this->h->getPrettyErrorResponse("Cannot login via ITS whilst already logged in.");
         }
         $userData = $this->oauthManager->getUserInfoUsingUuid($uuid);
@@ -77,6 +77,7 @@ class OAuthController extends AbstractController {
             $user->setItsUsername($userCode);
             $this->userRepo->add($user);
             $this->authManager->setActualUserId($user->getUserId());
+            $flash->set("flash", array("message" => "New user created for ITS account $userCode", "type" => "success"));
         }
         return new RedirectResponse("index.php");
     }

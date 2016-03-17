@@ -1,6 +1,7 @@
 <?php
 
 namespace SplitBill\Request;
+use SplitBill\IApplication;
 
 /**
  * Need to store: URL, headers, request method.
@@ -134,6 +135,10 @@ class HttpRequest {
 
     public function isAjax() {
         return $this->getHeader("X-Requested-With") !== null && strtolower($this->getHeader("X-Requested-With")) == "xmlhttprequest";
+    }
+
+    public function getIpAddress() {
+        return $_SERVER['REMOTE_ADDR'];
     }
 
 

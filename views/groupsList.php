@@ -6,6 +6,7 @@ use SplitBill\Entity\Group; ?>
 <main class="groups">
     <div class="container">
         <h1>Groups <a class="button button-right modal-trigger" data-selector=".group-add-modal"><i class="fa fa-plus"></i> Create group</a></h1>
+        <?php require("partials/errors.php"); ?>
         <p>
             Groups are used to manage collections of people subject to bills. From this page, you can create your
             own group and manage their details.
@@ -15,15 +16,18 @@ use SplitBill\Entity\Group; ?>
             <?php
             $group = $groupEntry['group'];
             $relations = $groupEntry['relations'];
+            $myRelation = $groupEntry['myRelation'];
             /** @var $relations \SplitBill\Entity\GroupRelationEntry[] */
+            /** @var $myRelation \SplitBill\Entity\GroupRelationEntry */
             /** @var $group Group */ ?>
             <div class="groupBox">
-                <h1><?php se($group->getName()); ?></h1>
+                <h1><i class="fa fa-users"></i> <?php se($group->getName()); ?></h1>
                 <ul>
                     <?php foreach ($relations as $relation): ?>
                         <li><?php se($relation->getUser()->getName()); ?> (<?php se($relation->getRelationType()); ?>) </li>
                     <?php endforeach; ?>
                 </ul>
+                <?php if ($myRelation->getRelationType() === "owner"): ?>
                 <h3>Invite a user</h3>
                 <form action="invite_user.php" method="POST" class="vertical-form">
                     <?php csrf_input(); ?>
@@ -37,6 +41,7 @@ use SplitBill\Entity\Group; ?>
                     </label>
                     <input type="submit" value="Send invite" class="button">
                 </form>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
 
