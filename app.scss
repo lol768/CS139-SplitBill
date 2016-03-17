@@ -1,11 +1,11 @@
 // Begin IoC debug styles..
 body.ioc {
   font-family: monospace;
-  background-color: #000;
-  color: #0f0;
+  background-color: #fff;
+  color: #000;
   table {
     border-collapse: collapse;
-    border: 1px dashed #0f0;
+    border: 1px dashed #000;
   }
   ul {
     list-style-type: square;
@@ -18,14 +18,14 @@ body.ioc {
     padding: 0 1rem;
   }
   tr {
-    border-bottom: 1px dashed #0f0;
+    border-bottom: 1px dashed #000;
   }
   li {
     font-family: monospace;
   }
   header {
     display: flex;
-    border: 1px dashed #0f0;
+    border: 1px dashed #000;
     justify-content: center;
     align-items: center;
   }
@@ -340,6 +340,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   }
 }
 
+.no-alerts {
+  padding: 0.5rem;
+}
+
 label {
   font-size: 1.2rem;
   color: #444;
@@ -582,6 +586,7 @@ main .vertical-form input[type=submit] {
 
 .flash {
   width: 100%;
+  flex-shrink: 0;
   padding: 0 0;
   line-height: 0.5;
   text-align: center;

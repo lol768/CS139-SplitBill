@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Gentium+Basic:400,700|Lato:400,300");
 body.ioc {
   font-family: monospace;
-  background-color: #000;
-  color: #0f0; }
+  background-color: #fff;
+  color: #000; }
   body.ioc table {
     border-collapse: collapse;
-    border: 1px dashed #0f0; }
+    border: 1px dashed #000; }
   body.ioc ul {
     list-style-type: square; }
   body.ioc td, body.ioc th {
@@ -14,12 +14,12 @@ body.ioc {
   body.ioc td:nth-child(2) {
     padding: 0 1rem; }
   body.ioc tr {
-    border-bottom: 1px dashed #0f0; }
+    border-bottom: 1px dashed #000; }
   body.ioc li {
     font-family: monospace; }
   body.ioc header {
     display: flex;
-    border: 1px dashed #0f0;
+    border: 1px dashed #000;
     justify-content: center;
     align-items: center; }
   body.ioc pre {
@@ -263,6 +263,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
     display: block;
     margin: 0; }
 
+.no-alerts {
+  padding: 0.5rem; }
+
 label {
   font-size: 1.2rem;
   color: #444; }
@@ -440,6 +443,7 @@ main .vertical-form input[type=submit] {
 
 .flash {
   width: 100%;
+  flex-shrink: 0;
   padding: 0 0;
   line-height: 0.5;
   text-align: center;

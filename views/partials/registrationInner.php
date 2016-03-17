@@ -3,7 +3,7 @@
 <form class="vertical-form" method="POST" action="register.php">
     <?php csrf_input(); ?>
     <label>
-        Full name: <input type="text" name="name" value="<?php old_input("name"); ?>">
+        Full name: <input type="text" name="name" value="<?php old_input("name"); ?>" required>
     </label>
     <label>
         E-mail: <input type="email" name="email" value="<?php old_input("email"); ?>" required>
