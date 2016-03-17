@@ -2,9 +2,11 @@
 
 namespace SplitBill\Controller;
 
+use SplitBill\Authentication\IAuthenticationManager;
 use SplitBill\DependencyInjection\IContainer;
 use SplitBill\Helper\IControllerHelper;
 use SplitBill\IApplication;
+use SplitBill\Repository\IUserRepository;
 use SplitBill\Request\HttpRequest;
 use SplitBill\Response\RedirectResponse;
 use SplitBill\Session\IFlashSession;
@@ -19,12 +21,17 @@ class AvatarController extends AbstractController {
      * @var IApplication
      */
     private $app;
+    /**
+     * @var IAuthenticationManager
+     */
+    private $authMan;
 
 
-    public function __construct(IControllerHelper $helper, IApplication $app) {
+    public function __construct(IControllerHelper $helper, IApplication $app, IAuthenticationManager $authMan) {
         $this->h = $helper;
         $this->h->requireLoggedIn();
         $this->app = $app;
+        $this->authMan = $authMan;
     }
 
     /**
@@ -33,7 +40,8 @@ class AvatarController extends AbstractController {
      * @param IFlashSession $flash
      * @return RedirectResponse
      */
-    public function postUploadAvatar(HttpRequest $request, IFlashSession $flash) {
+    public function postUploadAvatar(HttpRequest $request, IFlashSession $flash, IUserRepository $userRepo) {
+        $uid = $this->authMan->getRealUser()->getUserId();
         $files = $request->getUploadedFiles();
         if (!array_key_exists("avatar", $files)) {
             $flash->set("errors", array("You didn't upload an avatar."));
@@ -70,7 +78,16 @@ class AvatarController extends AbstractController {
 
         $largerImage = imagecreatetruecolor(200, 200);
         imagecopyresampled($largerImage, $image, 0, 0, 0, 0, 200, 200, $sizeInfo[0], $sizeInfo[1]);
-        die();
+
+        imagepng($thumbnailImage, $this->app->getRootPath() . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "avatars" . DIRECTORY_SEPARATOR . $uid . "_t.png");
+        imagepng($largerImage, $this->app->getRootPath() . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "avatars" . DIRECTORY_SEPARATOR . $uid . ".png");
+        imagedestroy($image);
+        imagedestroy($thumbnailImage);
+        imagedestroy($largerImage);
+        $flash->set("flash", array("type" => "success", "message" => "Avatar uploaded."));
+        $this->authMan->getRealUser()->setHasAvatar(true);
+        $userRepo->update($this->authMan->getRealUser());
+        return new RedirectResponse("edit_profile.php");
     }
 
 }

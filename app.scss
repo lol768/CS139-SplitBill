@@ -369,6 +369,7 @@ label {
   align-content: center;
   align-items: center;
   background-attachment: fixed;
+  background-position: 100% 100%;
   h1 {
     text-shadow: 1px 1px 5px #000;
     font-family: 'Lato', sans-serif;
@@ -600,6 +601,10 @@ main .vertical-form input[type=submit] {
   background-color: #cf8b00;
 }
 
+.flash-success {
+  background-color: #288815;
+}
+
 .flash-error {
   background-color: #cf2000;
 }
@@ -610,4 +615,13 @@ body.modals-enabled .ajax-error-modal .modal-inner {
 
 .profile h2 {
   margin-top: 1rem;
+}
+.profile .groupBox {
+  position: relative;
+}
+.profile .current-avatar {
+  position: absolute;
+  right: 1rem;
+  width: 100px;
+  top: 1rem;
 }

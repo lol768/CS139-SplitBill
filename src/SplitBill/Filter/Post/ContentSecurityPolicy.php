@@ -13,9 +13,9 @@ class ContentSecurityPolicy implements IPostResponseFilter  {
      * @return AbstractResponse
      */
     public function handleResponse(AbstractResponse $response) {
-//        $response->setHeader("Content-Security-Policy",
-//            "default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com"
-//        );
+        $response->setHeader("Content-Security-Policy",
+            "default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' https://cdnjs.cloudflare.com; connect-src ws://americano.adamwilliams.host:8765;"
+        );
         return $response;
     }
 }

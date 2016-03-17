@@ -49,11 +49,12 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
         $user->setCreatedAt(DateTime::createFromFormat("U", $arr['created_at']));
         $user->setUpdatedAt(DateTime::createFromFormat("U", $arr['updated_at']));
         $user->setItsUsername($arr['its_username']);
+        $user->setHasAvatar($arr['has_avatar'] == 1);
         return $user;
     }
 
     public function add(User $user) {
-        $sql = "INSERT INTO users VALUES(NULL, :name, :email, :password, :created_at, :updated_at, :its_username, :active);";
+        $sql = "INSERT INTO users VALUES(NULL, :name, :email, :password, :created_at, :updated_at, :its_username, :active, :has_avatar);";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":name", $user->getName(), SQLITE3_TEXT);
         $stmt->bindValue(":password", $user->getPassword(), SQLITE3_TEXT);
@@ -62,6 +63,7 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
         $stmt->bindValue(":updated_at", $user->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
         $stmt->bindValue(":its_username", $user->getItsUsername(), SQLITE3_TEXT);
         $stmt->bindValue(":active", $user->getActive() ? 1 : 0, SQLITE3_INTEGER);
+        $stmt->bindValue(":has_avatar", $user->getHasAvatar() ? 1 : 0, SQLITE3_INTEGER);
         $stmt->execute();
         $user->setUserId($this->db->lastInsertRowID());
         return $user;
@@ -72,7 +74,7 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
      * @return User
      */
     public function update(User $user) {
-        $sql = "UPDATE users SET name = :name, email = :email, password = :password, created_at = :created_at, updated_at = :updated_at, its_username = :its_username, active = :active WHERE user_id = :user_id;";
+        $sql = "UPDATE users SET name = :name, email = :email, password = :password, created_at = :created_at, updated_at = :updated_at, its_username = :its_username, active = :active, has_avatar = :has_avatar WHERE user_id = :user_id;";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":name", $user->getName(), SQLITE3_TEXT);
         $stmt->bindValue(":user_id", $user->getUserId(), SQLITE3_INTEGER);
@@ -82,6 +84,7 @@ class SqliteUserRepository extends AbstractSqliteRepository implements IUserRepo
         $stmt->bindValue(":updated_at", $user->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
         $stmt->bindValue(":its_username", $user->getItsUsername(), SQLITE3_TEXT);
         $stmt->bindValue(":active", $user->getActive() ? 1 : 0, SQLITE3_INTEGER);
+        $stmt->bindValue(":has_avatar", $user->getHasAvatar() ? 1 : 0, SQLITE3_INTEGER);
         $stmt->execute();
         return $user;
     }

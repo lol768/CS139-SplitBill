@@ -41,6 +41,10 @@ class User {
      */
     private $active;
 
+    /**
+     * @var bool Whether the user has an avatar or not.
+     */
+    private $hasAvatar = false;
 
     /**
      * User constructor.
@@ -190,5 +194,17 @@ class User {
         return $this->active;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getHasAvatar() {
+        return $this->hasAvatar;
+    }
 
+    /**
+     * @param mixed $hasAvatar
+     */
+    public function setHasAvatar($hasAvatar) {
+        $this->hasAvatar = $hasAvatar;
+    }
 }

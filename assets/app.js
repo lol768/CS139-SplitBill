@@ -25,6 +25,7 @@ SplitBill.Dropdowns = {
         jQuery(".with-dropdown > a").click(function(event) {
             jQuery(this).parent().toggleClass("active");
             event.stopPropagation();
+            return false;
         });
 
         jQuery(".with-dropdown .menu").click(function(event) {

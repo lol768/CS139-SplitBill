@@ -6,7 +6,8 @@ CREATE TABLE users(
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
   its_username VARCHAR,
-  active INTEGER NOT NULL DEFAULT 0
+  active INTEGER NOT NULL DEFAULT 0,
+  has_avatar INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE groups(
