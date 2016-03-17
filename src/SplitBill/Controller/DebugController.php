@@ -53,11 +53,13 @@ class DebugController extends AbstractController {
         return new RedirectResponse("index.php");
     }
 
-    public function postMasquerade(HttpRequest $req, IApplication $app, MasqueradeFormRequest $m) {
+    public function postMasquerade(HttpRequest $req, IApplication $app, MasqueradeFormRequest $m, IFlashSession $flash) {
         if (in_array($req->getIpAddress(), $app->getConfig()['masquerade_ips'])) {
             if ($m->getUid() != $this->authMan->getRealUser()->getUserId()) {
                 $this->authMan->masquerade($m->getUid());
             }
+        } else {
+            $flash->set("flash", array("message" => "You're not authorised to do that.", "type" => "error"));
         }
         return new RedirectResponse("index.php");
     }

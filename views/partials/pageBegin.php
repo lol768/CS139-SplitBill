@@ -2,7 +2,7 @@
 use SplitBill\Entity\User;
 
 /** @var $user User */ /** @var $realUser User */ ?>
-<?php $frontendModules = array("AlertManager", "WebSockets", "Modals", "FlashMessages", "JQueryCustomisations", "Dropdowns"); ?>
+<?php $frontendModules = array("AlertManager", "WebSockets", "Modals", "FlashMessages", "JQueryCustomisations", "Dropdowns", "UserSearchResults"); ?>
 <!doctype html>
 <html lang="en">
 <head>

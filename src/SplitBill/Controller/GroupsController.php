@@ -15,6 +15,7 @@ use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\RedirectResponse;
 use SplitBill\Session\IFlashSession;
 use SplitBill\Validation\GroupAddFormRequest;
+use SplitBill\Validation\GroupDeleteFormRequest;
 use SplitBill\Validation\GroupUserInviteRequest;
 
 class GroupsController extends AbstractController {
@@ -82,13 +83,35 @@ class GroupsController extends AbstractController {
         if (!$groupAdd->isValid()) {
             return new RedirectResponse("groups.php");
         } else {
-            $group = new Group($groupAdd->getName(), $groupAdd->isSecret(), $groupAdd->isOpen());
+            $group = new Group($groupAdd->getName(), $groupAdd->isOpen(), $groupAdd->isSecret());
             $this->groupRepo->add($group);
             $this->groupRepo->addRelation($group->getGroupId(), $this->user->getUserId(), GroupRelationType::OWNER);
             return new RedirectResponse("groups.php");
         }
     }
 
+    /**
+     * POST delete_group.php
+     * @param GroupDeleteFormRequest $groupDelete
+     * @return RedirectResponse
+     */
+    public function postDeleteGroup(GroupDeleteFormRequest $groupDelete, IFlashSession $flash) {
+        if (!$groupDelete->isValid()) {
+            return new RedirectResponse("groups.php");
+        }
+        $groupDelete->getGroupToDelete()->setDeleted(true);
+        $this->groupRepo->update($groupDelete->getGroupToDelete());
+        $flash->set("flash", array("message" => $groupDelete->getGroupToDelete()->getName() . " has been removed.", "type" => "success"));
+        return new RedirectResponse("groups.php");
+    }
+
+    /**
+     * POST /invite_user.php
+     * @param GroupUserInviteRequest $groupInvite
+     * @param IFlashSession $flash
+     * @param IEmailService $email
+     * @return RedirectResponse
+     */
     public function postInviteGroup(GroupUserInviteRequest $groupInvite, IFlashSession $flash, IEmailService $email) {
         if (!$groupInvite->isValid()) {
             return new RedirectResponse("groups.php");

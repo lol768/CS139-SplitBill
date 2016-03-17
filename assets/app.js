@@ -70,6 +70,8 @@ SplitBill.UserSearchResults = {
                 $resultsContainer.html("");
                 $resultsContainer.append($resultsList);
             });
+            event.stopPropagation();
+            return false;
         });
     },
 

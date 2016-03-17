@@ -58,7 +58,7 @@ use SplitBill\Entity\User;
             <form class="vertical-form" method="POST" action="upload_avatar.php" enctype="multipart/form-data">
                 <?php csrf_input(); ?>
                 <label>
-                    Image: <input type="file" name="avatar">
+                    Image: <input type="file" name="avatar" accept="image/png,image/jpg,image/jpeg">
                 </label>
                 <span class="explanation">Images must be at least 200x200 and use either JPEG or PNG format.</span>
                 <input type="submit" class="button" value="Upload">

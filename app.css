@@ -489,6 +489,22 @@ body.modals-enabled .ajax-error-modal .modal-inner {
 .groups .groupBox + .groupBox {
   margin-top: 1rem; }
 
+.groups .panels {
+  display: flex;
+  align-content: space-between; }
+  .groups .panels div.member-list {
+    min-width: 34%; }
+  .groups .panels div.invites, .groups .panels div.management, .groups .panels div.permissions {
+    flex-grow: 2;
+    margin-left: 2rem;
+    border-left: 1px solid #aaa;
+    padding-left: 2rem; }
+
+hr {
+  border: none;
+  border-top: 1px solid #aaa;
+  margin-bottom: 1rem; }
+
 .groups h2 {
   margin-bottom: 0.5rem; }
 

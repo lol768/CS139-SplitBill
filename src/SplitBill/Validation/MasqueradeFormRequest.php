@@ -15,12 +15,12 @@ class MasqueradeFormRequest implements IFormRequest {
     private $errors = array();
 
     public function receiveFrom(array $data) {
-        FormRequestUtils::requireFieldsPresent($data, array("uid"), $this->errors);
+        FormRequestUtils::requireFieldsPresent($data, array("selectedId"), $this->errors);
         if (count($this->errors) > 0) {
             return;
         }
 
-       $this->uid = $data['uid'];
+       $this->uid = $data['selectedId'];
     }
 
     public function getErrors() {

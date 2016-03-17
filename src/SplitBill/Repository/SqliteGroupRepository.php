@@ -19,7 +19,7 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
      * @return Group
      */
     public function getById($groupId) {
-        $sql = "SELECT * FROM groups WHERE groups.group_id = :id LIMIT 1";
+        $sql = "SELECT * FROM groups WHERE groups.group_id = :id AND deleted = 0 LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":id", $groupId, SQLITE3_INTEGER);
         return $this->getSingleEntityViaStatement($stmt);
@@ -27,7 +27,7 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
 
     /** @return Group[] */
     public function getPublicGroups() {
-        $sql = "SELECT * FROM groups WHERE groups.secret = 0;";
+        $sql = "SELECT * FROM groups WHERE groups.secret = 0 AND deleted = 0;";
         $stmt = $this->db->prepare($sql);
         return $this->getMultipleEntitiesViaStatement($stmt);
     }
@@ -39,12 +39,12 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
      */
     public function getGroupsSatisfyingRelation($userId, $role) {
         if ($role == null) {
-            $sql = "SELECT * FROM groups gr INNER JOIN users_groups ug ON gr.group_id = ug.group_id WHERE ug.user_id = :user_id;";
+            $sql = "SELECT * FROM groups gr INNER JOIN users_groups ug ON gr.group_id = ug.group_id WHERE ug.user_id = :user_id AND deleted = 0;";
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
             return $this->getMultipleEntitiesViaStatement($stmt);
         }
-        $sql = "SELECT * FROM groups gr INNER JOIN users_groups ug ON gr.group_id = ug.group_id WHERE ug.user_id = :user_id AND ug.role = :role;";
+        $sql = "SELECT * FROM groups gr INNER JOIN users_groups ug ON gr.group_id = ug.group_id WHERE ug.user_id = :user_id AND ug.role = :role AND deleted = 0;";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
         $stmt->bindValue(":role", $role, SQLITE3_TEXT);
@@ -56,7 +56,7 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
      * @return Group
      */
     public function add(Group $group) {
-        $sql = "INSERT INTO groups VALUES(NULL, :name, :created_at, :updated_at, :open, :secret);";
+        $sql = "INSERT INTO groups VALUES(NULL, :name, :created_at, :updated_at, :open, :secret, 0);";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":name", $group->getName(), SQLITE3_TEXT);
         $stmt->bindValue(":created_at", $group->getCreatedAt()->format("U"), SQLITE3_INTEGER);
@@ -90,7 +90,7 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
      * @return Group
      */
     public function update(Group $group) {
-        $sql = "UPDATE groups SET name = :name, open = :open, secret = :secret, updated_at = :updated_at, created_at = :created_at WHERE group_id = :group_id;";
+        $sql = "UPDATE groups SET name = :name, open = :open, secret = :secret, updated_at = :updated_at, created_at = :created_at, deleted = :deleted WHERE group_id = :group_id;";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":group_id", $group->getGroupId(), SQLITE3_INTEGER);
         $stmt->bindValue(":name", $group->getName(), SQLITE3_TEXT);
@@ -98,6 +98,7 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
         $stmt->bindValue(":updated_at", $group->getUpdatedAt()->format("U"), SQLITE3_INTEGER);
         $stmt->bindValue(":open", $group->getIsOpen() ? 1 : 0, SQLITE3_INTEGER);
         $stmt->bindValue(":secret", $group->getIsSecret() ? 1 : 0, SQLITE3_INTEGER);
+        $stmt->bindValue(":deleted", $group->isDeleted() ? 1 : 0, SQLITE3_INTEGER);
         $stmt->execute();
         $group->setGroupId($this->db->lastInsertRowID());
         return $group;

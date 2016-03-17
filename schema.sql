@@ -16,7 +16,8 @@ CREATE TABLE groups(
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
   open INTEGER DEFAULT 0,
-  secret INTEGER DEFAULT 0
+  secret INTEGER DEFAULT 0,
+  deleted INTEGER DEFAULT 0
 );
 
 CREATE TABLE users_groups(

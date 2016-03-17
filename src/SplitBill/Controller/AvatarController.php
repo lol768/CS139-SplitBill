@@ -41,7 +41,7 @@ class AvatarController extends AbstractController {
      * @return RedirectResponse
      */
     public function postUploadAvatar(HttpRequest $request, IFlashSession $flash, IUserRepository $userRepo) {
-        $uid = $this->authMan->getRealUser()->getUserId();
+        $uid = $this->authMan->getEffectiveUser()->getUserId();
         $files = $request->getUploadedFiles();
         if (!array_key_exists("avatar", $files)) {
             $flash->set("errors", array("You didn't upload an avatar."));
@@ -85,8 +85,8 @@ class AvatarController extends AbstractController {
         imagedestroy($thumbnailImage);
         imagedestroy($largerImage);
         $flash->set("flash", array("type" => "success", "message" => "Avatar uploaded."));
-        $this->authMan->getRealUser()->setHasAvatar(true);
-        $userRepo->update($this->authMan->getRealUser());
+        $this->authMan->getEffectiveUser()->setHasAvatar(true);
+        $userRepo->update($this->authMan->getEffectiveUser());
         return new RedirectResponse("edit_profile.php");
     }
 
