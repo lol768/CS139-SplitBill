@@ -20,6 +20,19 @@ SplitBill.FlashMessages = {
     }
 };
 
+SplitBill.BillManager = {
+    wireUpEvents: function() {
+        jQuery(".select-all").click(function() {
+            jQuery(this).parent().find("input").each(function() {
+                jQuery(this).prop("checked", !jQuery(this).prop("checked"));
+            });
+        })
+    },
+    initialise: function() {
+        this.wireUpEvents();
+    }
+};
+
 SplitBill.Dropdowns = {
     wireUpEvents: function() {
         jQuery(".with-dropdown > a").click(function(event) {

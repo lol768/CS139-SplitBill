@@ -23,10 +23,12 @@ class DummyEmailService implements IEmailService {
     public function sendEmail($to, $subject, $viewName, $viewVars) {
         $viewName = "emails/" . $viewName;
         $plainViewName = $viewName . "Plain";
+
         $messageBody = "Email to $to with subject $subject:\n\n";
         $messageBody .= "Plain Text:\n";
         $messageBody .= $this->viewRenderer->renderView($plainViewName, $viewVars);
         $messageBody .= "\n\nHTML:\n" . $this->viewRenderer->renderView($viewName, $viewVars);
+
         file_put_contents("/tmp/email_" . SecurityUtil::generateSecurityToken(10) . ".txt", $messageBody);
     }
 }

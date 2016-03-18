@@ -1,9 +1,12 @@
 <?php /** @var $myGroups array */
 /** @var $billableGroups Group[] */
 /** @var $duePayments Payment[] */
+/** @var $completedPayments Payment[] */
+
 use SplitBill\Entity\Group;
 use SplitBill\Entity\Payment; ?>
 <?php require("partials/pageBegin.php"); ?>
+<?php $frontendModules[] = "BillManager"; ?>
 <?php require("partials/nav.php"); ?>
 <main class="bills">
     <div class="container">
@@ -21,18 +24,25 @@ use SplitBill\Entity\Payment; ?>
         <?php if (count($duePayments) == 0): ?>
             <p>Great! You have no due payments.</p>
         <?php else: ?>
-            <form action="mark_bills_paid.php" method="POST">
+            <form action="mark_bills_paid.php" method="POST" class="unpaid-bills-form">
+                <a href="#" class="select-all">(Select all)</a>
                 <?php csrf_input(); ?>
                 <?php foreach ($duePayments as $payment): ?>
                     <p>
-                        <input type="checkbox" name="check-<?php se($payment['payment']->getPaymentId()); ?>"> <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>
-                        as part of a payment to <?php se($payment['bill']->getCompany()); ?> (group '<?php se($payment['group']->getName()); ?>').
+                        <input type="checkbox" class="bill-checkbox" name="check-<?php se($payment['payment']->getPaymentId()); ?>"> <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>
+                        as part of a payment to <?php se($payment['bill']->getCompany()); ?> (group '<?php se($payment['group']->getName()); ?>'). (<a href="#" class="view-bill-details" data-bill="<?php se($payment['bill']->getBillId()); ?>">details</a>)
                     </p>
                 <?php endforeach; ?>
                 <input type="submit" class="button" value="Mark paid">
             </form>
         <?php endif; ?>
         <h2>Paid bills</h2>
+        <?php foreach ($completedPayments as $payment): ?>
+            <p>
+                <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>
+                as part of a payment to <?php se($payment['bill']->getCompany()); ?> (group '<?php se($payment['group']->getName()); ?>').  (<a href="#" class="view-bill-details" data-bill="<?php se($payment['bill']->getBillId()); ?>">details</a>)
+            </p>
+        <?php endforeach; ?>
 
     </div>
 </main>

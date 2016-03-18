@@ -68,6 +68,26 @@
                 of the <code>alt</code> attribute where possible to provide a contextual explanation of the image.
                 Colour blind individuals have been directly involved in the design and development of the site.
             </p>
+
+            <h2><i class="fa fa-cogs"></i> Maintainable</h2>
+            <p>
+                The entire <?php se($brand); ?> application makes use of dependency injection to try and attempts to
+                follow some of the SOLID object oriented design principles by depending on abstractions instead
+                of concrete implementations. For example, all of the controllers in the application make use of
+                interfaces to access data from the database. Behind the scenes, a simple inversion of control container
+                implementation resolves these interfaces based on a set of bindings (which can be seen
+                <a href="ioc_debug.php">here</a>) and instantiates the necessary concrete classes required for the
+                classes to work.
+            </p>
+
+            <p>
+                In this way, it's possible to switch implementations throughout the application from one configuration
+                file. For example, if the SQLite was found to not scale appropriately a set of new interface implementations
+                using MySQL could be developed and the entire application could be switched over to use them without
+                having to change any code provided the interface contracts were met. Similarly, for testing, it's
+                possible to swap in "dummy" or "stub" implementations of contracts (this was used to test the
+                email service without resulting in sending a large number of emails).
+            </p>
         </div>
     </div>
 

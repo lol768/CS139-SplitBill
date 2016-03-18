@@ -62,4 +62,15 @@ class SqlitePaymentRepository extends AbstractSqliteRepository implements IPayme
         $stmt->bindValue(":user_id", $userId, SQLITE3_INTEGER);
         return $this->getMultipleEntitiesViaStatement($stmt);
     }
+
+    /**
+     * @param $billId
+     * @return Payment[]
+     */
+    public function getPaymentsForBill($billId) {
+        $sql = "SELECT * FROM payments WHERE bill_id = :bill_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":bill_id", $billId, SQLITE3_INTEGER);
+        return $this->getMultipleEntitiesViaStatement($stmt);
+    }
 }

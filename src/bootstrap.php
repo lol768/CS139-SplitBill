@@ -29,7 +29,7 @@ function namespacedDirectoryLoader($class) {
 function isolatedViewInclude($_nameOfView, $_variables) {
     extract($_variables);
     unset($_variables);
-    require_once($_nameOfView);
+    require($_nameOfView);
 }
 
 /**

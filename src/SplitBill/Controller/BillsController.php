@@ -123,10 +123,11 @@ class BillsController extends AbstractController {
         foreach ($applicableRelations as $relation) {
             $payment = new Payment($bill->getBillId(), $relation->getUser()->getUserId(), false, $amountPayable);
             $this->paymentRepo->add($payment);
-            $this->emailService->sendEmail($relation->getUser()->getEmail(), "Payment due", "paymentDue", array(
+            $emailVars = array(
                 "name" => $relation->getUser()->getName(),
                 "billsUrl" => $this->getBillsUrl()
-            ));
+            );
+            $this->emailService->sendEmail($relation->getUser()->getEmail(), "Payment due", "paymentDue", $emailVars);
         }
     }
 
