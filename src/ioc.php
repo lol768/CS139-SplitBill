@@ -48,8 +48,8 @@ function wireUpContainer(IContainer $container) {
 
     $container->registerAbstractImplementation("\\SplitBill\\Handler\\IExceptionHandlerManager", "\\SplitBill\\Handler\\ExceptionHandlerManager");
     /** Email binding */
-    $container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\DummyEmailService");
-    //$container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\MultipartEmailService");
+    //$container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\DummyEmailService");
+    $container->registerAbstractImplementation("\\SplitBill\\Email\\IEmailService", "\\SplitBill\\Email\\MultipartEmailService");
 
     $container->registerAbstractImplementation("\\SplitBill\\Repository\\IEmailConfirmationRepository", "\\SplitBill\\Repository\\SqliteEmailConfirmationRepository");
     $container->registerSingleton($container->resolveClassInstance("\\SplitBill\\Session\\FlashSession"));
