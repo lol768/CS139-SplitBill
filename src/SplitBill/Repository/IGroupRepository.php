@@ -62,6 +62,13 @@ interface IGroupRepository {
     public function hasRelation($groupId, $userId, $role);
 
     /**
+     * @param int $groupId
+     * @param int $userId
+     * @return bool
+     */
+    public function hasAnyRelation($groupId, $userId);
+
+    /**
      * @param Group $user
      * @return Group
      */

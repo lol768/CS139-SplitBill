@@ -18,12 +18,22 @@ use SplitBill\Entity\Payment; ?>
             This page gives you an overview of any outstanding bills and can also be used to create new bills for a group.
         </p>
         <h2>Unpaid bills (total: <?php print_integer_money($totalDue); ?> due)</h2>
-        <?php foreach ($duePayments as $payment): ?>
-            <p>
-                <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>
-                <?php se($payment['group']->getName()); ?>
-            </p>
-        <?php endforeach; ?>
+        <?php if (count($duePayments) == 0): ?>
+            <p>Great! You have no due payments.</p>
+        <?php else: ?>
+            <form action="mark_bills_paid.php" method="POST">
+                <?php csrf_input(); ?>
+                <?php foreach ($duePayments as $payment): ?>
+                    <p>
+                        <input type="checkbox" name="check-<?php se($payment['payment']->getPaymentId()); ?>"> <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>
+                        as part of a payment to <?php se($payment['bill']->getCompany()); ?> (group '<?php se($payment['group']->getName()); ?>').
+                    </p>
+                <?php endforeach; ?>
+                <input type="submit" class="button" value="Mark paid">
+            </form>
+        <?php endif; ?>
+        <h2>Paid bills</h2>
+
     </div>
 </main>
 

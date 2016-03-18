@@ -14,6 +14,7 @@ use SplitBill\Repository\IBillRepository;
 use SplitBill\Repository\IGroupRepository;
 use SplitBill\Repository\IPaymentRepository;
 use SplitBill\Repository\IUserRepository;
+use SplitBill\Request\HttpRequest;
 use SplitBill\Response\AbstractResponse;
 use SplitBill\Response\JsonResponse;
 use SplitBill\Response\RedirectResponse;
@@ -83,7 +84,7 @@ class BillsController extends AbstractController {
      * @param BillCreationFormRequest $formRequest
      * @return AbstractResponse
      */
-    public function postAddBill(BillCreationFormRequest $formRequest) {
+    public function postAddBill(BillCreationFormRequest $formRequest, IFlashSession $flash) {
         if (!$formRequest->isValid()) {
             return new RedirectResponse("bills.php");
         }
@@ -94,6 +95,7 @@ class BillsController extends AbstractController {
 
         $this->billRepo->add($bill);
         $this->createPaymentsFromBill($bill, $formRequest->getGroup());
+        $flash->set("wsb", array($this->authMan->getEffectiveUser()->getFirstName() . " has added a new bill to group " . $formRequest->getGroup()->getName()));
         return new RedirectResponse("bills.php");
     }
 
@@ -105,6 +107,24 @@ class BillsController extends AbstractController {
             $payment = new Payment($bill->getBillId(), $relation->getUser()->getUserId(), false, $amountPayable);
             $this->paymentRepo->add($payment);
         }
+    }
+
+    public function postMarkPaid(HttpRequest $req, IAuthenticationManager $authMan, IFlashSession $flash) {
+        $duePayments = $this->paymentRepo->getPendingPaymentsForUserId($authMan->getEffectiveUser()->getUserId());
+        $i = 0;
+        foreach ($duePayments as $duePayment) {
+            if ($req->hasFormParameter("check-" . $duePayment->getPaymentId())) {
+                $duePayment->setCompleted(true);
+                $i++;
+                $this->paymentRepo->update($duePayment);
+            }
+        }
+        if ($i > 0) {
+            $flash->set("wsb", array($this->authMan->getEffectiveUser()->getFirstName() . " has paid $i bills!"));
+            $flash->set("flash", array("message" => "Bills marked as paid!", "type" => "success"));
+        }
+        
+        return new RedirectResponse("bills.php");
     }
 
 }

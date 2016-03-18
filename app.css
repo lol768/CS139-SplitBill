@@ -266,6 +266,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   .alert ul {
     display: block;
     margin: 0; }
+    .alert ul li + li {
+      margin-top: 0.2rem; }
 
 .no-alerts {
   padding: 0.5rem; }

@@ -23,6 +23,7 @@ class GroupUserInviteRequest implements IFormRequest {
     private $authMan;
 
     private $userToInvite;
+    /** @var Group */
     private $group;
     private $role;
     /**
@@ -58,6 +59,7 @@ class GroupUserInviteRequest implements IFormRequest {
             $this->errors[] = "You can't invite yourself to a group";
         }
 
+
         $selectedUser = $this->userRepo->getById($data['selectedId']);
         if ($selectedUser === null) {
             $this->errors[] = "Invalid user selection for invite.";
@@ -70,6 +72,10 @@ class GroupUserInviteRequest implements IFormRequest {
                 $hasPermission = true;
                 $this->group = $group;
             }
+        }
+
+        if ($this->groupRepo->hasAnyRelation($this->group->getGroupId(), $selectedUser->getUserId())) {
+            $this->errors[] = "User is already a part of this group.";
         }
 
         if (!$hasPermission) {

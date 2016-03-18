@@ -252,7 +252,11 @@ SplitBill.WebSockets = {
      * @param event
      */
     socketOpened: function(event) {
-        this.socket.send("SplitBill");
+        SplitBill.WebSockets.socket.send("SplitBill");
+        var dataBroadcast = JSON.parse(jQuery("#wsb").html());
+        for (var item of dataBroadcast) {
+            SplitBill.WebSockets.socket.send("bc " + item);
+        }
     },
 
     /**
@@ -261,6 +265,7 @@ SplitBill.WebSockets = {
      */
     socketMessageReceived: function(event) {
         var data = JSON.parse(event.data);
+        console.log("[WS] --> " + event.data);
         if (data.type == "alert") {
             SplitBill.AlertManager.addAlert(data.message);
         }
@@ -270,7 +275,7 @@ SplitBill.WebSockets = {
      * Handle browsers which don't close sockets properly..
      */
     beforeUnloadHandler: function() {
-        this.socket.close();
+        SplitBill.WebSockets.socket.close();
     },
 
     /**
@@ -278,7 +283,7 @@ SplitBill.WebSockets = {
      * @returns WebSocket
      */
     getSocket: function() {
-        return this.socket;
+        return SplitBill.WebSockets.socket;
     }
 };
 

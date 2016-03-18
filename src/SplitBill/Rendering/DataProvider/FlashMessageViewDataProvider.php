@@ -24,5 +24,9 @@ class FlashMessageViewDataProvider implements IViewDataProvider {
             $vars['flashMessage'] = $this->flash->get("flash")['message'];
             $vars['flashType'] = $this->flash->get("flash")['type'];
         }
+        $vars['wsb'] = array();
+        if ($this->flash->has("wsb")) {
+            $vars['wsb'] = $this->flash->get("wsb");
+        }
     }
 }

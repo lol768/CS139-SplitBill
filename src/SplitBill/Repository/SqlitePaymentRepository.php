@@ -33,7 +33,7 @@ class SqlitePaymentRepository extends AbstractSqliteRepository implements IPayme
      * @return Payment
      */
     public function update(Payment $payment) {
-        $sql = "UPDATE payments SET amount = :amount, bill_id = :bill_id, user_id = :user_id, completed = :completed, created_at = :created_at, updated_at = :upated_at WHERE payment_id = :payment_id";
+        $sql = "UPDATE payments SET amount = :amount, bill_id = :bill_id, user_id = :user_id, completed = :completed, created_at = :created_at, updated_at = :updated_at WHERE payment_id = :payment_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":amount", $payment->getAmount(), SQLITE3_INTEGER);
         $stmt->bindValue(":payment_id", $payment->getPaymentId(), SQLITE3_INTEGER);

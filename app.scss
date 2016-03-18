@@ -341,6 +341,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   ul {
     display: block;
     margin: 0;
+    li + li {
+      margin-top: 0.2rem;
+    }
   }
 }
 

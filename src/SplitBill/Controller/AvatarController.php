@@ -87,6 +87,7 @@ class AvatarController extends AbstractController {
         $flash->set("flash", array("type" => "success", "message" => "Avatar uploaded."));
         $this->authMan->getEffectiveUser()->setHasAvatar(true);
         $userRepo->update($this->authMan->getEffectiveUser());
+        $flash->set("wsb", array($this->authMan->getEffectiveUser()->getFirstName() . " has a new avatar!"));
         return new RedirectResponse("edit_profile.php");
     }
 
