@@ -5,6 +5,9 @@
     <label>
         Group name: <input type="text" name="name" value="<?php old_input("name"); ?>">
     </label>
+    <input type="hidden" name="visibility" value="secret">
+    <input type="hidden" name="invitationMode" value="closed">
+
     <!--
     <label>
         Visibility: <select name="visibility"><option value="secret">Secret</option><option value="public">Public</option></select>

@@ -11,7 +11,7 @@ SplitBill.Configuration = {
 SplitBill.FlashMessages = {
     wireUpEvents: function() {
         jQuery(".flash a.close").click(function() {
-            jQuery(this).parent().hide();
+            jQuery(this).parent().fadeOut();
         });
     },
 
@@ -174,7 +174,7 @@ SplitBill.AlertManager = {
             for (var alert of this.getAlerts()) {
                 $alertsList.append(jQuery("<li>").text(alert));
             }
-            $notsMenu.show();
+            jQuery(".notifications-dropdown").addClass("active");
         } else {
             jQuery(".no-alerts").show();
         }

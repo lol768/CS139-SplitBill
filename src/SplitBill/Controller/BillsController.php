@@ -4,6 +4,7 @@ namespace SplitBill\Controller;
 
 use SplitBill\Authentication\IAuthenticationManager;
 use SplitBill\DependencyInjection\IContainer;
+use SplitBill\Email\IEmailService;
 use SplitBill\Entity\Bill;
 use SplitBill\Entity\Group;
 use SplitBill\Entity\Payment;
@@ -47,11 +48,20 @@ class BillsController extends AbstractController {
      * @var IPaymentRepository
      */
     private $paymentRepo;
+    /**
+     * @var IEmailService
+     */
+    private $emailService;
+    /**
+     * @var HttpRequest
+     */
+    private $req;
 
 
     public function __construct(IControllerHelper $helper, IUserRepository $userRepo,
                                 IBillRepository $billRepo, IGroupRepository $groupRepo,
-                                IAuthenticationManager $authMan, IPaymentRepository $paymentRepo) {
+                                IAuthenticationManager $authMan, IPaymentRepository $paymentRepo,
+                                IEmailService $emailService, HttpRequest $req) {
         $this->h = $helper;
         $this->h->requireLoggedIn();
         $this->h->setActiveNavigationItem("Bills");
@@ -60,6 +70,8 @@ class BillsController extends AbstractController {
         $this->billRepo = $billRepo;
         $this->userRepo = $userRepo;
         $this->paymentRepo = $paymentRepo;
+        $this->emailService = $emailService;
+        $this->req = $req;
     }
 
     /**
@@ -72,11 +84,16 @@ class BillsController extends AbstractController {
         $duePaymentsOut = array();
         $totalDue = 0;
         foreach ($duePayments as $payment) {
-            $bill = $this->billRepo->getByBillId($payment->getBillId());
             $totalDue += $payment->getAmount();
-            $duePaymentsOut[] = array("payment" => $payment, "bill" => $bill, "group" => $this->groupRepo->getById($bill->getGroupId()));
+            $duePaymentsOut[] = $this->getAdditionalDataForPayment($payment);
         }
-        return $this->h->getViewResponse("billDashboard", array("title" => "Bills", "duePayments" => $duePaymentsOut, "billableGroups" => $billableGroups, "totalDue" => $totalDue));
+
+        $completedPayments = $this->paymentRepo->getCompletedPaymentsForUserId($user->getUserId());
+        $completedPaymentsOut = array();
+        foreach ($completedPayments as $payment) {
+            $completedPaymentsOut[] = $this->getAdditionalDataForPayment($payment);
+        }
+        return $this->h->getViewResponse("billDashboard", array("title" => "Bills", "completedPayments" => $completedPaymentsOut, "duePayments" => $duePaymentsOut, "billableGroups" => $billableGroups, "totalDue" => $totalDue));
     }
 
     /**
@@ -106,6 +123,10 @@ class BillsController extends AbstractController {
         foreach ($applicableRelations as $relation) {
             $payment = new Payment($bill->getBillId(), $relation->getUser()->getUserId(), false, $amountPayable);
             $this->paymentRepo->add($payment);
+            $this->emailService->sendEmail($relation->getUser()->getEmail(), "Payment due", "paymentDue", array(
+                "name" => $relation->getUser()->getName(),
+                "billsUrl" => $this->getBillsUrl()
+            ));
         }
     }
 
@@ -123,8 +144,28 @@ class BillsController extends AbstractController {
             $flash->set("wsb", array($this->authMan->getEffectiveUser()->getFirstName() . " has paid $i bills!"));
             $flash->set("flash", array("message" => "Bills marked as paid!", "type" => "success"));
         }
-        
+
         return new RedirectResponse("bills.php");
+    }
+
+    /**
+     * @param Payment $payment
+     * @return array
+     */
+    private function getAdditionalDataForPayment(Payment $payment) {
+        $bill = $this->billRepo->getByBillId($payment->getBillId());
+        $duePayment = array(
+            "payment" => $payment,
+            "bill" => $bill,
+            "group" => $this->groupRepo->getById($bill->getGroupId())
+        );
+        return $duePayment;
+    }
+
+    private function getBillsUrl() {
+        $currentUrl = "http://" . $this->req->getHeader("Host") . $this->req->getUrlRequested();
+        $url = preg_replace("/[A-Za-z_]+\\.php.*$/", "bills.php", $currentUrl);
+        return $url;
     }
 
 }

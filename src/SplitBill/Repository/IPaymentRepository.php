@@ -23,4 +23,10 @@ interface IPaymentRepository {
      * @return Payment[]
      */
     public function getPendingPaymentsForUserId($userId);
+
+    /**
+     * @param $userId
+     * @return Payment[]
+     */
+    public function getCompletedPaymentsForUserId($userId);
 }
