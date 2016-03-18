@@ -54,7 +54,8 @@ class DebugController extends AbstractController {
     }
 
     public function postMasquerade(HttpRequest $req, IApplication $app, MasqueradeFormRequest $m, IFlashSession $flash) {
-        if (in_array($req->getIpAddress(), $app->getConfig()['masquerade_ips'])) {
+        $config = $app->getConfig();
+        if (in_array($req->getIpAddress(), $config['masquerade_ips'])) {
             if ($m->getUid() != $this->authMan->getRealUser()->getUserId()) {
                 $this->authMan->masquerade($m->getUid());
             }
