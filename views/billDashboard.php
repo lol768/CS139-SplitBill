@@ -37,6 +37,9 @@ use SplitBill\Entity\Payment; ?>
             </form>
         <?php endif; ?>
         <h2>Paid bills</h2>
+        <?php if (count($completedPayments) == 0): ?>
+            <p>No historical payments could be located.</p>
+        <?php endif; ?>
         <?php foreach ($completedPayments as $payment): ?>
             <p>
                 <?php print_integer_money($payment['payment']->getAmount()); ?> for <?php se($payment['bill']->getDescription()); ?>

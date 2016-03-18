@@ -19,7 +19,7 @@ class SqliteGroupRepository extends AbstractSqliteRepository implements IGroupRe
      * @return Group
      */
     public function getById($groupId) {
-        $sql = "SELECT * FROM groups WHERE groups.group_id = :id AND deleted = 0 LIMIT 1";
+        $sql = "SELECT * FROM groups WHERE groups.group_id = :id LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":id", $groupId, SQLITE3_INTEGER);
         return $this->getSingleEntityViaStatement($stmt);
