@@ -26,7 +26,15 @@ SplitBill.BillManager = {
             jQuery(this).parent().find("input").each(function() {
                 jQuery(this).prop("checked", !jQuery(this).prop("checked"));
             });
-        })
+        });
+        jQuery(".view-bill-details").click(function() {
+            var id = jQuery(this).data("bill");
+            jQuery.get("api.php", {"action": "bill", "id": id}, function(data) {
+                var $el = $("footer").after(data);
+                SplitBill.Modals.openModal($el);
+            });
+            return false;
+        });
     },
     initialise: function() {
         this.wireUpEvents();
