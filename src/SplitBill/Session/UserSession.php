@@ -13,11 +13,11 @@ class UserSession implements IUserSession {
     public function __construct(IApplication $app) {
         $config = $app->getConfig();
 
-        ini_set('session.cookie_httponly', true);
-        ini_set('session.cookie_path', $config['cookies']['path']);
-        session_name($config['cookies']['name']);
 
         if (session_id() === '') {
+            ini_set('session.cookie_httponly', true);
+            ini_set('session.cookie_path', $config['cookies']['path']);
+            session_name($config['cookies']['name']);
             session_start();
         }
     }
